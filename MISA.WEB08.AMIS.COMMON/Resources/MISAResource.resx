@@ -129,6 +129,10 @@
     <value>Sever has error when try to do this request.</value>
     <comment>Thông báo cho dev có 1 exception</comment>
   </data>
+  <data name="DevMsg_InsertFailed" xml:space="preserve">
+    <value>Insert record to databse failed</value>
+    <comment>Thông báo cho dev thêm mới thất bại</comment>
+  </data>
   <data name="DevMsg_ValidateFailed" xml:space="preserve">
     <value>Some fileds of this request is not accepted</value>
     <comment>Thông báo cho dev có 1 lỗi liên quan tới validate</comment>
@@ -140,6 +144,10 @@
   <data name="MoreInfo_Exception" xml:space="preserve">
     <value>https://openapi.misa.com/error-code/e001</value>
     <comment>Trang mô tả chi tiết về exception</comment>
+  </data>
+  <data name="MoreInfo_InsertFailed" xml:space="preserve">
+    <value>https://openapi.misa.com/error-code/e007</value>
+    <comment>Trang mô tả chi tiết về insert thất bại</comment>
   </data>
   <data name="MoreInfo_ValidateFailed" xml:space="preserve">
     <value>https://openapi.misa.com/error-code/e003</value>
@@ -189,6 +197,14 @@
     <value>Proc_{0}_GetAll</value>
     <comment>Tên proc getall tùy thuộc vào từng table trong Database</comment>
   </data>
+  <data name="Proc_GetDupplicateCode" xml:space="preserve">
+    <value>Proc_{0}_GetDuplicateCode</value>
+    <comment>Tên proc test mã bị trùng</comment>
+  </data>
+  <data name="Proc_InsertOne" xml:space="preserve">
+    <value>Proc_{0}_PostOneRecord</value>
+    <comment>Tên proc tạo thêm 1 trường trong Database</comment>
+  </data>
   <data name="UserMsg_DuplicatedCode" xml:space="preserve">
     <value>Mã nhân viên đã tồn tại trong hệ thống, vui lòng sử dụng mã khác</value>
     <comment>Thông báo cho người dùng mã đã bị trùng</comment>
@@ -196,6 +212,10 @@
   <data name="UserMsg_Exception" xml:space="preserve">
     <value>Có lỗi xảy ra, vui lòng liên hệ với MISA để được hỗ trợ.</value>
     <comment>Thồng báo có lỗi xảy ra cho người dùng</comment>
+  </data>
+  <data name="UserMsg_InsertFailed" xml:space="preserve">
+    <value>Thêm mới thất bại, vui lòng kiểm tra lại</value>
+    <comment>Thông báo cho user thêm mới thất bại</comment>
   </data>
   <data name="UserMsg_ValidateFailed" xml:space="preserve">
     <value>Có một hoặc nhiều trường dữ liệu bị lỗi, vui lòng kiểm tra lại.</value>

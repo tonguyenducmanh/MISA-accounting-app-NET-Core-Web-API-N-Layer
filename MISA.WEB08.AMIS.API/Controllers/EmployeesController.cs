@@ -114,7 +114,7 @@ namespace MISA.WEB08.AMIS.API
         //            ));
         //    }
         //}       
-        
+
         ///// <summary>
         ///// API lấy mã nhân viên lớn nhất
         ///// </summary>
@@ -270,116 +270,49 @@ namespace MISA.WEB08.AMIS.API
         //#endregion
 
         //// Danh sách các API liên quan tới việc tạo mới nhân viên
-        //#region PostMethod
+        #region PostMethod
 
-        ///// <summary>
-        ///// API Thêm mới 1 nhân viên
-        ///// </summary>
-        ///// <param name="employee">Thông tin nhân viên mới</param>
-        ///// <returns>Status 201 created, employeeID</returns>
-        ///// Created by : TNMANH (17/09/2022)
-        //[HttpPost]
-        //public IActionResult InsertEmployee([FromBody] Employee employee)
-        //{
-        //    try
-        //    {
-        //        // Validate dữ liệu đầu vào
-        //        var props = typeof(Employee).GetProperties();
-        //        List<string> validateFailed = new List<string>();
-        //        foreach(var prop in props)
-        //        {
-        //            var propName = prop.Name;
-        //            var propValue = prop.GetValue(employee);
-        //            var mustHave = (MustHave?)Attribute.GetCustomAttribute(prop, typeof(MustHave));
-        //            if(mustHave != null && string.IsNullOrEmpty(propValue?.ToString()))
-        //            {
-        //                validateFailed.Add(mustHave.ErrorMessage);
-        //            }
-        //        }
+        /// <summary>
+        /// API Thêm mới 1 nhân viên
+        /// </summary>
+        /// <param name="employee">Thông tin nhân viên mới</param>
+        /// <returns>Status 201 created, employeeID</returns>
+        /// Created by : TNMANH (17/09/2022)
+        [HttpPost]
+        public IActionResult InsertEmployee([FromBody] Employee employee)
+        {
+            try
+            {
+                var result = _employeeBL.InsertEmployee(employee);
+                if (result.Success)
+                {
+                    return StatusCode(StatusCodes.Status200OK, result.Data);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult(
+                        ErrorCode.InvalidInput,
+                        MISAResource.DevMsg_ValidateFailed,
+                        MISAResource.UserMsg_ValidateFailed,
+                        MISAResource.MoreInfo_ValidateFailed,
+                        HttpContext.TraceIdentifier));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                (
+                    ErrorCode.Exception,
+                    MISAResource.DevMsg_Exception,
+                    MISAResource.UserMsg_Exception,
+                    MISAResource.MoreInfo_Exception,
+                     HttpContext.TraceIdentifier
+                ));
+            }
+        }
 
-        //        // Check xem nếu có lỗi văng ra kết quả luôn khỏi chạy đoạn dưới
-        //        if(validateFailed.Count > 0)
-        //        {
-        //            return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult(
-        //                ErrorCode.EmptyCode,
-        //                MISAResource.DevMsg_ValidateFailed,
-        //                MISAResource.UserMsg_ValidateFailed,
-        //                validateFailed,
-        //                HttpContext.TraceIdentifier
-        //                ));
-        //        }
-
-        //        // Tạo connection
-        //        var sqlConnection = new MySqlConnection(_configuration.GetConnectionString(MISAResource.ConnectionString));
-        //        // Validate xem có bị trùng mã nhân viên không
-        //        string testProcName = MISAResource.ProcGetDupplicateCode;
-        //        DynamicParameters testParameters = new DynamicParameters();
-        //        testParameters.Add("v_EmployeeCode", employee.EmployeeCode);
-        //        // Thực hiện kiểm tra mã nhân viên trong database
-        //        var testResult = sqlConnection.Query(
-        //                testProcName,
-        //                testParameters,
-        //                commandType: System.Data.CommandType.StoredProcedure
-        //            );
-        //        if(testResult.Count() > 0)
-        //        {
-        //            return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult(
-        //                ErrorCode.DuplicateCode,
-        //                MISAResource.DevMsg_DuplicatedCode,
-        //                MISAResource.UserMsg_DuplicatedCode,
-        //                MISAResource.MoreInfo_DupplicatedCode,
-        //                HttpContext.TraceIdentifier
-        //                ));
-        //        }
-        //        else
-        //        {
-
-        //        // Tạo ra employeeID bằng guid
-        //        Guid employeeID = Guid.NewGuid();
-
-        //        // chuẩn bị câu lệnh MySQL
-        //        string storeProcedureName = MISAResource.ProcPostNewEmployee;
-
-        //        // Truyền tham số vào store procedure
-        //        DynamicParameters parameters = new DynamicParameters();
-
-        //        // Chèn các giá trị khác vào param cho store procedure
-        //        foreach (var prop in props)
-        //        {
-        //            // lấy ra tên của properties
-        //            var propName = prop.Name;
-        //            var propValue = prop.GetValue(employee);
-        //            parameters.Add($"v_{propName}", propValue);
-        //        }
-
-        //        parameters.Add("v_EmployeeID", employeeID);
-
-        //        // Thực hiện chèn dữ liệu vào trong database
-        //        var queryResult = sqlConnection.Execute(
-        //                storeProcedureName,
-        //                parameters,
-        //                commandType: System.Data.CommandType.StoredProcedure
-        //            );
-
-        //        // Trả về kết quả
-        //        return StatusCode(StatusCodes.Status200OK, queryResult);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-        //        return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
-        //        (
-        //            ErrorCode.Exception,
-        //            MISAResource.DevMsg_Exception,
-        //            MISAResource.UserMsg_Exception,
-        //            MISAResource.MoreInfo_Exception,
-        //             HttpContext.TraceIdentifier
-        //        ));
-        //    }
-        //}
-
-        //#endregion
+        #endregion
 
         //#region PutMethod
 

@@ -88,6 +88,15 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insert record to databse failed.
+        /// </summary>
+        public static string DevMsg_InsertFailed {
+            get {
+                return ResourceManager.GetString("DevMsg_InsertFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Some fileds of this request is not accepted.
         /// </summary>
         public static string DevMsg_ValidateFailed {
@@ -115,6 +124,15 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://openapi.misa.com/error-code/e007.
+        /// </summary>
+        public static string MoreInfo_InsertFailed {
+            get {
+                return ResourceManager.GetString("MoreInfo_InsertFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://openapi.misa.com/error-code/e003.
         /// </summary>
         public static string MoreInfo_ValidateFailed {
@@ -129,6 +147,24 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         public static string Proc_GetAll {
             get {
                 return ResourceManager.GetString("Proc_GetAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proc_{0}_GetDuplicateCode.
+        /// </summary>
+        public static string Proc_GetDupplicateCode {
+            get {
+                return ResourceManager.GetString("Proc_GetDupplicateCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proc_{0}_PostOneRecord.
+        /// </summary>
+        public static string Proc_InsertOne {
+            get {
+                return ResourceManager.GetString("Proc_InsertOne", resourceCulture);
             }
         }
         
@@ -237,6 +273,15 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         public static string UserMsg_Exception {
             get {
                 return ResourceManager.GetString("UserMsg_Exception", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thêm mới thất bại, vui lòng kiểm tra lại.
+        /// </summary>
+        public static string UserMsg_InsertFailed {
+            get {
+                return ResourceManager.GetString("UserMsg_InsertFailed", resourceCulture);
             }
         }
         

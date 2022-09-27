@@ -53,7 +53,7 @@ namespace MISA.WEB08.AMIS.COMMON.Entities
         /// <param name="traceId">ID kết nối để dò lỗi sau này</param>
         /// Created by : TNMANH (21/09/2022)
 
-        public ErrorResult(ErrorCode errorCode, string devMsg, string userMsg, dynamic? moreInfo, string traceId)
+        public ErrorResult(ErrorCode errorCode, string devMsg, string userMsg, dynamic? moreInfo, string? traceId = null)
         {
             ErrorCode = errorCode;
             DevMsg = devMsg;

@@ -1,11 +1,15 @@
-﻿using MISA.WEB08.AMIS.COMMON.Entities;
+﻿using MISA.WEB08.AMIS.COMMON.CustomAttribute;
+using MISA.Web08.AMIS.COMMON.Enums;
+using MISA.WEB08.AMIS.COMMON.Entities;
 using MISA.WEB08.AMIS.COMMON.Resources;
 using MISA.WEB08.AMIS.DL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace MISA.WEB08.AMIS.BL
 {
@@ -95,11 +99,90 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="employee">Thông tin nhân viên mới</param>
         /// <returns>Status 201 created, employeeID</returns>
         /// Created by : TNMANH (17/09/2022)
-        public int InsertEmployee(Employee employee)
+        public ServiceResponse InsertEmployee(Employee employee)
         {
-            throw new NotImplementedException();
+            var validateResult = ValidateRequestData(employee);
+
+            if (validateResult != null && validateResult.Success)
+            {
+                var newEmployeeID = _employeeDL.InsertEmployee(employee);
+
+                if (newEmployeeID != Guid.Empty)
+                {
+                    return new ServiceResponse
+                    {
+                        Success = true,
+                        Data = newEmployeeID
+                    };
+                }
+                else
+                {
+                    return new ServiceResponse
+                    {
+                        Success = false,
+                        Data = new ErrorResult(
+                        ErrorCode.InsertFailed,
+                        MISAResource.DevMsg_InsertFailed,
+                        MISAResource.UserMsg_Exception,
+                        MISAResource.MoreInfo_InsertFailed
+                        )
+                    };
+                }
+            }
+            else
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    Data = validateResult?.Data
+                };
+            }
+
         }
 
+        /// <summary>
+        /// Validate dữ liệu truyền lên
+        /// </summary>
+        /// <param name="employee">Đối tượng nhân viên cần validate</param>
+        /// <param name="httpContext">httpContext truyền vào từ request</param>
+        /// <returns>Đối tượng ServiceRespone</returns>
+        /// Created by : TNMANH (27/09/2022)
+        private ServiceResponse ValidateRequestData(Employee employee)
+        {
+            // Validate dữ liệu đầu vào
+            var props = typeof(Employee).GetProperties();
+            List<string> validateFailed = new List<string>();
+            foreach (var prop in props)
+            {
+                var propName = prop.Name;
+                var propValue = prop.GetValue(employee);
+                var mustHave = (MustHave?)Attribute.GetCustomAttribute(prop, typeof(MustHave));
+                if (mustHave != null && string.IsNullOrEmpty(propValue?.ToString()))
+                {
+                    validateFailed.Add(mustHave.ErrorMessage);
+                }
+            }
+
+            // Check xem nếu có lỗi văng ra kết quả luôn khỏi chạy đoạn dưới
+            if (validateFailed.Count > 0)
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    Data =
+                    new ErrorResult(
+                    ErrorCode.EmptyCode,
+                    MISAResource.DevMsg_ValidateFailed,
+                    MISAResource.UserMsg_ValidateFailed,
+                    validateFailed
+                    )
+                };
+            }
+            return new ServiceResponse
+            {
+                Success = true
+            };
+        }
 
         #endregion
 

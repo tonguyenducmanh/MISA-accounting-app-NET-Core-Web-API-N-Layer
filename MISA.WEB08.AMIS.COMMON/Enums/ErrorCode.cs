@@ -34,12 +34,18 @@
         /// Lỗi thuộc về database phòng ban
         /// </summary>
         /// Created by : TNMANH (21/09/2022)
-        DepartmentError = 3,
+        DepartmentError = 5,
 
         /// <summary>
         /// Lỗi thuộc về database chức vụ
         /// </summary>
         /// Created by : TNMANH (21/09/2022)
-        PositionError = 4,
+        PositionError = 6,
+
+        /// <summary>
+        /// Lỗi nhập sai
+        /// </summary>
+        /// Created by : TNMANH (27/09/2022)
+        InvalidInput = 7,
     }
 }

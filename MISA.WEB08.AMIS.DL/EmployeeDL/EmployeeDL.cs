@@ -1,10 +1,13 @@
 ﻿using Dapper;
+using MISA.WEB08.AMIS.COMMON.CustomAttribute;
+using MISA.Web08.AMIS.COMMON.Enums;
 using MISA.WEB08.AMIS.COMMON.Entities;
 using MISA.WEB08.AMIS.COMMON.Resources;
 using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -90,11 +93,48 @@ namespace MISA.WEB08.AMIS.DL
         /// API Thêm mới 1 nhân viên
         /// </summary>
         /// <param name="employee">Thông tin nhân viên mới</param>
-        /// <returns>Status 201 created, employeeID</returns>
+        /// <returns>ID của nhân viên vừa thêm, nếu insert thất bại thì return guid rỗng</returns>
         /// Created by : TNMANH (17/09/2022)
-        public int InsertEmployee(Employee employee)
+        public Guid InsertEmployee(Employee employee)
         {
-            throw new NotImplementedException();
+            // Tạo connection
+            var sqlConnection = new MySqlConnection(DataContext.MySQLConnectionString);
+
+            // Tạo ra employeeID bằng guid
+            Guid newID = Guid.NewGuid();
+
+            // chuẩn bị câu lệnh MySQL
+            string storeProcedureName = string.Format(MISAResource.Proc_InsertOne, typeof(Employee).Name.ToLower());
+
+            // Truyền tham số vào store procedure
+            DynamicParameters parameters = new DynamicParameters();
+
+            // Chèn các giá trị khác vào param cho store procedure
+            var props = typeof(Employee).GetProperties();
+            foreach (var prop in props)
+            {
+                // lấy ra tên của properties
+                var propName = prop.Name;
+                var propValue = prop.GetValue(employee);
+                parameters.Add($"v_{propName}", propValue);
+            }
+
+            parameters.Add($"v_{typeof(Employee).Name}ID", newID);
+
+            // Thực hiện chèn dữ liệu vào trong database
+            var nunmberOfAffectedRows = sqlConnection.Execute(
+                    storeProcedureName,
+                    parameters,
+                    commandType: System.Data.CommandType.StoredProcedure
+                );
+            if(nunmberOfAffectedRows > 0)
+            {
+                return newID;
+            }
+            else
+            {
+                return Guid.Empty;
+            }
         }
 
 

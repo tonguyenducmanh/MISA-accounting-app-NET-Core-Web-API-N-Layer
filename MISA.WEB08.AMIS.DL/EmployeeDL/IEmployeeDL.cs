@@ -70,7 +70,7 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="employee">Thông tin nhân viên mới</param>
         /// <returns>Status 201 created, employeeID</returns>
         /// Created by : TNMANH (17/09/2022)
-        public int InsertEmployee(Employee employee);
+        public Guid InsertEmployee(Employee employee);
 
 
         #endregion

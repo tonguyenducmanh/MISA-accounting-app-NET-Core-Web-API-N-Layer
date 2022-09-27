@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MISA.WEB08.AMIS.COMMON\MISA.WEB08.AMIS.COMMON.csproj" />
     <ProjectReference Include="..\MISA.WEB08.AMIS.DL\MISA.WEB08.AMIS.DL.csproj" />
   </ItemGroup>
