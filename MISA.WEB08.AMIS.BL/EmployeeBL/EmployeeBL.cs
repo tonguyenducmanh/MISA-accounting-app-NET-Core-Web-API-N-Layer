@@ -102,8 +102,9 @@ namespace MISA.WEB08.AMIS.BL
         public ServiceResponse InsertEmployee(Employee employee)
         {
             var validateResult = ValidateRequestData(employee);
+            var checkDuplicateResult = CheckDuplicateEmployeeCode(employee.EmployeeCode);
 
-            if (validateResult != null && validateResult.Success)
+            if (validateResult != null && validateResult.Success && checkDuplicateResult.Success)
             {
                 var newEmployeeID = _employeeDL.InsertEmployee(employee);
 
@@ -140,17 +141,10 @@ namespace MISA.WEB08.AMIS.BL
 
         }
 
-        /// <summary>
-        /// Validate dữ liệu truyền lên
-        /// </summary>
-        /// <param name="employee">Đối tượng nhân viên cần validate</param>
-        /// <param name="httpContext">httpContext truyền vào từ request</param>
-        /// <returns>Đối tượng ServiceRespone</returns>
-        /// Created by : TNMANH (27/09/2022)
-        private ServiceResponse ValidateRequestData(Employee employee)
+        public ServiceResponse CheckDuplicateEmployeeCode(string employeeCode)
         {
             // Kiểm tra xem mã có bị trùng chưa
-            var testDuplicateCode = GetDuplicateCode(employee.EmployeeCode);
+            var testDuplicateCode = GetDuplicateCode(employeeCode);
 
             if (testDuplicateCode != null)
             {
@@ -165,7 +159,25 @@ namespace MISA.WEB08.AMIS.BL
                         )
                 };
             }
+            else
+            {
+                return new ServiceResponse
+                {
+                    Success = true,
+                    Data = ""
+                };
+            }
+        }
 
+        /// <summary>
+        /// Validate dữ liệu truyền lên
+        /// </summary>
+        /// <param name="employee">Đối tượng nhân viên cần validate</param>
+        /// <param name="httpContext">httpContext truyền vào từ request</param>
+        /// <returns>Đối tượng ServiceRespone</returns>
+        /// Created by : TNMANH (27/09/2022)
+        private ServiceResponse ValidateRequestData(Employee employee)
+        {
             // Validate dữ liệu đầu vào
             var props = typeof(Employee).GetProperties();
             List<string> validateFailed = new List<string>();
