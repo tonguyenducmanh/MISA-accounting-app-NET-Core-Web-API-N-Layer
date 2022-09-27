@@ -52,7 +52,7 @@ namespace MISA.WEB08.AMIS.BL
         /// Created by : TNMANH (25/09/2022)
         public Employee GetDuplicateCode(string EmployeeCode)
         {
-            throw new NotImplementedException();
+            return _employeeDL.GetDuplicateCode(EmployeeCode);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace MISA.WEB08.AMIS.BL
         /// Created by : TNMANH (17/09/2022)
         public string GetMaxEmployeeCode()
         {
-            throw new NotImplementedException();
+            return _employeeDL.GetMaxEmployeeCode();
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace MISA.WEB08.AMIS.BL
         /// Created by : TNMANH (17/09/2022)
         public Employee GetEmployeeByID(Guid employeeID)
         {
-            throw new NotImplementedException();
+            return _employeeDL.GetEmployeeByID(employeeID);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace MISA.WEB08.AMIS.BL
         /// <returns>Tổng số bản ghi, tổng số trang, số trang hiện tại, danh sách kết quả</returns>
         public PagingData FilterEmployee(string? keyword, int? pageNumber, int? pageSize)
         {
-            throw new NotImplementedException();
+            return _employeeDL.FilterEmployee(keyword, pageNumber, pageSize);
         }
 
         #endregion
@@ -149,6 +149,23 @@ namespace MISA.WEB08.AMIS.BL
         /// Created by : TNMANH (27/09/2022)
         private ServiceResponse ValidateRequestData(Employee employee)
         {
+            // Kiểm tra xem mã có bị trùng chưa
+            var testDuplicateCode = GetDuplicateCode(employee.EmployeeCode);
+
+            if (testDuplicateCode != null)
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    Data = new ErrorResult(
+                        ErrorCode.DuplicateCode,
+                        MISAResource.DevMsg_DuplicatedCode,
+                        MISAResource.UserMsg_DuplicatedCode,
+                        MISAResource.MoreInfo_DupplicatedCode
+                        )
+                };
+            }
+
             // Validate dữ liệu đầu vào
             var props = typeof(Employee).GetProperties();
             List<string> validateFailed = new List<string>();
@@ -195,9 +212,44 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="employee">Giá trị sửa</param>
         /// <returns>Status 200 OK, employeeID / Status 400 badrequest</returns>
         /// Created by : TNMANH (17/09/2022)
-        public int UpdateEmployee(Guid employeeID, Employee employee)
+        public ServiceResponse UpdateEmployee(Guid employeeID, Employee employee)
         {
-            throw new NotImplementedException();
+            var validateResult = ValidateRequestData(employee);
+
+            if (validateResult != null && validateResult.Success)
+            {
+                var editedEmployeeID = _employeeDL.UpdateEmployee(employeeID, employee);
+
+                if (editedEmployeeID != Guid.Empty)
+                {
+                    return new ServiceResponse
+                    {
+                        Success = true,
+                        Data = editedEmployeeID
+                    };
+                }
+                else
+                {
+                    return new ServiceResponse
+                    {
+                        Success = false,
+                        Data = new ErrorResult(
+                        ErrorCode.UpdateFailed,
+                        MISAResource.DevMsg_InsertFailed,
+                        MISAResource.UserMsg_Exception,
+                        MISAResource.MoreInfo_InsertFailed
+                        )
+                    };
+                }
+            }
+            else
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    Data = validateResult?.Data
+                };
+            }
         }
 
         #endregion
@@ -210,9 +262,31 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="employeeID">ID của nhân viên</param>
         /// <returns>Status 200 OK, employeeID / Status 400 badrequest</returns>
         /// Created by : TNMANH (17/09/2022)
-        public int DeleteEmployee(Guid employeeID)
+        public ServiceResponse DeleteEmployee(Guid employeeID)
         {
-            throw new NotImplementedException();
+            var deletedEmployeeID = _employeeDL.DeleteEmployee(employeeID);
+
+            if (deletedEmployeeID != Guid.Empty)
+            {
+                return new ServiceResponse
+                {
+                    Success = true,
+                    Data = deletedEmployeeID
+                };
+            }
+            else
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    Data = new ErrorResult(
+                    ErrorCode.UpdateFailed,
+                    MISAResource.DevMsg_InsertFailed,
+                    MISAResource.UserMsg_Exception,
+                    MISAResource.MoreInfo_InsertFailed
+                    )
+                };
+            }
         }
 
         #endregion 

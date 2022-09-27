@@ -36,6 +36,9 @@ namespace MISA.WEB08.AMIS.API
 
         #endregion
 
+        /// danh sách các API liên quan tới việc lấy thông tin nhân viên
+        #region GETMethod
+
         // Danh sách các API liên quan tới việc lấy thông tin của nhân viên
         //#region GetMethod
 
@@ -70,204 +73,140 @@ namespace MISA.WEB08.AMIS.API
             }
         }
 
-        ///// <summary>
-        ///// API check trùng mã nhân viên
-        ///// </summary>
-        ///// <returns>Records có mã nhân viên trùng</returns>
-        ///// Created by : TNMANH (25/09/2022)
-        //[HttpGet("duplicate-code")]
-        //public IActionResult GetDuplicateCode(string EmployeeCode)
-        //{
-        //    try
-        //    {
-        //        // Tạo connection
-        //        var sqlConnection = new MySqlConnection(_configuration.GetConnectionString(MISAResource.ConnectionString));
+        /// <summary>
+        /// API check trùng mã nhân viên
+        /// <param name="employeecode">ID của nhân viên</param>
+        /// </summary>
+        /// <returns>Records có mã nhân viên trùng</returns>
+        /// Created by : TNMANH (25/09/2022)
+        [HttpGet("duplicate-code")]
+        public IActionResult GetDuplicateCode(string employeeCode)
+        {
+            try
+            {
+                // Thực hiện gọi vào db
+                var duplicatedEmployee = _employeeBL.GetDuplicateCode(employeeCode);
+                // Trả về Status code và kết quả
+                return StatusCode(StatusCodes.Status200OK, duplicatedEmployee);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
-        //        // Chuẩn bị câu lệnh Query
-        //        string storeProcedureName = MISAResource.ProcGetDupplicateCode;
+                // Trả về Status code và object báo lỗi
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult(
+                    ErrorCode.Exception,
+                    MISAResource.DevMsg_Exception,
+                    MISAResource.UserMsg_Exception,
+                    MISAResource.MoreInfo_Exception,
+                    HttpContext.TraceIdentifier
+                    ));
+            }
+        }
 
-        //        // Thêm param
-        //        DynamicParameters parameters = new DynamicParameters();
-        //        parameters.Add("v_EmployeeCode", EmployeeCode);
 
-        //        // Thực hiện gọi vào Database
-        //        var maxCode = sqlConnection.QueryFirstOrDefault<Employee>(
-        //            storeProcedureName,
-        //            parameters,
-        //            commandType: System.Data.CommandType.StoredProcedure
-        //            );
+        /// <summary>
+        /// API lấy mã nhân viên lớn nhất
+        /// </summary>
+        /// <returns>Mã nhân viên lớn nhất</returns>
+        /// Created by : TNMANH (17/09/2022)
+        [HttpGet("max-code")]
+        public IActionResult GetMaxEmployeeCode()
+        {
+            try
+            {
+                var maxCode = _employeeBL.GetMaxEmployeeCode();
+                // Trả về Status code và kết quả
+                return StatusCode(StatusCodes.Status200OK, maxCode);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
-        //        // Trả về Status code và kết quả
-        //        return StatusCode(StatusCodes.Status200OK, maxCode);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
+                // Trả về Status code và object báo lỗi
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult(
+                    ErrorCode.Exception,
+                    MISAResource.DevMsg_Exception,
+                    MISAResource.UserMsg_Exception,
+                    MISAResource.MoreInfo_Exception,
+                    HttpContext.TraceIdentifier
+                    ));
+            }
+        }
 
-        //        // Trả về Status code và object báo lỗi
-        //        return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult(
-        //            ErrorCode.Exception,
-        //            MISAResource.DevMsg_Exception,
-        //            MISAResource.UserMsg_Exception,
-        //            MISAResource.MoreInfo_Exception,
-        //            HttpContext.TraceIdentifier
-        //            ));
-        //    }
-        //}       
+        /// <summary>
+        /// API lấy thông tin chi tiết của 1 nhân viên theo ID đầu vào
+        /// </summary>
+        /// <param name="employeeID">ID của nhân viên</param>
+        /// <returns>Thông tin của nhân viên theo ID</returns>
+        /// Created by : TNMANH (17/09/2022)
+        [HttpGet("{employeeID}")]
+        public IActionResult GetEmployeeByID([FromRoute] Guid employeeID)
+        {
+            try
+            {
+                // Lấy thông tin chi tiết 1 nhân viên
+                var employee = _employeeBL.GetEmployeeByID(employeeID);
 
-        ///// <summary>
-        ///// API lấy mã nhân viên lớn nhất
-        ///// </summary>
-        ///// <returns>Mã nhân viên lớn nhất</returns>
-        ///// Created by : TNMANH (17/09/2022)
-        //[HttpGet("max-code")]
-        //public IActionResult GetMaxEmployeeCode()
-        //{
-        //    try
-        //    {
-        //        // Tạo connection
-        //        var sqlConnection = new MySqlConnection(_configuration.GetConnectionString(MISAResource.ConnectionString));
+                // Trả về status code và kết quả trả về
+                return StatusCode(StatusCodes.Status200OK, employee);
 
-        //        // Chuẩn bị câu lệnh Query
-        //        string storeProcedureName = MISAResource.ProcGetMaxEmployeeCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
-        //        // Thực hiện gọi vào Database
-        //        var maxCode = sqlConnection.QueryFirstOrDefault<String>(
-        //            storeProcedureName,
-        //            commandType: System.Data.CommandType.StoredProcedure
-        //            );
+                // Trả về status code kèm theo kết quả báo lỗi
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult(
+                    ErrorCode.Exception,
+                    MISAResource.DevMsg_Exception,
+                    MISAResource.UserMsg_Exception,
+                    MISAResource.MoreInfo_Exception,
+                    HttpContext.TraceIdentifier
+                    ));
+            }
 
-        //        // Trả về Status code và kết quả
-        //        return StatusCode(StatusCodes.Status200OK, maxCode);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
+        }
 
-        //        // Trả về Status code và object báo lỗi
-        //        return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult(
-        //            ErrorCode.Exception,
-        //            MISAResource.DevMsg_Exception,
-        //            MISAResource.UserMsg_Exception,
-        //            MISAResource.MoreInfo_Exception,
-        //            HttpContext.TraceIdentifier
-        //            ));
-        //    }
-        //}
+        /// <summary>
+        /// API lọc danh sách nhân viên theo các điều kiện cho trước
+        /// </summary>
+        /// <param name="keyword">Từ khóa tìm kiếm (mã, tên, số điện thoại của nhân viên)</param>
+        /// <param name="limit">Số lượng kết quả trả về của 1 bảng</param>
+        /// <param name="offset">Start Index của bảng</param>
+        /// <returns>Tổng số bản ghi, tổng số trang, số trang hiện tại, danh sách kết quả</returns>
+        [HttpGet("filter")]
+        public IActionResult FilterEmployee(
+            [FromQuery] string? keyword,
+            [FromQuery] int? pageNumber,
+            [FromQuery] int? pageSize
+            )
+        {
+            try
+            {
+                // Lấy danh sách nhân viên theo filter
+                var employeeFiltered = _employeeBL.FilterEmployee(keyword, pageNumber, pageSize);
 
-        ///// <summary>
-        ///// API lấy thông tin chi tiết của 1 nhân viên theo ID đầu vào
-        ///// </summary>
-        ///// <param name="employeeID">ID của nhân viên</param>
-        ///// <returns>Thông tin của nhân viên theo ID</returns>
-        ///// Created by : TNMANH (17/09/2022)
-        //[HttpGet("{employeeID}")]
-        //public IActionResult GetEmployeeByID([FromRoute] Guid employeeID)
-        //{
-        //    try
-        //    {
-        //        // Tạo connection
-        //        var sqlConnection = new MySqlConnection(_configuration.GetConnectionString(MISAResource.ConnectionString));
+                // Trả về status code kèm theo object kết quả
+                return StatusCode(StatusCodes.Status200OK, employeeFiltered);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
-        //        // Khai báo procedure name
-        //        string storeProcedureName = MISAResource.ProcGetEmployeeByID;
+                // Trả về status code kèm theo object thông báo lỗi
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult(
+                    ErrorCode.Exception,
+                    MISAResource.DevMsg_Exception,
+                    MISAResource.UserMsg_Exception,
+                    MISAResource.MoreInfo_Exception,
+                    HttpContext.TraceIdentifier));
+            }
 
-        //        // Khởi tạo các parameter để chèn vào trong storeprocedure
-        //        DynamicParameters parameters = new DynamicParameters();
-        //        parameters.Add("v_id", employeeID);
+        }
 
-        //        // Thực hiện kết nối tới Database
-        //        var employee = sqlConnection.QueryFirstOrDefault<Employee>(
-        //            storeProcedureName,
-        //            parameters,
-        //            commandType: System.Data.CommandType.StoredProcedure
-        //            );
+        #endregion
 
-        //        // Trả về status code và kết quả trả về
-        //        return StatusCode(StatusCodes.Status200OK, employee);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-
-        //        // Trả về status code kèm theo kết quả báo lỗi
-        //        return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult(
-        //            ErrorCode.Exception,
-        //            MISAResource.DevMsg_Exception, 
-        //            MISAResource.UserMsg_Exception, 
-        //            MISAResource.MoreInfo_Exception,
-        //            HttpContext.TraceIdentifier
-        //            ));
-        //    }
-
-        //}
-
-        ///// <summary>
-        ///// API lọc danh sách nhân viên theo các điều kiện cho trước
-        ///// </summary>
-        ///// <param name="keyword">Từ khóa tìm kiếm (mã, tên, số điện thoại của nhân viên)</param>
-        ///// <param name="limit">Số lượng kết quả trả về của 1 bảng</param>
-        ///// <param name="offset">Start Index của bảng</param>
-        ///// <returns>Tổng số bản ghi, tổng số trang, số trang hiện tại, danh sách kết quả</returns>
-        //[HttpGet("filter")]
-        //public IActionResult FilterEmployee(
-        //    [FromQuery] string? keyword,
-        //    [FromQuery] int? pageNumber,
-        //    [FromQuery] int? pageSize
-        //    )
-        //{
-        //    try
-        //    {
-        //        // Tạo connection
-        //        var sqlConnection = new MySqlConnection(_configuration.GetConnectionString(MISAResource.ConnectionString));
-
-        //        // Chuẩn bị câu lệnh MySQL
-        //        string storeProcedureName = MISAResource.ProcGetEmployeeFilter;
-
-        //        // Chèn parameter cho procedure
-        //        DynamicParameters parameters = new DynamicParameters();
-
-        //        parameters.Add("v_PageNumber", pageNumber);
-        //        parameters.Add("v_PageSize", pageSize);
-        //        parameters.Add("v_Search", keyword);
-
-        //        // Thực hiện gọi vào trong Database
-        //        var employeesFiltered = sqlConnection.QueryMultiple(
-        //                storeProcedureName,
-        //                parameters,
-        //                commandType: System.Data.CommandType.StoredProcedure
-        //            );
-
-        //        var employees = employeesFiltered.Read<Employee>().ToList();
-        //        var totalRecord = (int)employeesFiltered.ReadSingle().TotalCount;
-
-        //        // Trả về status code kèm theo object kết quả
-        //        return StatusCode(StatusCodes.Status200OK, new PagingData()
-        //        {
-        //            PageSize = pageSize,
-        //            CurrentPage = pageNumber,
-        //            TotalPage = (int)Math.Ceiling( Convert.ToDecimal(totalRecord / pageSize) +1),
-        //            Data = employees,
-        //            TotalRecord = totalRecord,
-        //        });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-
-        //        // Trả về status code kèm theo object thông báo lỗi
-        //        return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult(
-        //            ErrorCode.Exception, 
-        //            MISAResource.DevMsg_Exception, 
-        //            MISAResource.UserMsg_Exception, 
-        //            MISAResource.MoreInfo_Exception, 
-        //            HttpContext.TraceIdentifier));
-        //    }
-
-        //}
-
-        //#endregion
 
         //// Danh sách các API liên quan tới việc tạo mới nhân viên
         #region PostMethod
@@ -290,12 +229,7 @@ namespace MISA.WEB08.AMIS.API
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult(
-                        ErrorCode.InvalidInput,
-                        MISAResource.DevMsg_ValidateFailed,
-                        MISAResource.UserMsg_ValidateFailed,
-                        MISAResource.MoreInfo_ValidateFailed,
-                        HttpContext.TraceIdentifier));
+                    return StatusCode(StatusCodes.Status400BadRequest, result.Data);
                 }
             }
             catch (Exception ex)
@@ -314,139 +248,82 @@ namespace MISA.WEB08.AMIS.API
 
         #endregion
 
-        //#region PutMethod
 
-        ///// <summary>
-        ///// API sửa thông tin của 1 nhân viên dựa vào employeeID
-        ///// </summary>
-        ///// <param name="employeeID">ID của nhân viên định sửa</param>
-        ///// <param name="employee">Giá trị sửa</param>
-        ///// <returns>Status 200 OK, employeeID / Status 400 badrequest</returns>
-        ///// Created by : TNMANH (17/09/2022)
-        //[HttpPut("{employeeID}")]
-        //public IActionResult UpdateEmployee([FromRoute] Guid employeeID, [FromBody] Employee employee)
-        //{
 
-        //    try
-        //    {
-        //        // Validate dữ liệu đầu vào
-        //        var props = typeof(Employee).GetProperties();
-        //        List<string> validateFailed = new List<string>();
-        //        foreach (var prop in props)
-        //        {
-        //            var propName = prop.Name;
-        //            var propValue = prop.GetValue(employee);
-        //            var mustHave = (MustHave?)Attribute.GetCustomAttribute(prop, typeof(MustHave));
-        //            if (mustHave != null && string.IsNullOrEmpty(propValue?.ToString()))
-        //            {
-        //                validateFailed.Add(mustHave.ErrorMessage);
-        //            }
-        //        }
+        #region PutMethod
 
-        //        // Check xem nếu có lỗi văng ra kết quả luôn khỏi chạy đoạn dưới
-        //        if (validateFailed.Count > 0)
-        //        {
-        //            return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult(
-        //                ErrorCode.EmptyCode,
-        //                MISAResource.DevMsg_ValidateFailed,
-        //                MISAResource.UserMsg_ValidateFailed,
-        //                validateFailed,
-        //                HttpContext.TraceIdentifier
-        //                ));
-        //        }
-        //        // Tạo connection
-        //        var sqlConnection = new MySqlConnection(_configuration.GetConnectionString(MISAResource.ConnectionString));
+        /// <summary>
+        /// API sửa thông tin của 1 nhân viên dựa vào employeeID
+        /// </summary>
+        /// <param name="employeeID">ID của nhân viên định sửa</param>
+        /// <param name="employee">Giá trị sửa</param>
+        /// <returns>Status 200 OK, employeeID / Status 400 badrequest</returns>
+        /// Created by : TNMANH (17/09/2022)
+        [HttpPut("{employeeID}")]
+        public IActionResult UpdateEmployee([FromRoute] Guid employeeID, [FromBody] Employee employee)
+        {
 
-        //        // chuẩn bị câu lệnh MySQL
-        //        string storeProcedureName = MISAResource.ProcPutOneEmployee;
+            try
+            {
+                var result = _employeeBL.UpdateEmployee(employeeID, employee);
+                if (result.Success)
+                {
+                    return StatusCode(StatusCodes.Status200OK, result.Data);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, result.Data);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                (
+                    ErrorCode.Exception,
+                    MISAResource.DevMsg_Exception,
+                    MISAResource.UserMsg_Exception,
+                    MISAResource.MoreInfo_Exception,
+                     HttpContext.TraceIdentifier
+                ));
+            }
+        }
 
-        //        // Truyền tham số vào store procedure
-        //        DynamicParameters parameters = new DynamicParameters();
+        #endregion
 
-        //        // Chèn các giá trị khác vào param cho store procedure
-        //        foreach (var prop in props)
-        //        {
-        //            // lấy ra tên của properties
-        //            var propName = prop.Name;
-        //            var propValue = prop.GetValue(employee);
-        //            parameters.Add($"v_{propName}", propValue);
-        //        }
+        #region DeleteMethod
 
-        //        // Thực hiện chèn dữ liệu vào trong database
-        //        var queryResult = sqlConnection.Execute(
-        //                storeProcedureName,
-        //                parameters,
-        //                commandType: System.Data.CommandType.StoredProcedure
-        //            );
+        /// <summary>
+        /// API xóa 1 nhân viên dựa vào ID
+        /// </summary>
+        /// <param name="employeeID">ID của nhân viên</param>
+        /// <returns>Status 200 OK, employeeID / Status 400 badrequest</returns>
+        /// Created by : TNMANH (17/09/2022)
+        [HttpDelete("{employeeID}")]
+        public IActionResult DeleteEmployee([FromRoute] Guid employeeID)
+        {
+            try
+            {
+                var employee = _employeeBL.DeleteEmployee(employeeID);
+                // trả về status code và kết quả
+                return StatusCode(StatusCodes.Status200OK, employee);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
-        //        // Trả về kết quả
-        //        return StatusCode(StatusCodes.Status200OK, queryResult);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-        //        return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
-        //        (
-        //            ErrorCode.Exception,
-        //            MISAResource.DevMsg_Exception,
-        //            MISAResource.UserMsg_Exception, 
-        //            MISAResource.MoreInfo_Exception,
-        //             HttpContext.TraceIdentifier
-        //        ));
-        //    }
-        //}
+                // trả về status code và object báo lỗi
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult(
+                    ErrorCode.Exception,
+                    MISAResource.DevMsg_Exception,
+                    MISAResource.UserMsg_Exception,
+                    MISAResource.MoreInfo_Exception,
+                    HttpContext.TraceIdentifier
 
-        //#endregion
+                    ));
+            }
+        }
 
-        //#region DeleteMethod
-
-        ///// <summary>
-        ///// API xóa 1 nhân viên dựa vào ID
-        ///// </summary>
-        ///// <param name="employeeID">ID của nhân viên</param>
-        ///// <returns>Status 200 OK, employeeID / Status 400 badrequest</returns>
-        ///// Created by : TNMANH (17/09/2022)
-        //[HttpDelete("{employeeID}")]
-        //public IActionResult DeleteEmployee([FromRoute] Guid employeeID)
-        //{
-        //    try
-        //    {
-        //        // Tạo connection
-        //        var sqlConnection = new MySqlConnection(_configuration.GetConnectionString(MISAResource.ConnectionString));
-
-        //        // khởi tạo store procedure
-        //        string storeProcedureName = MISAResource.ProcDeleteOneEmployee;
-
-        //        // khởi tạo các parameter truyền vào trong store procedure
-        //        DynamicParameters parameters = new DynamicParameters();
-        //        parameters.Add("v_id", employeeID);
-
-        //        // thực hiện truy vấn tới database
-        //        var deleteOne = sqlConnection.Execute(
-        //            storeProcedureName,
-        //            parameters,
-        //            commandType: System.Data.CommandType.StoredProcedure
-        //            );
-
-        //        // trả về status code và kết quả
-        //        return StatusCode(StatusCodes.Status200OK, deleteOne);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-
-        //        // trả về status code và object báo lỗi
-        //        return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult(
-        //            ErrorCode.Exception,
-        //            MISAResource.DevMsg_Exception,
-        //            MISAResource.UserMsg_Exception,
-        //            MISAResource.MoreInfo_Exception,
-        //            HttpContext.TraceIdentifier
-
-        //            ));
-        //    }
-        //}
-
-        //#endregion
+        #endregion
     }
 }

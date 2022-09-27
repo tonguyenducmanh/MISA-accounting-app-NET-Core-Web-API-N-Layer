@@ -80,7 +80,7 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="employee">Giá trị sửa</param>
         /// <returns>Status 200 OK, employeeID / Status 400 badrequest</returns>
         /// Created by : TNMANH (17/09/2022)
-        public int UpdateEmployee(Guid employeeID, Employee employee);
+        public ServiceResponse UpdateEmployee(Guid employeeID, Employee employee);
 
         #endregion
 
@@ -92,7 +92,7 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="employeeID">ID của nhân viên</param>
         /// <returns>Status 200 OK, employeeID / Status 400 badrequest</returns>
         /// Created by : TNMANH (17/09/2022)
-        public int DeleteEmployee(Guid employeeID);
+        public ServiceResponse DeleteEmployee(Guid employeeID);
         #endregion
     }
 }

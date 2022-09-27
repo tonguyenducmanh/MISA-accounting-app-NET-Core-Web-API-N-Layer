@@ -48,7 +48,26 @@ namespace MISA.WEB08.AMIS.DL
         /// Created by : TNMANH (25/09/2022)
         public Employee GetDuplicateCode(string EmployeeCode)
         {
-            throw new NotImplementedException();
+            // Tạo connection
+            string connectionString = DataContext.MySQLConnectionString;
+            var sqlConnection = new MySqlConnection(connectionString);
+
+            // Chuẩn bị câu lệnh Query
+            string storeProcedureName = MISAResource.ProcGetDupplicateCode;
+
+            // Thêm param
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("v_EmployeeCode", EmployeeCode);
+
+            // Thực hiện gọi vào Database
+            var maxCode = sqlConnection.QueryFirstOrDefault<Employee>(
+                storeProcedureName,
+                parameters,
+                commandType: System.Data.CommandType.StoredProcedure
+                );
+
+            // Trả về kết quả
+            return maxCode;
         }
 
         /// <summary>
@@ -58,7 +77,21 @@ namespace MISA.WEB08.AMIS.DL
         /// Created by : TNMANH (17/09/2022)
         public string GetMaxEmployeeCode()
         {
-            throw new NotImplementedException();
+            // Tạo connection
+            string connectionString = DataContext.MySQLConnectionString;
+            var sqlConnection = new MySqlConnection(connectionString);
+
+            // Chuẩn bị câu lệnh Query
+            string storeProcedureName = MISAResource.ProcGetMaxEmployeeCode;
+
+            // Thực hiện gọi vào Database
+            var maxCode = sqlConnection.QueryFirstOrDefault<String>(
+                storeProcedureName,
+                commandType: System.Data.CommandType.StoredProcedure
+                );
+
+            // Trả về kết quả
+            return maxCode;
         }
 
         /// <summary>
@@ -69,7 +102,26 @@ namespace MISA.WEB08.AMIS.DL
         /// Created by : TNMANH (17/09/2022)
         public Employee GetEmployeeByID(Guid employeeID)
         {
-            throw new NotImplementedException();
+            // Tạo connection
+            string connectionString = DataContext.MySQLConnectionString;
+            var sqlConnection = new MySqlConnection(connectionString);
+
+            // Khai báo procedure name
+            string storeProcedureName = MISAResource.ProcGetEmployeeByID;
+
+            // Khởi tạo các parameter để chèn vào trong storeprocedure
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("v_id", employeeID);
+
+            // Thực hiện kết nối tới Database
+            var employee = sqlConnection.QueryFirstOrDefault<Employee>(
+                storeProcedureName,
+                parameters,
+                commandType: System.Data.CommandType.StoredProcedure
+                );
+
+            // Trả về status code và kết quả trả về
+            return employee;
         }
 
         /// <summary>
@@ -81,7 +133,39 @@ namespace MISA.WEB08.AMIS.DL
         /// <returns>Tổng số bản ghi, tổng số trang, số trang hiện tại, danh sách kết quả</returns>
         public PagingData FilterEmployee(string? keyword, int? pageNumber, int? pageSize)
         {
-            throw new NotImplementedException();
+            // Tạo connection
+            string connectionString = DataContext.MySQLConnectionString;
+            var sqlConnection = new MySqlConnection(connectionString);
+
+            // Chuẩn bị câu lệnh MySQL
+            string storeProcedureName = MISAResource.ProcGetEmployeeFilter;
+
+            // Chèn parameter cho procedure
+            DynamicParameters parameters = new DynamicParameters();
+
+            parameters.Add("v_PageNumber", pageNumber);
+            parameters.Add("v_PageSize", pageSize);
+            parameters.Add("v_Search", keyword);
+
+            // Thực hiện gọi vào trong Database
+            var employeesFiltered = sqlConnection.QueryMultiple(
+                    storeProcedureName,
+                    parameters,
+                    commandType: System.Data.CommandType.StoredProcedure
+                );
+
+            var employees = employeesFiltered.Read<Employee>().ToList();
+            var totalRecord = (int)employeesFiltered.ReadSingle().TotalCount;
+
+            // Trả về status code kèm theo object kết quả
+            return new PagingData()
+            {
+                PageSize = pageSize,
+                CurrentPage = pageNumber,
+                TotalPage = (int)Math.Ceiling(Convert.ToDecimal(totalRecord / pageSize) + 1),
+                Data = employees,
+                TotalRecord = totalRecord,
+            };
         }
 
         #endregion
@@ -149,9 +233,46 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="employee">Giá trị sửa</param>
         /// <returns>Status 200 OK, employeeID / Status 400 badrequest</returns>
         /// Created by : TNMANH (17/09/2022)
-        public int UpdateEmployee(Guid employeeID, Employee employee)
+        public Guid UpdateEmployee(Guid employeeID, Employee employee)
         {
-            throw new NotImplementedException();
+            // Tạo connection
+            var sqlConnection = new MySqlConnection(DataContext.MySQLConnectionString);
+
+            // chuẩn bị câu lệnh MySQL
+            string storeProcedureName = MISAResource.ProcPutOneEmployee;
+
+            // Truyền tham số vào store procedure
+            DynamicParameters parameters = new DynamicParameters();
+
+            // Chèn các giá trị khác vào param cho store procedure
+            var props = typeof(Employee).GetProperties();
+            foreach (var prop in props)
+            {
+                // lấy ra tên của properties
+                var propName = prop.Name;
+                var propValue = prop.GetValue(employee);
+                parameters.Add($"v_{propName}", propValue);
+            }
+
+            // Thay giá trị employeeID vào ( cái này không được đổi )
+            parameters.Add("$v_EmployeeID", employeeID);
+
+            // Thực hiện chèn dữ liệu vào trong database
+            var nunmberOfAffectedRows = sqlConnection.Execute(
+                    storeProcedureName,
+                    parameters,
+                    commandType: System.Data.CommandType.StoredProcedure
+                );
+
+            // Trả về kết quả
+            if (nunmberOfAffectedRows > 0)
+            {
+                return employeeID;
+            }
+            else
+            {
+                return Guid.Empty;
+            }
         }
 
         #endregion
@@ -164,9 +285,34 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="employeeID">ID của nhân viên</param>
         /// <returns>Status 200 OK, employeeID / Status 400 badrequest</returns>
         /// Created by : TNMANH (17/09/2022)
-        public int DeleteEmployee(Guid employeeID)
+        public Guid DeleteEmployee(Guid employeeID)
         {
-            throw new NotImplementedException();
+            // Tạo connection
+            var sqlConnection = new MySqlConnection(DataContext.MySQLConnectionString);
+
+            // khởi tạo store procedure
+            string storeProcedureName = MISAResource.ProcDeleteOneEmployee;
+
+            // khởi tạo các parameter truyền vào trong store procedure
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("v_id", employeeID);
+
+            // thực hiện truy vấn tới database
+            var nunmberOfAffectedRows = sqlConnection.Execute(
+                storeProcedureName,
+                parameters,
+                commandType: System.Data.CommandType.StoredProcedure
+                );
+
+            // Trả về kết quả
+            if (nunmberOfAffectedRows > 0)
+            {
+                return employeeID;
+            }
+            else
+            {
+                return Guid.Empty;
+            }
         }
 
         #endregion

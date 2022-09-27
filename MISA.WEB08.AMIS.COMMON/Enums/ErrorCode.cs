@@ -47,5 +47,11 @@
         /// </summary>
         /// Created by : TNMANH (27/09/2022)
         InvalidInput = 7,
+
+        /// <summary>
+        /// Gọi vào DB để update thất bại
+        /// </summary>
+        /// Created by : TNMANH (27/09/2022)
+        UpdateFailed = 4,
     }
 }
