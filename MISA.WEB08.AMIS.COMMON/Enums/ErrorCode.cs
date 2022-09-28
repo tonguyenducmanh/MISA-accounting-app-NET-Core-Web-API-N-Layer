@@ -52,6 +52,12 @@
         /// Gọi vào DB để update thất bại
         /// </summary>
         /// Created by : TNMANH (27/09/2022)
-        UpdateFailed = 4,
+        UpdateFailed = 8,
+
+        /// <summary>
+        /// Gọi vào DB để delete thất bại
+        /// </summary>
+        /// Created by : TNMANH (28/09/2022)
+        DeleteFailed = 9,
     }
 }

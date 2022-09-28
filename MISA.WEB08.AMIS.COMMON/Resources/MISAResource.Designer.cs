@@ -70,6 +70,15 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Something wrong when try to delete this record.
+        /// </summary>
+        public static string DevMsg_DeleteFailed {
+            get {
+                return ResourceManager.GetString("DevMsg_DeleteFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to EmployeeCode is existed, please try another code.
         /// </summary>
         public static string DevMsg_DuplicatedCode {
@@ -97,11 +106,29 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update record to database failed.
+        /// </summary>
+        public static string DevMsg_UpdatedFailed {
+            get {
+                return ResourceManager.GetString("DevMsg_UpdatedFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Some fileds of this request is not accepted.
         /// </summary>
         public static string DevMsg_ValidateFailed {
             get {
                 return ResourceManager.GetString("DevMsg_ValidateFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://openapi.misa.com/error-code/e009.
+        /// </summary>
+        public static string MoreInfo_DeleteFailed {
+            get {
+                return ResourceManager.GetString("MoreInfo_DeleteFailed", resourceCulture);
             }
         }
         
@@ -129,6 +156,15 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         public static string MoreInfo_InsertFailed {
             get {
                 return ResourceManager.GetString("MoreInfo_InsertFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://openapi.misa.com/error-code/e008.
+        /// </summary>
+        public static string MoreInfo_UpdatedFailed {
+            get {
+                return ResourceManager.GetString("MoreInfo_UpdatedFailed", resourceCulture);
             }
         }
         
@@ -259,6 +295,15 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Có lỗi xảy ra khi cố gắng xóa trường này, vui lòng kiểm tra lại.
+        /// </summary>
+        public static string UserMsg_DeleteFailed {
+            get {
+                return ResourceManager.GetString("UserMsg_DeleteFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mã nhân viên đã tồn tại trong hệ thống, vui lòng sử dụng mã khác.
         /// </summary>
         public static string UserMsg_DuplicatedCode {
@@ -282,6 +327,15 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         public static string UserMsg_InsertFailed {
             get {
                 return ResourceManager.GetString("UserMsg_InsertFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sửa thất bại, vui lòng kiểm tra lại.
+        /// </summary>
+        public static string UserMsg_UpdatedFailed {
+            get {
+                return ResourceManager.GetString("UserMsg_UpdatedFailed", resourceCulture);
             }
         }
         

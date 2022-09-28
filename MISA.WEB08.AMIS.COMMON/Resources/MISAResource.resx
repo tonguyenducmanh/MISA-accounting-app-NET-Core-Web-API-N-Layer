@@ -121,6 +121,10 @@
     <value>SecretConnectionString</value>
     <comment>Tên của connection string gọi từ appsettings.json</comment>
   </data>
+  <data name="DevMsg_DeleteFailed" xml:space="preserve">
+    <value>Something wrong when try to delete this record</value>
+    <comment>Thông báo cho dev lỗi xóa record</comment>
+  </data>
   <data name="DevMsg_DuplicatedCode" xml:space="preserve">
     <value>EmployeeCode is existed, please try another code</value>
     <comment>Thông báo cho dev mã đã bị trùng</comment>
@@ -133,9 +137,17 @@
     <value>Insert record to databse failed</value>
     <comment>Thông báo cho dev thêm mới thất bại</comment>
   </data>
+  <data name="DevMsg_UpdatedFailed" xml:space="preserve">
+    <value>Update record to database failed</value>
+    <comment>Thông báo cho dev sửa 1 trường thất bại</comment>
+  </data>
   <data name="DevMsg_ValidateFailed" xml:space="preserve">
     <value>Some fileds of this request is not accepted</value>
     <comment>Thông báo cho dev có 1 lỗi liên quan tới validate</comment>
+  </data>
+  <data name="MoreInfo_DeleteFailed" xml:space="preserve">
+    <value>https://openapi.misa.com/error-code/e009</value>
+    <comment>Trang mô tả chi tiết thông tin xóa thất bại</comment>
   </data>
   <data name="MoreInfo_DupplicatedCode" xml:space="preserve">
     <value>https://openapi.misa.com/error-code/e002</value>
@@ -148,6 +160,10 @@
   <data name="MoreInfo_InsertFailed" xml:space="preserve">
     <value>https://openapi.misa.com/error-code/e007</value>
     <comment>Trang mô tả chi tiết về insert thất bại</comment>
+  </data>
+  <data name="MoreInfo_UpdatedFailed" xml:space="preserve">
+    <value>https://openapi.misa.com/error-code/e008</value>
+    <comment>Trang mô tả chi tiết về lỗi sửa thất bại</comment>
   </data>
   <data name="MoreInfo_ValidateFailed" xml:space="preserve">
     <value>https://openapi.misa.com/error-code/e003</value>
@@ -205,6 +221,10 @@
     <value>Proc_{0}_PostOneRecord</value>
     <comment>Tên proc tạo thêm 1 trường trong Database</comment>
   </data>
+  <data name="UserMsg_DeleteFailed" xml:space="preserve">
+    <value>Có lỗi xảy ra khi cố gắng xóa trường này, vui lòng kiểm tra lại</value>
+    <comment>Thông báo cho người dùng lỗi xóa record</comment>
+  </data>
   <data name="UserMsg_DuplicatedCode" xml:space="preserve">
     <value>Mã nhân viên đã tồn tại trong hệ thống, vui lòng sử dụng mã khác</value>
     <comment>Thông báo cho người dùng mã đã bị trùng</comment>
@@ -216,6 +236,10 @@
   <data name="UserMsg_InsertFailed" xml:space="preserve">
     <value>Thêm mới thất bại, vui lòng kiểm tra lại</value>
     <comment>Thông báo cho user thêm mới thất bại</comment>
+  </data>
+  <data name="UserMsg_UpdatedFailed" xml:space="preserve">
+    <value>Sửa thất bại, vui lòng kiểm tra lại</value>
+    <comment>Thông báo cho người dùng sửa 1 trường thất bại</comment>
   </data>
   <data name="UserMsg_ValidateFailed" xml:space="preserve">
     <value>Có một hoặc nhiều trường dữ liệu bị lỗi, vui lòng kiểm tra lại.</value>

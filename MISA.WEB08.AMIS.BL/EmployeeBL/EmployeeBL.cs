@@ -247,9 +247,9 @@ namespace MISA.WEB08.AMIS.BL
                         Success = false,
                         Data = new ErrorResult(
                         ErrorCode.UpdateFailed,
-                        MISAResource.DevMsg_InsertFailed,
-                        MISAResource.UserMsg_Exception,
-                        MISAResource.MoreInfo_InsertFailed
+                        MISAResource.DevMsg_UpdatedFailed,
+                        MISAResource.UserMsg_UpdatedFailed,
+                        MISAResource.MoreInfo_UpdatedFailed
                         )
                     };
                 }
@@ -292,10 +292,10 @@ namespace MISA.WEB08.AMIS.BL
                 {
                     Success = false,
                     Data = new ErrorResult(
-                    ErrorCode.UpdateFailed,
-                    MISAResource.DevMsg_InsertFailed,
-                    MISAResource.UserMsg_Exception,
-                    MISAResource.MoreInfo_InsertFailed
+                    ErrorCode.DeleteFailed,
+                    MISAResource.DevMsg_DeleteFailed,
+                    MISAResource.UserMsg_DeleteFailed,
+                    MISAResource.MoreInfo_DeleteFailed
                     )
                 };
             }
