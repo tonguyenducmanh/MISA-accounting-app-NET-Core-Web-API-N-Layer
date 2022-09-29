@@ -122,45 +122,6 @@ namespace MISA.WEB08.AMIS.DL
 
         #endregion
 
-        #region DeleteMethod
-
-        /// <summary>
-        /// API xóa 1 nhân viên dựa vào ID
-        /// </summary>
-        /// <param name="employeeID">ID của nhân viên</param>
-        /// <returns>Status 200 OK, employeeID / Status 400 badrequest</returns>
-        /// Created by : TNMANH (17/09/2022)
-        public Guid DeleteEmployee(Guid employeeID)
-        {
-            // Tạo connection
-            var sqlConnection = new MySqlConnection(DataContext.MySQLConnectionString);
-
-            // khởi tạo store procedure
-            string storeProcedureName = MISAResource.Proc_Delete_OneRecord;
-
-            // khởi tạo các parameter truyền vào trong store procedure
-            DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("v_id", employeeID);
-
-            // thực hiện truy vấn tới database
-            var nunmberOfAffectedRows = sqlConnection.Execute(
-                storeProcedureName,
-                parameters,
-                commandType: System.Data.CommandType.StoredProcedure
-                );
-
-            // Trả về kết quả
-            if (nunmberOfAffectedRows > 0)
-            {
-                return employeeID;
-            }
-            else
-            {
-                return Guid.Empty;
-            }
-        }
-
-        #endregion
 
     }
 }

@@ -59,15 +59,5 @@ namespace MISA.WEB08.AMIS.DL
 
         #endregion
 
-        #region DeleteMethod
-
-        /// <summary>
-        /// API xóa 1 nhân viên dựa vào ID
-        /// </summary>
-        /// <param name="employeeID">ID của nhân viên</param>
-        /// <returns>Status 200 OK, employeeID / Status 400 badrequest</returns>
-        /// Created by : TNMANH (17/09/2022)
-        public Guid DeleteEmployee(Guid employeeID);
-        #endregion
     }
 }

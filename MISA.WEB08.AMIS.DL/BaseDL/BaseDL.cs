@@ -202,5 +202,51 @@ namespace MISA.WEB08.AMIS.DL
         }
 
         #endregion
+
+
+        #region DeleteMethod
+
+        /// <summary>
+        /// API xóa 1 record dựa vào ID
+        /// </summary>
+        /// <param name="recordID">ID của record</param>
+        /// <returns>Status 200 OK, employeeID / Status 400 badrequest</returns>
+        /// Created by : TNMANH (17/09/2022)
+        public Guid DeleteRecord(Guid recordID)
+        {
+
+            // khởi tạo store procedure
+            string storeProcedureName = string.Format(MISAResource.Proc_Delete_OneRecord, typeof(T).Name.ToLower());
+
+            // khởi tạo các parameter truyền vào trong store procedure
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("v_id", recordID);
+
+            // Tạo biến số lượng kết quả
+            int nunmberOfAffectedRows;
+
+            // Tạo connection
+            using (var sqlConnection = new MySqlConnection(DataContext.MySQLConnectionString))
+            {
+            // thực hiện truy vấn tới database
+                nunmberOfAffectedRows = sqlConnection.Execute(
+                storeProcedureName,
+                parameters,
+                commandType: System.Data.CommandType.StoredProcedure
+                );
+            } ;
+
+            // Trả về kết quả
+            if (nunmberOfAffectedRows > 0)
+            {
+                return recordID;
+            }
+            else
+            {
+                return Guid.Empty;
+            }
+        }
+
+        #endregion
     }
 }

@@ -56,5 +56,16 @@ namespace MISA.WEB08.AMIS.BL
         public Guid InsertRecord(T record);
 
         #endregion
+
+        #region DeleteMethod
+
+        /// <summary>
+        /// API xóa 1 record dựa vào ID
+        /// </summary>
+        /// <param name="recordID">ID của record</param>
+        /// <returns>Status 200 OK, recordID / Status 400 badrequest</returns>
+        /// Created by : TNMANH (29/09/2022)
+        public ServiceResponse DeleteRecord(Guid recordID);
+        #endregion
     }
 }

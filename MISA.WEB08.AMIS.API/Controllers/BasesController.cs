@@ -154,5 +154,40 @@ namespace MISA.WEB08.AMIS.API.Controllers
         }
 
         #endregion
+
+        #region DeleteMethod
+
+        /// <summary>
+        /// API xóa 1 record dựa vào ID
+        /// </summary>
+        /// <param name="recordID">ID của record</param>
+        /// <returns>Status 200 OK, recordID / Status 400 badrequest</returns>
+        /// Created by : TNMANH (29/09/2022)
+        [HttpDelete("{recordID}")]
+        public IActionResult DeleteRecord([FromRoute] Guid recordID)
+        {
+            try
+            {
+                var record = _baseBL.DeleteRecord(recordID);
+                // trả về status code và kết quả
+                return StatusCode(StatusCodes.Status200OK, record);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                // trả về status code và object báo lỗi
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult(
+                    ErrorCode.Exception,
+                    MISAResource.DevMsg_Exception,
+                    MISAResource.UserMsg_Exception,
+                    MISAResource.MoreInfo_Exception,
+                    HttpContext.TraceIdentifier
+
+                    ));
+            }
+        }
+
+        #endregion
     }
 }

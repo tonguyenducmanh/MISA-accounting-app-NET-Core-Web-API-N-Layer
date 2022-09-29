@@ -1,4 +1,6 @@
-﻿using MISA.WEB08.AMIS.COMMON.Entities;
+﻿using MISA.Web08.AMIS.COMMON.Enums;
+using MISA.WEB08.AMIS.COMMON.Entities;
+using MISA.WEB08.AMIS.COMMON.Resources;
 using MISA.WEB08.AMIS.DL;
 using System;
 using System.Collections.Generic;
@@ -87,6 +89,45 @@ namespace MISA.WEB08.AMIS.BL
         {
             return _baseDL.InsertRecord(record);
         }
+
+        #endregion
+
+
+        #region DeleteMethod
+
+        /// <summary>
+        /// API xóa 1 record dựa vào ID
+        /// </summary>
+        /// <param name="recordID">ID của record</param>
+        /// <returns>Status 200 OK, recordID / Status 400 badrequest</returns>
+        /// Created by : TNMANH (29/09/2022)
+        public ServiceResponse DeleteRecord(Guid recordID)
+        {
+            var deletedRecordID = _baseDL.DeleteRecord(recordID);
+
+            if (deletedRecordID != Guid.Empty)
+            {
+                return new ServiceResponse
+                {
+                    Success = true,
+                    Data = deletedRecordID
+                };
+            }
+            else
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    Data = new ErrorResult(
+                    ErrorCode.DeleteFailed,
+                    MISAResource.DevMsg_DeleteFailed,
+                    MISAResource.UserMsg_DeleteFailed,
+                    MISAResource.MoreInfo_DeleteFailed
+                    )
+                };
+            }
+        }
+
 
         #endregion
     }
