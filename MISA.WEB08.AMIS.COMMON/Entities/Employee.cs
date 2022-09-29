@@ -7,7 +7,7 @@ namespace MISA.WEB08.AMIS.COMMON.Entities
     /// Thực thể nhân viên map tới bảng Employee trong database
     /// </summary>
     /// Created by : TNMANH (17/09/2022)
-    public class Employee
+    public class Employee : BaseEntity
     {
         #region Properties
 
@@ -114,26 +114,6 @@ namespace MISA.WEB08.AMIS.COMMON.Entities
         /// Tên chức danh
         /// </summary>
         public string? PositionName { get; set; }
-
-        /// <summary>
-        /// Ngày tạo nhân viên
-        /// </summary>
-        public DateTime? CreatedDate { get; set; }
-
-        /// <summary>
-        /// Người tạo nhân viên
-        /// </summary>
-        public string? CreatedBy { get; set; }
-
-        /// <summary>
-        /// Ngày sửa gần nhất
-        /// </summary>
-        public DateTime? ModifiedDate { get; set; }
-
-        /// <summary>
-        /// Người sửa gần nhất
-        /// </summary>
-        public string? ModifiedBy { get; set; } 
 
         #endregion
     }

@@ -4,7 +4,7 @@
     /// Thực thể chức danh map với bảng Positions trong database
     /// </summary>
     /// Created by : TNMANH (17/09/2022)
-    public class Positions
+    public class Positions : BaseEntity
     {
         #region Properties
 
@@ -27,26 +27,6 @@
         /// Giới thiệu về chức danh
         /// </summary>
         public string Description { get; set; }
-
-        /// <summary>
-        /// Ngày tạo chức danh
-        /// </summary>
-        public DateTime CreatedDate { get; set; }
-
-        /// <summary>
-        /// Người tạo chức danh
-        /// </summary>
-        public string CreatedBy { get; set; }
-
-        /// <summary>
-        /// Ngày sửa gần nhất
-        /// </summary>
-        public DateTime ModifiedDate { get; set; }
-
-        /// <summary>
-        /// Người sửa gần nhất
-        /// </summary>
-        public string ModifiedBy { get; set; } 
 
         #endregion
     }

@@ -4,7 +4,7 @@
     /// Thực thể đơn vị map tới bảng Department trong Database
     /// </summary>
     /// Created by : TNMANH (17/09/2022)
-    public class Department
+    public class Department : BaseEntity
     {
         #region Properties
 
@@ -27,26 +27,6 @@
         /// Giới thiệu về đơn vị, phòng ban
         /// </summary>
         public string Description { get; set; }
-
-        /// <summary>
-        /// Ngày tạo đơn vị
-        /// </summary>
-        public DateTime CreatedDate { get; set; }
-
-        /// <summary>
-        /// Người tạo đơn vị
-        /// </summary>
-        public string CreatedBy { get; set; }
-
-        /// <summary>
-        /// Ngày sửa gần nhất
-        /// </summary>
-        public DateTime ModifiedDate { get; set; }
-
-        /// <summary>
-        /// Người sửa gần nhất
-        /// </summary>
-        public string ModifiedBy { get; set; } 
 
         #endregion
     }
