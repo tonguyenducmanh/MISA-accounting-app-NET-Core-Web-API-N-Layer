@@ -41,38 +41,6 @@ namespace MISA.WEB08.AMIS.API
         #region GETMethod
 
         /// <summary>
-        /// API check trùng mã nhân viên
-        /// <param name="employeecode">ID của nhân viên</param>
-        /// </summary>
-        /// <returns>Records có mã nhân viên trùng</returns>
-        /// Created by : TNMANH (25/09/2022)
-        [HttpGet("duplicate-code")]
-        public IActionResult GetDuplicateCode(string employeeCode)
-        {
-            try
-            {
-                // Thực hiện gọi vào db
-                var duplicatedEmployee = _employeeBL.GetDuplicateCode(employeeCode);
-                // Trả về Status code và kết quả
-                return StatusCode(StatusCodes.Status200OK, duplicatedEmployee);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-
-                // Trả về Status code và object báo lỗi
-                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult(
-                    ErrorCode.Exception,
-                    MISAResource.DevMsg_Exception,
-                    MISAResource.UserMsg_Exception,
-                    MISAResource.MoreInfo_Exception,
-                    HttpContext.TraceIdentifier
-                    ));
-            }
-        }
-
-
-        /// <summary>
         /// API lấy mã nhân viên lớn nhất
         /// </summary>
         /// <returns>Mã nhân viên lớn nhất</returns>

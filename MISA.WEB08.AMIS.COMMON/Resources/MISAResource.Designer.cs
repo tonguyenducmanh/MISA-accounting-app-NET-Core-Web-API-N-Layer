@@ -70,6 +70,24 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tô Nguyễn Đức Mạnh.
+        /// </summary>
+        public static string Default_CreatedBy_User {
+            get {
+                return ResourceManager.GetString("Default_CreatedBy_User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Liễu Thị Oanh.
+        /// </summary>
+        public static string Default_ModifiedBy_User {
+            get {
+                return ResourceManager.GetString("Default_ModifiedBy_User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Something wrong when try to delete this record.
         /// </summary>
         public static string DevMsg_DeleteFailed {
@@ -178,6 +196,42 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Proc_{0}_DeleteOneRecord.
+        /// </summary>
+        public static string Proc_Delete_OneRecord {
+            get {
+                return ResourceManager.GetString("Proc_Delete_OneRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proc_{0}_GetByID.
+        /// </summary>
+        public static string Proc_Get_ByID {
+            get {
+                return ResourceManager.GetString("Proc_Get_ByID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proc_{0}_GetDuplicateCode.
+        /// </summary>
+        public static string Proc_Get_DupplicateCode {
+            get {
+                return ResourceManager.GetString("Proc_Get_DupplicateCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proc_{0}_GetMaxCode.
+        /// </summary>
+        public static string Proc_Get_MaxCode {
+            get {
+                return ResourceManager.GetString("Proc_Get_MaxCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Proc_{0}_GetAll.
         /// </summary>
         public static string Proc_GetAll {
@@ -205,56 +259,11 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Proc_employee_DeleteOneRecord.
+        ///   Looks up a localized string similar to Proc_{0}_PutOneRecord.
         /// </summary>
-        public static string ProcDeleteOneEmployee {
+        public static string Proc_Put_OneRecord {
             get {
-                return ResourceManager.GetString("ProcDeleteOneEmployee", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Proc_department_GetAll.
-        /// </summary>
-        public static string ProcGetAllDepartment {
-            get {
-                return ResourceManager.GetString("ProcGetAllDepartment", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Proc_employee_GetAll.
-        /// </summary>
-        public static string ProcGetAllEmployee {
-            get {
-                return ResourceManager.GetString("ProcGetAllEmployee", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Proc_positions_GetAll.
-        /// </summary>
-        public static string ProcGetAllPosition {
-            get {
-                return ResourceManager.GetString("ProcGetAllPosition", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Proc_employee_GetDuplicateCode.
-        /// </summary>
-        public static string ProcGetDupplicateCode {
-            get {
-                return ResourceManager.GetString("ProcGetDupplicateCode", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Proc_employee_GetByID.
-        /// </summary>
-        public static string ProcGetEmployeeByID {
-            get {
-                return ResourceManager.GetString("ProcGetEmployeeByID", resourceCulture);
+                return ResourceManager.GetString("Proc_Put_OneRecord", resourceCulture);
             }
         }
         
@@ -264,33 +273,6 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         public static string ProcGetEmployeeFilter {
             get {
                 return ResourceManager.GetString("ProcGetEmployeeFilter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Proc_employee_GetMaxCode.
-        /// </summary>
-        public static string ProcGetMaxEmployeeCode {
-            get {
-                return ResourceManager.GetString("ProcGetMaxEmployeeCode", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Proc_employee_PostOneRecord.
-        /// </summary>
-        public static string ProcPostNewEmployee {
-            get {
-                return ResourceManager.GetString("ProcPostNewEmployee", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Proc_employee_PutOneRecord.
-        /// </summary>
-        public static string ProcPutOneEmployee {
-            get {
-                return ResourceManager.GetString("ProcPutOneEmployee", resourceCulture);
             }
         }
         

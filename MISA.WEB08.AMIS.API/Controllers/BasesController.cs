@@ -59,6 +59,37 @@ namespace MISA.WEB08.AMIS.API.Controllers
             }
         }
 
+        /// <summary>
+        /// API check trùng mã record
+        /// <param name="recordCode">Mã của record</param>
+        /// </summary>
+        /// <returns>Records có mã trùng</returns>
+        /// Created by : TNMANH (29/09/2022)
+        [HttpGet("duplicate-code")]
+        public IActionResult GetDuplicateCode(string recordCode)
+        {
+            try
+            {
+                // Thực hiện gọi vào db
+                var duplicatedRecord = _baseBL.GetDuplicateCode(recordCode);
+                // Trả về Status code và kết quả
+                return StatusCode(StatusCodes.Status200OK, duplicatedRecord);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                // Trả về Status code và object báo lỗi
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult(
+                    ErrorCode.Exception,
+                    MISAResource.DevMsg_Exception,
+                    MISAResource.UserMsg_Exception,
+                    MISAResource.MoreInfo_Exception,
+                    HttpContext.TraceIdentifier
+                    ));
+            }
+        }
+
         #endregion
     }
 }

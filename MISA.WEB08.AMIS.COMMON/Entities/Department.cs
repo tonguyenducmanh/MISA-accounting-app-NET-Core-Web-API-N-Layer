@@ -1,4 +1,6 @@
-﻿namespace MISA.WEB08.AMIS.COMMON.Entities
+﻿using MISA.WEB08.AMIS.COMMON.CustomAttribute;
+
+namespace MISA.WEB08.AMIS.COMMON.Entities
 {
     /// <summary>
     /// Thực thể đơn vị map tới bảng Department trong Database
@@ -11,6 +13,7 @@
         /// <summary>
         /// ID đơn vị
         /// </summary>
+        [PrimaryKey]
         public Guid DepartmentID { get; set; }
 
         /// <summary>

@@ -19,35 +19,6 @@ namespace MISA.WEB08.AMIS.DL
         #region GetMethod
 
         /// <summary>
-        /// API check trùng mã nhân viên
-        /// </summary>
-        /// <returns>Records có mã nhân viên trùng</returns>
-        /// Created by : TNMANH (25/09/2022)
-        public Employee GetDuplicateCode(string EmployeeCode)
-        {
-            // Tạo connection
-            string connectionString = DataContext.MySQLConnectionString;
-            var sqlConnection = new MySqlConnection(connectionString);
-
-            // Chuẩn bị câu lệnh Query
-            string storeProcedureName = MISAResource.ProcGetDupplicateCode;
-
-            // Thêm param
-            DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("v_EmployeeCode", EmployeeCode);
-
-            // Thực hiện gọi vào Database
-            var maxCode = sqlConnection.QueryFirstOrDefault<Employee>(
-                storeProcedureName,
-                parameters,
-                commandType: System.Data.CommandType.StoredProcedure
-                );
-
-            // Trả về kết quả
-            return maxCode;
-        }
-
-        /// <summary>
         /// API lấy mã nhân viên lớn nhất
         /// </summary>
         /// <returns>Mã nhân viên lớn nhất</returns>
@@ -59,7 +30,7 @@ namespace MISA.WEB08.AMIS.DL
             var sqlConnection = new MySqlConnection(connectionString);
 
             // Chuẩn bị câu lệnh Query
-            string storeProcedureName = MISAResource.ProcGetMaxEmployeeCode;
+            string storeProcedureName = MISAResource.Proc_Get_MaxCode;
 
             // Thực hiện gọi vào Database
             var maxCode = sqlConnection.QueryFirstOrDefault<String>(
@@ -84,7 +55,7 @@ namespace MISA.WEB08.AMIS.DL
             var sqlConnection = new MySqlConnection(connectionString);
 
             // Khai báo procedure name
-            string storeProcedureName = MISAResource.ProcGetEmployeeByID;
+            string storeProcedureName = MISAResource.Proc_Get_ByID;
 
             // Khởi tạo các parameter để chèn vào trong storeprocedure
             DynamicParameters parameters = new DynamicParameters();
@@ -150,55 +121,6 @@ namespace MISA.WEB08.AMIS.DL
         // Danh sách các API liên quan tới việc tạo mới nhân viên
         #region PostMethod
 
-        /// <summary>
-        /// API Thêm mới 1 nhân viên
-        /// </summary>
-        /// <param name="employee">Thông tin nhân viên mới</param>
-        /// <returns>ID của nhân viên vừa thêm, nếu insert thất bại thì return guid rỗng</returns>
-        /// Created by : TNMANH (17/09/2022)
-        public Guid InsertEmployee(Employee employee)
-        {
-            // Tạo connection
-            var sqlConnection = new MySqlConnection(DataContext.MySQLConnectionString);
-
-            // Tạo ra employeeID bằng guid
-            Guid newID = Guid.NewGuid();
-
-            // chuẩn bị câu lệnh MySQL
-            string storeProcedureName = string.Format(MISAResource.Proc_InsertOne, typeof(Employee).Name.ToLower());
-
-            // Truyền tham số vào store procedure
-            DynamicParameters parameters = new DynamicParameters();
-
-            // Chèn các giá trị khác vào param cho store procedure
-            var props = typeof(Employee).GetProperties();
-            foreach (var prop in props)
-            {
-                // lấy ra tên của properties
-                var propName = prop.Name;
-                var propValue = prop.GetValue(employee);
-                parameters.Add($"v_{propName}", propValue);
-            }
-
-            parameters.Add($"v_{typeof(Employee).Name}ID", newID);
-
-            // Thực hiện chèn dữ liệu vào trong database
-            var nunmberOfAffectedRows = sqlConnection.Execute(
-                    storeProcedureName,
-                    parameters,
-                    commandType: System.Data.CommandType.StoredProcedure
-                );
-            if(nunmberOfAffectedRows > 0)
-            {
-                return newID;
-            }
-            else
-            {
-                return Guid.Empty;
-            }
-        }
-
-
         #endregion
 
         #region PutMethod
@@ -216,7 +138,7 @@ namespace MISA.WEB08.AMIS.DL
             var sqlConnection = new MySqlConnection(DataContext.MySQLConnectionString);
 
             // chuẩn bị câu lệnh MySQL
-            string storeProcedureName = MISAResource.ProcPutOneEmployee;
+            string storeProcedureName = MISAResource.Proc_Put_OneRecord;
 
             // Truyền tham số vào store procedure
             DynamicParameters parameters = new DynamicParameters();
@@ -268,7 +190,7 @@ namespace MISA.WEB08.AMIS.DL
             var sqlConnection = new MySqlConnection(DataContext.MySQLConnectionString);
 
             // khởi tạo store procedure
-            string storeProcedureName = MISAResource.ProcDeleteOneEmployee;
+            string storeProcedureName = MISAResource.Proc_Delete_OneRecord;
 
             // khởi tạo các parameter truyền vào trong store procedure
             DynamicParameters parameters = new DynamicParameters();

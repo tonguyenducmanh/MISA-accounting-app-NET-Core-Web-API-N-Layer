@@ -1,4 +1,6 @@
-﻿namespace MISA.WEB08.AMIS.COMMON.Entities
+﻿using MISA.WEB08.AMIS.COMMON.CustomAttribute;
+
+namespace MISA.WEB08.AMIS.COMMON.Entities
 {
     /// <summary>
     /// Thực thể chức danh map với bảng Positions trong database
@@ -11,6 +13,7 @@
         /// <summary>
         /// ID chức danh
         /// </summary>
+        [PrimaryKey]
         public Guid PositionID { get; set; }
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MISA.WEB08.AMIS.COMMON.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,22 +18,22 @@ namespace MISA.WEB08.AMIS.COMMON
         /// <summary>
         /// Ngày tạo đơn vị
         /// </summary>
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Người tạo đơn vị
         /// </summary>
-        public string CreatedBy { get; set; }
+        public string CreatedBy { get; set; } = MISAResource.Default_CreatedBy_User;
 
         /// <summary>
         /// Ngày sửa gần nhất
         /// </summary>
-        public DateTime ModifiedDate { get; set; }
+        public DateTime ModifiedDate { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Người sửa gần nhất
         /// </summary>
-        public string ModifiedBy { get; set; }
+        public string ModifiedBy { get; set; } = MISAResource.Default_ModifiedBy_User;
 
         #endregion
     }

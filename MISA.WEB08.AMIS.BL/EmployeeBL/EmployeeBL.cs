@@ -35,17 +35,6 @@ namespace MISA.WEB08.AMIS.BL
         // Danh sách các API liên quan tới việc lấy thông tin của nhân viên
         #region GetMethod
 
-
-        /// <summary>
-        /// API check trùng mã nhân viên
-        /// </summary>
-        /// <returns>Records có mã nhân viên trùng</returns>
-        /// Created by : TNMANH (25/09/2022)
-        public Employee GetDuplicateCode(string EmployeeCode)
-        {
-            return _employeeDL.GetDuplicateCode(EmployeeCode);
-        }
-
         /// <summary>
         /// API lấy mã nhân viên lớn nhất
         /// </summary>
@@ -97,7 +86,7 @@ namespace MISA.WEB08.AMIS.BL
 
             if (validateResult != null && validateResult.Success && checkDuplicateResult.Success)
             {
-                var newEmployeeID = _employeeDL.InsertEmployee(employee);
+                var newEmployeeID = _employeeDL.InsertRecord(employee);
 
                 if (newEmployeeID != Guid.Empty)
                 {
