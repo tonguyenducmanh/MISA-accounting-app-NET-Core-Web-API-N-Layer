@@ -139,9 +139,14 @@ namespace MISA.WEB08.AMIS.BL
 
         }
 
-        public ServiceResponse CheckDuplicateEmployeeCode(T record)
+        /// <summary>
+        /// Lấy ra recordCode từ record
+        /// </summary>
+        /// <param name="record">record đầu vào</param>
+        /// <returns>recordCode trả về</returns>
+        /// Created by : TNMANH (29/09/2022)
+        public string GetRecordCode(T record)
         {
-
             // Lấy ra trường record code trong object recor
             var props = typeof(T).GetProperties();
             List<string> validateFailed = new List<string>();
@@ -151,11 +156,25 @@ namespace MISA.WEB08.AMIS.BL
                 var propName = prop.Name;
                 var propValue = prop.GetValue(record);
                 var mustHave = (RecordCodeAttribute?)Attribute.GetCustomAttribute(prop, typeof(RecordCodeAttribute));
-                if(mustHave != null)
+                if (mustHave != null)
                 {
                     recordCode = propValue.ToString();
                 }
             }
+            return recordCode;
+        }
+
+        /// <summary>
+        /// Check mã trùng dựa vào record
+        /// </summary>
+        /// <param name="record">record đầu vào</param>
+        /// <returns>trả về ServiceResponse</returns>
+        /// Created by : TNMANH (29/09/2022)
+        public ServiceResponse CheckDuplicateEmployeeCode(T record)
+        {
+
+            // Lấy ra trường record code trong object recor
+            string recordCode = GetRecordCode(record);
             // Kiểm tra xem mã có bị trùng chưa
             var testDuplicateCode = GetDuplicateCode(recordCode);
 
@@ -227,6 +246,7 @@ namespace MISA.WEB08.AMIS.BL
 
         #endregion
 
+        // Danh sách các API liên quan tới việc sửa 1 record có sẵn 1 table
         #region PutMethod
 
         /// <summary>
@@ -238,6 +258,29 @@ namespace MISA.WEB08.AMIS.BL
         /// Created by : TNMANH (29/09/2022)
         public ServiceResponse UpdateRecord(Guid recordID, T record)
         {
+
+            // check trùng mã, trường hợp mà recordCode đã có sẵn nhưng thuộc record trên đó thì ta loại nó đi,
+            // trường hợp mà recordCode khác record có ID trên thì ta xét xem đã trùng chưa
+            string originalRecordCode = GetRecordCode(GetRecordByID(recordID));
+            string currentRecordCode = GetRecordCode(record);
+
+            if(originalRecordCode != currentRecordCode)
+            {
+                var checkDuplicateResult = CheckDuplicateEmployeeCode(record);
+
+                // trả về kết quả mã trùng trước
+                if (checkDuplicateResult.Success == false)
+                {
+                    return new ServiceResponse
+                    {
+                        Success = false,
+                        Data = checkDuplicateResult?.Data
+                    };
+                }
+
+            }
+
+            // validate các trường còn lại trong record
             var validateResult = ValidateRequestData(record);
 
             if (validateResult != null && validateResult.Success)
@@ -278,6 +321,7 @@ namespace MISA.WEB08.AMIS.BL
 
         #endregion
 
+        // Danh sách các API liên quan tới việc xóa 1 record trong 1 table
         #region DeleteMethod
 
         /// <summary>
