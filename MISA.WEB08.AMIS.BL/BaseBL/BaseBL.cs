@@ -227,6 +227,56 @@ namespace MISA.WEB08.AMIS.BL
 
         #endregion
 
+        #region PutMethod
+
+        /// <summary>
+        /// API sửa thông tin của 1 record dựa vào employeeID
+        /// </summary>
+        /// <param name="recordID">ID của record định sửa</param>
+        /// <param name="record">Giá trị của record sửa</param>
+        /// <returns>Status 200 OK, recordID / Status 400 badrequest</returns>
+        /// Created by : TNMANH (29/09/2022)
+        public ServiceResponse UpdateRecord(Guid recordID, T record)
+        {
+            var validateResult = ValidateRequestData(record);
+
+            if (validateResult != null && validateResult.Success)
+            {
+                var editedRecordID = _baseDL.UpdateRecord(recordID, record);
+
+                if (editedRecordID != Guid.Empty)
+                {
+                    return new ServiceResponse
+                    {
+                        Success = true,
+                        Data = editedRecordID
+                    };
+                }
+                else
+                {
+                    return new ServiceResponse
+                    {
+                        Success = false,
+                        Data = new ErrorResult(
+                        ErrorCode.UpdateFailed,
+                        MISAResource.DevMsg_UpdatedFailed,
+                        MISAResource.UserMsg_UpdatedFailed,
+                        MISAResource.MoreInfo_UpdatedFailed
+                        )
+                    };
+                }
+            }
+            else
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    Data = validateResult?.Data
+                };
+            }
+        }
+
+        #endregion
 
         #region DeleteMethod
 
@@ -262,7 +312,6 @@ namespace MISA.WEB08.AMIS.BL
                 };
             }
         }
-
 
         #endregion
     }

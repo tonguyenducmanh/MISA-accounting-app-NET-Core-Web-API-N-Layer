@@ -60,6 +60,18 @@ namespace MISA.WEB08.AMIS.DL
 
         #endregion
 
+        #region PutMethod
+
+        /// <summary>
+        /// API sửa thông tin của 1 record dựa vào recordID
+        /// </summary>
+        /// <param name="recordID">ID của record định sửa</param>
+        /// <param name="record">Giá trị record định sửa</param>
+        /// <returns>Status 200 OK, recordID / Status 400 badrequest</returns>
+        /// Created by : TNMANH (29/09/2022)
+        public Guid UpdateRecord(Guid recordID, T record);
+
+        #endregion
 
         #region DeleteMethod
 

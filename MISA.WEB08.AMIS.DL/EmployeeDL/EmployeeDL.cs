@@ -71,55 +71,6 @@ namespace MISA.WEB08.AMIS.DL
 
         #region PutMethod
 
-        /// <summary>
-        /// API sửa thông tin của 1 nhân viên dựa vào employeeID
-        /// </summary>
-        /// <param name="employeeID">ID của nhân viên định sửa</param>
-        /// <param name="employee">Giá trị sửa</param>
-        /// <returns>Status 200 OK, employeeID / Status 400 badrequest</returns>
-        /// Created by : TNMANH (17/09/2022)
-        public Guid UpdateEmployee(Guid employeeID, Employee employee)
-        {
-            // Tạo connection
-            var sqlConnection = new MySqlConnection(DataContext.MySQLConnectionString);
-
-            // chuẩn bị câu lệnh MySQL
-            string storeProcedureName = MISAResource.Proc_Put_OneRecord;
-
-            // Truyền tham số vào store procedure
-            DynamicParameters parameters = new DynamicParameters();
-
-            // Chèn các giá trị khác vào param cho store procedure
-            var props = typeof(Employee).GetProperties();
-            foreach (var prop in props)
-            {
-                // lấy ra tên của properties
-                var propName = prop.Name;
-                var propValue = prop.GetValue(employee);
-                parameters.Add($"v_{propName}", propValue);
-            }
-
-            // Thay giá trị employeeID vào ( cái này không được đổi )
-            parameters.Add("$v_EmployeeID", employeeID);
-
-            // Thực hiện chèn dữ liệu vào trong database
-            var nunmberOfAffectedRows = sqlConnection.Execute(
-                    storeProcedureName,
-                    parameters,
-                    commandType: System.Data.CommandType.StoredProcedure
-                );
-
-            // Trả về kết quả
-            if (nunmberOfAffectedRows > 0)
-            {
-                return employeeID;
-            }
-            else
-            {
-                return Guid.Empty;
-            }
-        }
-
         #endregion
 
 

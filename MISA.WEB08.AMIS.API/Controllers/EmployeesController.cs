@@ -89,43 +89,6 @@ namespace MISA.WEB08.AMIS.API
 
         #region PutMethod
 
-        /// <summary>
-        /// API sửa thông tin của 1 nhân viên dựa vào employeeID
-        /// </summary>
-        /// <param name="employeeID">ID của nhân viên định sửa</param>
-        /// <param name="employee">Giá trị sửa</param>
-        /// <returns>Status 200 OK, employeeID / Status 400 badrequest</returns>
-        /// Created by : TNMANH (17/09/2022)
-        [HttpPut("{employeeID}")]
-        public IActionResult UpdateEmployee([FromRoute] Guid employeeID, [FromBody] Employee employee)
-        {
-
-            try
-            {
-                var result = _employeeBL.UpdateEmployee(employeeID, employee);
-                if (result.Success)
-                {
-                    return StatusCode(StatusCodes.Status200OK, result.Data);
-                }
-                else
-                {
-                    return StatusCode(StatusCodes.Status400BadRequest, result.Data);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
-                (
-                    ErrorCode.Exception,
-                    MISAResource.DevMsg_Exception,
-                    MISAResource.UserMsg_Exception,
-                    MISAResource.MoreInfo_Exception,
-                     HttpContext.TraceIdentifier
-                ));
-            }
-        }
-
         #endregion
 
 

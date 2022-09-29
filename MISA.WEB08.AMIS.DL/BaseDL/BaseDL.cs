@@ -203,6 +203,69 @@ namespace MISA.WEB08.AMIS.DL
 
         #endregion
 
+        #region PutMethod
+
+        /// <summary>
+        /// API sửa thông tin của 1 record dựa vào employeeID
+        /// </summary>
+        /// <param name="recordID">ID của record định sửa</param>
+        /// <param name="recor">Giá trị record sửa</param>
+        /// <returns>Status 200 OK, recordID / Status 400 badrequest</returns>
+        /// Created by : TNMANH (29/09/2022)
+        public Guid UpdateRecord(Guid recordID, T record)
+        {
+
+            // chuẩn bị câu lệnh MySQL
+
+            // Truyền tham số vào store procedure
+            DynamicParameters parameters = new DynamicParameters();
+
+            // Chèn các giá trị khác vào param cho store procedure
+            var props = typeof(T).GetProperties();
+            foreach (var prop in props)
+            {
+                // lấy ra tên của properties
+                string propName = prop.Name;
+                object propValue;
+                var primaryKeyAttribute = (PrimaryKeyAttribute?)Attribute.GetCustomAttribute(prop, typeof(PrimaryKeyAttribute));
+                if (primaryKeyAttribute != null)
+                {
+                    propValue = recordID;
+                }
+                else
+                {
+                    propValue = prop.GetValue(record, null);
+                }
+                parameters.Add($"v_{propName}", propValue);
+            }
+
+            // Số bản ghi bị ảnh hưởng
+            int nunmberOfAffectedRows = 0;
+
+            // Tạo connection
+            using (var sqlConnection = new MySqlConnection(DataContext.MySQLConnectionString))
+            {
+                string storeProcedureName = string.Format(MISAResource.Proc_Put_OneRecord, typeof(T).Name.ToLower());
+                // Thực hiện chèn dữ liệu vào trong database
+                nunmberOfAffectedRows = sqlConnection.Execute(
+                    storeProcedureName,
+                    parameters,
+                    commandType: System.Data.CommandType.StoredProcedure
+                );
+            };
+
+            // Trả về kết quả
+            if (nunmberOfAffectedRows > 0)
+            {
+                return recordID;
+            }
+            else
+            {
+                return Guid.Empty;
+            }
+        }
+
+        #endregion
 
         #region DeleteMethod
 

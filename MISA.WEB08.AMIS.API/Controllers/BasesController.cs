@@ -195,6 +195,47 @@ namespace MISA.WEB08.AMIS.API.Controllers
 
         #endregion
 
+        #region PutMethod
+
+        /// <summary>
+        /// API sửa thông tin của 1 record dựa vào employeeID
+        /// </summary>
+        /// <param name="recordID">ID của record định sửa</param>
+        /// <param name="record">Giá trị của record sửa</param>
+        /// <returns>Status 200 OK, recordID / Status 400 badrequest</returns>
+        /// Created by : TNMANH (17/09/2022)
+        [HttpPut("{recordID}")]
+        public IActionResult UpdateRecord([FromRoute] Guid recordID, [FromBody] T record)
+        {
+
+            try
+            {
+                var result = _baseBL.UpdateRecord(recordID, record);
+                if (result.Success)
+                {
+                    return StatusCode(StatusCodes.Status200OK, result.Data);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, result.Data);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                (
+                    ErrorCode.Exception,
+                    MISAResource.DevMsg_Exception,
+                    MISAResource.UserMsg_Exception,
+                    MISAResource.MoreInfo_Exception,
+                     HttpContext.TraceIdentifier
+                ));
+            }
+        }
+
+        #endregion
+
         #region DeleteMethod
 
         /// <summary>

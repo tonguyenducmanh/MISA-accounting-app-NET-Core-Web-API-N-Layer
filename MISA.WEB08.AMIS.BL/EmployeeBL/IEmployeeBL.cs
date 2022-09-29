@@ -33,18 +33,7 @@ namespace MISA.WEB08.AMIS.BL
 
         #endregion
 
-        #region PutMethod
 
-        /// <summary>
-        /// API sửa thông tin của 1 nhân viên dựa vào employeeID
-        /// </summary>
-        /// <param name="employeeID">ID của nhân viên định sửa</param>
-        /// <param name="employee">Giá trị sửa</param>
-        /// <returns>Status 200 OK, employeeID / Status 400 badrequest</returns>
-        /// Created by : TNMANH (17/09/2022)
-        public ServiceResponse UpdateEmployee(Guid employeeID, Employee employee);
-
-        #endregion
 
     }
 }
