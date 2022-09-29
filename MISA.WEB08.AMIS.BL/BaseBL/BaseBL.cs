@@ -28,7 +28,7 @@ namespace MISA.WEB08.AMIS.BL
 
         #endregion
 
-        // Danh sách các API liên quan tới việc lấy thông tin của 1 table
+        // Danh sách các method liên quan tới việc lấy thông tin của 1 table
         #region GetMethod
 
         /// <summary>
@@ -74,70 +74,8 @@ namespace MISA.WEB08.AMIS.BL
         }
         #endregion
 
-
-        // Danh sách các API liên quan tới việc thêm mới 1 record vào 1 table
-
-        #region PostMethod
-
-
-        /// <summary>
-        /// API Thêm mới 1 record
-        /// </summary>
-        /// <param name="record">Thông tin record mới</param>
-        /// <returns>Status 201 created, recordID</returns>
-        /// Created by : TNMANH (29/09/2022)
-        public ServiceResponse InsertRecord(T record)
-        {
-            var validateResult = ValidateRequestData(record);
-            var checkDuplicateResult = CheckDuplicateEmployeeCode(record);
-
-            // trả về kết quả mã trùng trước
-            if (checkDuplicateResult.Success == false)
-            {
-                return new ServiceResponse
-                {
-                    Success = false,
-                    Data = checkDuplicateResult?.Data
-                };
-            }
-
-            // trả về kết quả validate sau
-            if (validateResult != null && validateResult.Success)
-            {
-                var newRecordID = _baseDL.InsertRecord(record);
-
-                if (newRecordID != Guid.Empty)
-                {
-                    return new ServiceResponse
-                    {
-                        Success = true,
-                        Data = newRecordID
-                    };
-                }
-                else
-                {
-                    return new ServiceResponse
-                    {
-                        Success = false,
-                        Data = new ErrorResult(
-                        ErrorCode.InsertFailed,
-                        MISAResource.DevMsg_InsertFailed,
-                        MISAResource.UserMsg_Exception,
-                        MISAResource.MoreInfo_InsertFailed
-                        )
-                    };
-                }
-            }
-            else
-            {
-                return new ServiceResponse
-                {
-                    Success = false,
-                    Data = validateResult?.Data
-                };
-            }
-
-        }
+        // Danh sách các method liên quan tới việc Validate dữ liệu đầu vào
+        #region ValidateMethod
 
         /// <summary>
         /// Lấy ra recordCode từ record
@@ -246,7 +184,72 @@ namespace MISA.WEB08.AMIS.BL
 
         #endregion
 
-        // Danh sách các API liên quan tới việc sửa 1 record có sẵn 1 table
+        // Danh sách các method liên quan tới việc thêm mới 1 record vào 1 table
+
+        #region PostMethod
+
+        /// <summary>
+        /// API Thêm mới 1 record
+        /// </summary>
+        /// <param name="record">Thông tin record mới</param>
+        /// <returns>Status 201 created, recordID</returns>
+        /// Created by : TNMANH (29/09/2022)
+        public ServiceResponse InsertRecord(T record)
+        {
+            var validateResult = ValidateRequestData(record);
+            var checkDuplicateResult = CheckDuplicateEmployeeCode(record);
+
+            // trả về kết quả mã trùng trước
+            if (checkDuplicateResult.Success == false)
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    Data = checkDuplicateResult?.Data
+                };
+            }
+
+            // trả về kết quả validate sau
+            if (validateResult != null && validateResult.Success)
+            {
+                var newRecordID = _baseDL.InsertRecord(record);
+
+                if (newRecordID != Guid.Empty)
+                {
+                    return new ServiceResponse
+                    {
+                        Success = true,
+                        Data = newRecordID
+                    };
+                }
+                else
+                {
+                    return new ServiceResponse
+                    {
+                        Success = false,
+                        Data = new ErrorResult(
+                        ErrorCode.InsertFailed,
+                        MISAResource.DevMsg_InsertFailed,
+                        MISAResource.UserMsg_Exception,
+                        MISAResource.MoreInfo_InsertFailed
+                        )
+                    };
+                }
+            }
+            else
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    Data = validateResult?.Data
+                };
+            }
+
+        }
+
+        #endregion
+
+        // Danh sách các method liên quan tới việc sửa 1 record có sẵn 1 table
         #region PutMethod
 
         /// <summary>
@@ -321,7 +324,7 @@ namespace MISA.WEB08.AMIS.BL
 
         #endregion
 
-        // Danh sách các API liên quan tới việc xóa 1 record trong 1 table
+        // Danh sách các method liên quan tới việc xóa 1 record trong 1 table
         #region DeleteMethod
 
         /// <summary>
