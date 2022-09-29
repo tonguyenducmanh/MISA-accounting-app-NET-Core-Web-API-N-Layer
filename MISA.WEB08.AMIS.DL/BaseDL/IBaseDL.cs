@@ -29,6 +29,20 @@ namespace MISA.WEB08.AMIS.DL
         /// Created by : TNMANH (29/09/2022)
         public T GetDuplicateCode(string recordCode);
 
+        /// <summary>
+        /// API lấy mã record lớn nhất
+        /// </summary>
+        /// <returns>Mã record lớn nhất</returns>
+        /// Created by : TNMANH (29/09/2022)
+        public String GetMaxRecordCode();
+
+        /// <summary>
+        /// API lấy thông tin chi tiết của 1 record theo ID đầu vào
+        /// </summary>
+        /// <param name="employeeID">ID của record</param>
+        /// <returns>Thông tin của record theo ID</returns>
+        /// Created by : TNMANH (29/09/2022)
+        public T GetRecordByID(Guid recordID);
         #endregion
 
         // Danh sách các API liên quan tới việc thêm mới 1 record vào 1 table

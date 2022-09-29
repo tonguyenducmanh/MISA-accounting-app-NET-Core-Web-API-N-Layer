@@ -36,27 +36,6 @@ namespace MISA.WEB08.AMIS.BL
         #region GetMethod
 
         /// <summary>
-        /// API lấy mã nhân viên lớn nhất
-        /// </summary>
-        /// <returns>Mã nhân viên lớn nhất</returns>
-        /// Created by : TNMANH (17/09/2022)
-        public string GetMaxEmployeeCode()
-        {
-            return _employeeDL.GetMaxEmployeeCode();
-        }
-
-        /// <summary>
-        /// API lấy thông tin chi tiết của 1 nhân viên theo ID đầu vào
-        /// </summary>
-        /// <param name="employeeID">ID của nhân viên</param>
-        /// <returns>Thông tin của nhân viên theo ID</returns>
-        /// Created by : TNMANH (17/09/2022)
-        public Employee GetEmployeeByID(Guid employeeID)
-        {
-            return _employeeDL.GetEmployeeByID(employeeID);
-        }
-
-        /// <summary>
         /// API lọc danh sách nhân viên theo các điều kiện cho trước
         /// </summary>
         /// <param name="keyword">Từ khóa tìm kiếm (mã, tên, số điện thoại của nhân viên)</param>

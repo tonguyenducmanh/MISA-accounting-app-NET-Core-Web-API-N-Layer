@@ -19,60 +19,6 @@ namespace MISA.WEB08.AMIS.DL
         #region GetMethod
 
         /// <summary>
-        /// API lấy mã nhân viên lớn nhất
-        /// </summary>
-        /// <returns>Mã nhân viên lớn nhất</returns>
-        /// Created by : TNMANH (17/09/2022)
-        public string GetMaxEmployeeCode()
-        {
-            // Tạo connection
-            string connectionString = DataContext.MySQLConnectionString;
-            var sqlConnection = new MySqlConnection(connectionString);
-
-            // Chuẩn bị câu lệnh Query
-            string storeProcedureName = MISAResource.Proc_Get_MaxCode;
-
-            // Thực hiện gọi vào Database
-            var maxCode = sqlConnection.QueryFirstOrDefault<String>(
-                storeProcedureName,
-                commandType: System.Data.CommandType.StoredProcedure
-                );
-
-            // Trả về kết quả
-            return maxCode;
-        }
-
-        /// <summary>
-        /// API lấy thông tin chi tiết của 1 nhân viên theo ID đầu vào
-        /// </summary>
-        /// <param name="employeeID">ID của nhân viên</param>
-        /// <returns>Thông tin của nhân viên theo ID</returns>
-        /// Created by : TNMANH (17/09/2022)
-        public Employee GetEmployeeByID(Guid employeeID)
-        {
-            // Tạo connection
-            string connectionString = DataContext.MySQLConnectionString;
-            var sqlConnection = new MySqlConnection(connectionString);
-
-            // Khai báo procedure name
-            string storeProcedureName = MISAResource.Proc_Get_ByID;
-
-            // Khởi tạo các parameter để chèn vào trong storeprocedure
-            DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("v_id", employeeID);
-
-            // Thực hiện kết nối tới Database
-            var employee = sqlConnection.QueryFirstOrDefault<Employee>(
-                storeProcedureName,
-                parameters,
-                commandType: System.Data.CommandType.StoredProcedure
-                );
-
-            // Trả về status code và kết quả trả về
-            return employee;
-        }
-
-        /// <summary>
         /// API lọc danh sách nhân viên theo các điều kiện cho trước
         /// </summary>
         /// <param name="keyword">Từ khóa tìm kiếm (mã, tên, số điện thoại của nhân viên)</param>

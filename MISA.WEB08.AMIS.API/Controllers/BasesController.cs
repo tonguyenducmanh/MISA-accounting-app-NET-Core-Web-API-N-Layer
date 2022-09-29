@@ -90,6 +90,69 @@ namespace MISA.WEB08.AMIS.API.Controllers
             }
         }
 
+        /// <summary>
+        /// API lấy mã record lớn nhất
+        /// </summary>
+        /// <returns>Mã record lớn nhất</returns>
+        /// Created by : TNMANH (29/09/2022)
+        [HttpGet("max-code")]
+        public IActionResult GetMaxRecordCode()
+        {
+            try
+            {
+                var maxCode = _baseBL.GetMaxRecordCode();
+                // Trả về Status code và kết quả
+                return StatusCode(StatusCodes.Status200OK, maxCode);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                // Trả về Status code và object báo lỗi
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult(
+                    ErrorCode.Exception,
+                    MISAResource.DevMsg_Exception,
+                    MISAResource.UserMsg_Exception,
+                    MISAResource.MoreInfo_Exception,
+                    HttpContext.TraceIdentifier
+                    ));
+            }
+        }
+
+        /// <summary>
+        /// API lấy thông tin chi tiết của 1 record theo ID đầu vào
+        /// </summary>
+        /// <param name="recordID">ID của record</param>
+        /// <returns>Thông tin của record theo ID</returns>
+        /// Created by : TNMANH (29/09/2022)
+        [HttpGet("{recordID}")]
+        public IActionResult GetRecordByID([FromRoute] Guid recordID)
+        {
+            try
+            {
+                // Lấy thông tin chi tiết 1 record
+                var record = _baseBL.GetRecordByID(recordID);
+
+                // Trả về status code và kết quả trả về
+                return StatusCode(StatusCodes.Status200OK, record);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                // Trả về status code kèm theo kết quả báo lỗi
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult(
+                    ErrorCode.Exception,
+                    MISAResource.DevMsg_Exception,
+                    MISAResource.UserMsg_Exception,
+                    MISAResource.MoreInfo_Exception,
+                    HttpContext.TraceIdentifier
+                    ));
+            }
+
+        }
+
         #endregion
     }
 }

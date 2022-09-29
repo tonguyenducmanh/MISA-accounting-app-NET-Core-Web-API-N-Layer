@@ -48,6 +48,27 @@ namespace MISA.WEB08.AMIS.BL
             return _baseDL.GetDuplicateCode(recordCode);
         }
 
+
+        /// <summary>
+        /// API lấy mã record lớn nhất
+        /// </summary>
+        /// <returns>Mã record lớn nhất</returns>
+        /// Created by : TNMANH (29/09/2022)
+        public string GetMaxRecordCode()
+        {
+            return _baseDL.GetMaxRecordCode();
+        }
+
+        /// <summary>
+        /// API lấy thông tin chi tiết của 1 record theo ID đầu vào
+        /// </summary>
+        /// <param name="recordID">ID của record</param>
+        /// <returns>Thông tin của record theo ID</returns>
+        /// Created by : TNMANH (29/09/2022)
+        public T GetRecordByID(Guid recordID)
+        {
+            return _baseDL.GetRecordByID(recordID);
+        }
         #endregion
 
 
@@ -61,7 +82,7 @@ namespace MISA.WEB08.AMIS.BL
         /// </summary>
         /// <param name="record">Thông tin record mới</param>
         /// <returns>Status 201 created, recordID</returns>
-        /// Created by : TNMANH (17/09/2022)
+        /// Created by : TNMANH (29/09/2022)
         public Guid InsertRecord(T record)
         {
             return _baseDL.InsertRecord(record);

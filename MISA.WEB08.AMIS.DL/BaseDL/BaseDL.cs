@@ -72,6 +72,68 @@ namespace MISA.WEB08.AMIS.DL
             return maxCode;
         }
 
+        /// <summary>
+        /// API lấy mã record lớn nhất
+        /// </summary>
+        /// <returns>Mã record lớn nhất</returns>
+        /// Created by : TNMANH (29/09/2022)
+        public string GetMaxRecordCode()
+        {
+
+            // Chuẩn bị câu lệnh Query
+            string storeProcedureName = string.Format(MISAResource.Proc_Get_MaxCode, typeof(T).Name.ToLower());
+
+            // Tạo biến result
+            string maxCode;
+
+            // Tạo connection
+            string connectionString = DataContext.MySQLConnectionString;
+            using (var sqlConnection = new MySqlConnection(connectionString))
+            {
+            // Thực hiện gọi vào Database
+                maxCode = sqlConnection.QueryFirstOrDefault<String>(
+                storeProcedureName,
+                commandType: System.Data.CommandType.StoredProcedure
+                );
+            };
+            // Trả về kết quả
+            return maxCode;
+        }
+
+        /// <summary>
+        /// API lấy thông tin chi tiết của 1 record theo ID đầu vào
+        /// </summary>
+        /// <param name="recordID">ID của record</param>
+        /// <returns>Thông tin của record theo ID</returns>
+        /// Created by : TNMANH (29/09/2022)
+        public T GetRecordByID(Guid recordID)
+        {
+            // Khai báo procedure name
+            string storeProcedureName = string.Format(MISAResource.Proc_Get_ByID, typeof(T).Name.ToLower());
+
+            // Tạo kết quả trả về
+            T record;
+
+            // Tạo connection
+            string connectionString = DataContext.MySQLConnectionString;
+            using (var sqlConnection = new MySqlConnection(connectionString))
+            {
+                // Khởi tạo các parameter để chèn vào trong storeprocedure
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("v_id", recordID);
+
+                // Thực hiện kết nối tới Database
+                record = sqlConnection.QueryFirstOrDefault<T>(
+                    storeProcedureName,
+                    parameters,
+                    commandType: System.Data.CommandType.StoredProcedure
+                    );
+            } ;
+
+            // Trả về status code và kết quả trả về
+            return record;
+        }
+
 
         #endregion
 

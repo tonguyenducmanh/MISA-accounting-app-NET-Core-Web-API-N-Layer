@@ -41,69 +41,6 @@ namespace MISA.WEB08.AMIS.API
         #region GETMethod
 
         /// <summary>
-        /// API lấy mã nhân viên lớn nhất
-        /// </summary>
-        /// <returns>Mã nhân viên lớn nhất</returns>
-        /// Created by : TNMANH (17/09/2022)
-        [HttpGet("max-code")]
-        public IActionResult GetMaxEmployeeCode()
-        {
-            try
-            {
-                var maxCode = _employeeBL.GetMaxEmployeeCode();
-                // Trả về Status code và kết quả
-                return StatusCode(StatusCodes.Status200OK, maxCode);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-
-                // Trả về Status code và object báo lỗi
-                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult(
-                    ErrorCode.Exception,
-                    MISAResource.DevMsg_Exception,
-                    MISAResource.UserMsg_Exception,
-                    MISAResource.MoreInfo_Exception,
-                    HttpContext.TraceIdentifier
-                    ));
-            }
-        }
-
-        /// <summary>
-        /// API lấy thông tin chi tiết của 1 nhân viên theo ID đầu vào
-        /// </summary>
-        /// <param name="employeeID">ID của nhân viên</param>
-        /// <returns>Thông tin của nhân viên theo ID</returns>
-        /// Created by : TNMANH (17/09/2022)
-        [HttpGet("{employeeID}")]
-        public IActionResult GetEmployeeByID([FromRoute] Guid employeeID)
-        {
-            try
-            {
-                // Lấy thông tin chi tiết 1 nhân viên
-                var employee = _employeeBL.GetEmployeeByID(employeeID);
-
-                // Trả về status code và kết quả trả về
-                return StatusCode(StatusCodes.Status200OK, employee);
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-
-                // Trả về status code kèm theo kết quả báo lỗi
-                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult(
-                    ErrorCode.Exception,
-                    MISAResource.DevMsg_Exception,
-                    MISAResource.UserMsg_Exception,
-                    MISAResource.MoreInfo_Exception,
-                    HttpContext.TraceIdentifier
-                    ));
-            }
-
-        }
-
-        /// <summary>
         /// API lọc danh sách nhân viên theo các điều kiện cho trước
         /// </summary>
         /// <param name="keyword">Từ khóa tìm kiếm (mã, tên, số điện thoại của nhân viên)</param>
