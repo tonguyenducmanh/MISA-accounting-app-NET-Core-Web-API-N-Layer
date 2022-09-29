@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MISA.WEB08.AMIS.BL
 {
-    public class PositionBL : IPositionBL
+    public class PositionBL : BaseBL<Positions>, IPositionBL
     {
         #region Field
 
@@ -18,7 +18,7 @@ namespace MISA.WEB08.AMIS.BL
 
         #region Constructor
 
-        public PositionBL(IPositionDL positionDL)
+        public PositionBL(IPositionDL positionDL): base(positionDL)
         {
             _positionDL = positionDL;
         }
@@ -29,16 +29,6 @@ namespace MISA.WEB08.AMIS.BL
 
         // Danh sách các API liên quan tới việc lấy thông tin
         #region GetMethod
-
-        /// <summary>
-        /// API lấy danh sách toàn bộ chức vụ
-        /// </summary>
-        /// <returns>Danh sách chức vụ</returns>
-        /// Created by : TNMANH (17/09/2022)
-        public IEnumerable<Positions> GetAllPositions()
-        {
-            return _positionDL.GetAllPositions();
-        }
 
         #endregion
 

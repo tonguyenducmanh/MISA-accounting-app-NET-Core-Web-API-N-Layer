@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MISA.WEB08.AMIS.BL
 {
-    public class DepartmentBL : IDepartmentBL
+    public class DepartmentBL : BaseBL<Department>, IDepartmentBL
     {
         #region Field
 
@@ -18,7 +18,7 @@ namespace MISA.WEB08.AMIS.BL
 
         #region Constructor
 
-        public DepartmentBL(IDepartmentDL departmentDL)
+        public DepartmentBL(IDepartmentDL departmentDL): base(departmentDL)
         {
             _departmentDL = departmentDL;
         }
@@ -29,16 +29,6 @@ namespace MISA.WEB08.AMIS.BL
 
         // Danh sách các API liên quan tới việc lấy thông tin của nhân viên
         #region GetMethod
-
-        /// <summary>
-        /// API lấy danh sách toàn bộ nhân viên
-        /// </summary>
-        /// <returns>Danh sách nhân viên</returns>
-        /// Created by : TNMANH (17/09/2022)
-        public IEnumerable<Department> GetAllDepartments()
-        {
-            return _departmentDL.GetAllDepartments();
-        }
 
         #endregion
 

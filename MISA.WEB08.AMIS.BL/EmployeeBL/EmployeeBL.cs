@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace MISA.WEB08.AMIS.BL
 {
-    public class EmployeeBL : IEmployeeBL
+    public class EmployeeBL : BaseBL<Employee>, IEmployeeBL
     {
         #region Field
 
@@ -23,7 +23,7 @@ namespace MISA.WEB08.AMIS.BL
 
         #region Constructor
 
-        public EmployeeBL(IEmployeeDL employeeDL)
+        public EmployeeBL(IEmployeeDL employeeDL) : base(employeeDL)
         {
             _employeeDL = employeeDL;
         }
@@ -35,15 +35,6 @@ namespace MISA.WEB08.AMIS.BL
         // Danh sách các API liên quan tới việc lấy thông tin của nhân viên
         #region GetMethod
 
-        /// <summary>
-        /// API lấy danh sách toàn bộ nhân viên
-        /// </summary>
-        /// <returns>Danh sách nhân viên</returns>
-        /// Created by : TNMANH (17/09/2022)
-        public IEnumerable<Employee> GetAllEmployees()
-        {
-            return _employeeDL.GetAllEmployees();
-        }
 
         /// <summary>
         /// API check trùng mã nhân viên
@@ -301,7 +292,8 @@ namespace MISA.WEB08.AMIS.BL
             }
         }
 
-        #endregion 
+
+        #endregion
         #endregion
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MISA.Web08.AMIS.COMMON.Enums;
+using MISA.WEB08.AMIS.API.Controllers;
 using MISA.WEB08.AMIS.BL;
 using MISA.WEB08.AMIS.COMMON.Entities;
 using MISA.WEB08.AMIS.COMMON.Resources;
@@ -12,7 +13,7 @@ namespace MISA.WEB08.AMIS.API
     /// Created by : TNMANH (17/09/2022)
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class EmployeesController : ControllerBase
+    public class EmployeesController : BasesController<Employee>
     {
 
         #region Field
@@ -29,7 +30,7 @@ namespace MISA.WEB08.AMIS.API
         /// Created by : TNMANH (24/09/2022)
         #region Constructor
 
-        public EmployeesController(IEmployeeBL employeeBL)
+        public EmployeesController(IEmployeeBL employeeBL): base(employeeBL)
         {
             _employeeBL = employeeBL;
         }
@@ -38,40 +39,6 @@ namespace MISA.WEB08.AMIS.API
 
         /// danh sách các API liên quan tới việc lấy thông tin nhân viên
         #region GETMethod
-
-        // Danh sách các API liên quan tới việc lấy thông tin của nhân viên
-        //#region GetMethod
-
-        /// <summary>
-        /// API lấy danh sách toàn bộ nhân viên
-        /// </summary>
-        /// <returns>Danh sách nhân viên</returns>
-        /// Created by : TNMANH (17/09/2022)
-        [HttpGet("")]
-        public IActionResult GetAllEmployees()
-        {
-
-            try
-            {
-                // thực hiện gọi vào DB
-                var employees = _employeeBL.GetAllEmployees();
-
-
-                return StatusCode(StatusCodes.Status200OK, employees);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
-                (
-                    ErrorCode.Exception,
-                    MISAResource.DevMsg_Exception,
-                    MISAResource.UserMsg_Exception,
-                    MISAResource.MoreInfo_Exception,
-                    HttpContext.TraceIdentifier
-                ));
-            }
-        }
 
         /// <summary>
         /// API check trùng mã nhân viên

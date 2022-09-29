@@ -13,33 +13,10 @@ using System.Threading.Tasks;
 
 namespace MISA.WEB08.AMIS.DL
 {
-    public class EmployeeDL : IEmployeeDL
+    public class EmployeeDL : BaseDL<Employee>, IEmployeeDL
     {
         // Danh sách các API liên quan tới việc lấy thông tin của nhân viên
         #region GetMethod
-
-        /// <summary>
-        /// API lấy danh sách toàn bộ nhân viên
-        /// </summary>
-        /// <returns>Danh sách nhân viên</returns>
-        /// Created by : TNMANH (17/09/2022)
-        public IEnumerable<Employee> GetAllEmployees()
-        {
-            // Tạo connection
-            string connectionString = DataContext.MySQLConnectionString;
-            var sqlConnection = new MySqlConnection(connectionString);
-
-            // chuẩn bị câu lệnh MySQL
-            string storeProcedureName = string.Format(MISAResource.Proc_GetAll, typeof(Employee).Name.ToLower());
-
-
-            // thực hiện gọi vào DB
-            var employees = sqlConnection.Query<Employee>(
-                storeProcedureName
-                , commandType: System.Data.CommandType.StoredProcedure
-                );
-            return employees;
-        }
 
         /// <summary>
         /// API check trùng mã nhân viên

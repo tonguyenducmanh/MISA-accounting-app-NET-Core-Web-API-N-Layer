@@ -7,18 +7,11 @@ using System.Threading.Tasks;
 
 namespace MISA.WEB08.AMIS.DL
 {
-    public interface IDepartmentDL
+    public interface IDepartmentDL : IBaseDL<Department>
     {
         // Danh sách các API liên quan tới việc lấy thông tin department
 
         #region GetMethod
-
-        /// <summary>
-        /// API lấy danh sách toàn bộ phòng ban
-        /// </summary>
-        /// <returns>Danh sách phòng ban</returns>
-        /// Created by : TNMANH (27/09/2022)
-        public IEnumerable<Department> GetAllDepartments();
 
         #endregion
     }

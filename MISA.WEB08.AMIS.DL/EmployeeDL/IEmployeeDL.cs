@@ -11,17 +11,10 @@ using System.Threading.Tasks;
 
 namespace MISA.WEB08.AMIS.DL
 {
-    public interface IEmployeeDL
+    public interface IEmployeeDL : IBaseDL<Employee>
     {
         // Danh sách các API liên quan tới việc lấy thông tin của nhân viên
         #region GetMethod
-
-        /// <summary>
-        /// API lấy danh sách toàn bộ nhân viên
-        /// </summary>
-        /// <returns>Danh sách nhân viên</returns>
-        /// Created by : TNMANH (17/09/2022)
-        public IEnumerable<Employee> GetAllEmployees();
 
         /// <summary>
         /// API check trùng mã nhân viên

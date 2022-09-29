@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MISA.Web08.AMIS.COMMON.Enums;
+using MISA.WEB08.AMIS.API.Controllers;
 using MISA.WEB08.AMIS.BL;
 using MISA.WEB08.AMIS.COMMON.Entities;
 using MISA.WEB08.AMIS.COMMON.Resources;
@@ -12,7 +13,7 @@ namespace MISA.WEB08.AMIS.API
     /// Created by : TNMANH (17/09/2022)
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class PositionsController : ControllerBase
+    public class PositionsController : BasesController<Positions>
     {
         #region Field
 
@@ -28,7 +29,7 @@ namespace MISA.WEB08.AMIS.API
         /// Created by : TNMANH (24/09/2022)
         #region Constructor
 
-        public PositionsController(IPositionBL positionBL)
+        public PositionsController(IPositionBL positionBL) : base(positionBL)
         {
             _positionBL = positionBL;
         }
@@ -37,36 +38,6 @@ namespace MISA.WEB08.AMIS.API
 
         /// danh sách các API liên quan tới việc lấy thông tin
         #region GETMethod
-
-        /// <summary>
-        /// API lấy danh sách toàn bộ chức vụ
-        /// </summary>
-        /// <returns>Danh sách chức vụ</returns>
-        /// Created by : TNMANH (27/09/2022)
-        [HttpGet("")]
-        public IActionResult GetAllPositions()
-        {
-
-            try
-            {
-                // thực hiện gọi vào DB
-                var positions = _positionBL.GetAllPositions();
-
-                return StatusCode(StatusCodes.Status200OK, positions);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
-                (
-                    ErrorCode.Exception,
-                    MISAResource.DevMsg_Exception,
-                    MISAResource.UserMsg_Exception,
-                    MISAResource.MoreInfo_Exception,
-                    HttpContext.TraceIdentifier
-                ));
-            }
-        }
 
         #endregion
     }

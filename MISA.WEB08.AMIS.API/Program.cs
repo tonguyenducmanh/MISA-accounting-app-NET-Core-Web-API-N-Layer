@@ -29,6 +29,9 @@ builder.Services.AddSwaggerGen();
 
 
 // Dependencies Injection
+builder.Services.AddScoped(typeof(IBaseDL<>), typeof(BaseDL<>));
+builder.Services.AddScoped(typeof(IBaseBL<>), typeof(BaseBL<>));
+
 builder.Services.AddScoped<IDepartmentBL, DepartmentBL>();
 builder.Services.AddScoped<IEmployeeBL, EmployeeBL>();
 builder.Services.AddScoped<IPositionBL, PositionBL>();
