@@ -83,41 +83,6 @@ namespace MISA.WEB08.AMIS.API
         //// Danh sách các API liên quan tới việc tạo mới nhân viên
         #region PostMethod
 
-        /// <summary>
-        /// API Thêm mới 1 nhân viên
-        /// </summary>
-        /// <param name="employee">Thông tin nhân viên mới</param>
-        /// <returns>Status 201 created, employeeID</returns>
-        /// Created by : TNMANH (17/09/2022)
-        [HttpPost]
-        public IActionResult InsertEmployee([FromBody] Employee employee)
-        {
-            try
-            {
-                var result = _employeeBL.InsertEmployee(employee);
-                if (result.Success)
-                {
-                    return StatusCode(StatusCodes.Status200OK, result.Data);
-                }
-                else
-                {
-                    return StatusCode(StatusCodes.Status400BadRequest, result.Data);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
-                (
-                    ErrorCode.Exception,
-                    MISAResource.DevMsg_Exception,
-                    MISAResource.UserMsg_Exception,
-                    MISAResource.MoreInfo_Exception,
-                     HttpContext.TraceIdentifier
-                ));
-            }
-        }
-
         #endregion
 
 

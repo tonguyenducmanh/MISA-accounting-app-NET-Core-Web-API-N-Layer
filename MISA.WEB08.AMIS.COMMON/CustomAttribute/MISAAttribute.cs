@@ -11,6 +11,16 @@
     }
 
     /// <summary>
+    /// Class khai báo 1 attribute là record Code
+    /// </summary>
+    /// Created by : TNMANH (29/09/2022)
+    [AttributeUsage(AttributeTargets.Property)]
+    public class RecordCodeAttribute : Attribute
+    {
+
+    }
+
+    /// <summary>
     /// Class khai báo 1 attribute bắt buộc phải có giá trị
     /// </summary>
     /// Created by : TNMANH (24/09/2022)

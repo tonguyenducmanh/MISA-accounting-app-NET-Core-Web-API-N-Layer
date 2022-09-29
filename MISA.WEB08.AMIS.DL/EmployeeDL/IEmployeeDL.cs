@@ -35,15 +35,6 @@ namespace MISA.WEB08.AMIS.DL
         // Danh sách các API liên quan tới việc tạo mới nhân viên
         #region PostMethod
 
-        /// <summary>
-        /// API Thêm mới 1 nhân viên
-        /// </summary>
-        /// <param name="employee">Thông tin nhân viên mới</param>
-        /// <returns>Status 201 created, employeeID</returns>
-        /// Created by : TNMANH (17/09/2022)
-        public Guid InsertRecord(Employee employee);
-
-
         #endregion
 
         #region PutMethod

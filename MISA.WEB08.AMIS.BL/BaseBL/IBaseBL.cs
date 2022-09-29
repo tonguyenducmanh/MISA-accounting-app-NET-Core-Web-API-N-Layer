@@ -52,8 +52,8 @@ namespace MISA.WEB08.AMIS.BL
         /// </summary>
         /// <param name="record">Thông tin record mới</param>
         /// <returns>Status 201 created, recordID</returns>
-        /// Created by : TNMANH (17/09/2022)
-        public Guid InsertRecord(T record);
+        /// Created by : TNMANH (29/09/2022)
+        public ServiceResponse InsertRecord(T record);
 
         #endregion
 

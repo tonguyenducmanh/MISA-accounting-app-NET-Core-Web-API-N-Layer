@@ -1,4 +1,5 @@
 ﻿using MISA.Web08.AMIS.COMMON.Enums;
+using MISA.WEB08.AMIS.COMMON.CustomAttribute;
 using MISA.WEB08.AMIS.COMMON.Entities;
 using MISA.WEB08.AMIS.COMMON.Resources;
 using MISA.WEB08.AMIS.DL;
@@ -85,9 +86,143 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="record">Thông tin record mới</param>
         /// <returns>Status 201 created, recordID</returns>
         /// Created by : TNMANH (29/09/2022)
-        public Guid InsertRecord(T record)
+        public ServiceResponse InsertRecord(T record)
         {
-            return _baseDL.InsertRecord(record);
+            var validateResult = ValidateRequestData(record);
+            var checkDuplicateResult = CheckDuplicateEmployeeCode(record);
+
+            // trả về kết quả mã trùng trước
+            if (checkDuplicateResult.Success == false)
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    Data = checkDuplicateResult?.Data
+                };
+            }
+
+            // trả về kết quả validate sau
+            if (validateResult != null && validateResult.Success)
+            {
+                var newRecordID = _baseDL.InsertRecord(record);
+
+                if (newRecordID != Guid.Empty)
+                {
+                    return new ServiceResponse
+                    {
+                        Success = true,
+                        Data = newRecordID
+                    };
+                }
+                else
+                {
+                    return new ServiceResponse
+                    {
+                        Success = false,
+                        Data = new ErrorResult(
+                        ErrorCode.InsertFailed,
+                        MISAResource.DevMsg_InsertFailed,
+                        MISAResource.UserMsg_Exception,
+                        MISAResource.MoreInfo_InsertFailed
+                        )
+                    };
+                }
+            }
+            else
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    Data = validateResult?.Data
+                };
+            }
+
+        }
+
+        public ServiceResponse CheckDuplicateEmployeeCode(T record)
+        {
+
+            // Lấy ra trường record code trong object recor
+            var props = typeof(T).GetProperties();
+            List<string> validateFailed = new List<string>();
+            string recordCode = "";
+            foreach (var prop in props)
+            {
+                var propName = prop.Name;
+                var propValue = prop.GetValue(record);
+                var mustHave = (RecordCodeAttribute?)Attribute.GetCustomAttribute(prop, typeof(RecordCodeAttribute));
+                if(mustHave != null)
+                {
+                    recordCode = propValue.ToString();
+                }
+            }
+            // Kiểm tra xem mã có bị trùng chưa
+            var testDuplicateCode = GetDuplicateCode(recordCode);
+
+            if (testDuplicateCode != null)
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    Data = new ErrorResult(
+                        ErrorCode.DuplicateCode,
+                        MISAResource.DevMsg_DuplicatedCode,
+                        MISAResource.UserMsg_DuplicatedCode,
+                        MISAResource.MoreInfo_DupplicatedCode
+                        )
+                };
+            }
+            else
+            {
+                return new ServiceResponse
+                {
+                    Success = true,
+                    Data = ""
+                };
+            }
+        }
+
+        /// <summary>
+        /// Validate dữ liệu truyền lên
+        /// </summary>
+        /// <param name="record">Đối tượng record cần validate</param>
+        /// <returns>Đối tượng ServiceRespone</returns>
+        /// Created by : TNMANH (27/09/2022)
+        public ServiceResponse ValidateRequestData(T record)
+        {
+            // Validate dữ liệu đầu vào
+            var props = typeof(T).GetProperties();
+            List<string> validateFailed = new List<string>();
+            foreach (var prop in props)
+            {
+                var propName = prop.Name;
+                var propValue = prop.GetValue(record);
+                var mustHave = (MustHave?)Attribute.GetCustomAttribute(prop, typeof(MustHave));
+                if (mustHave != null && string.IsNullOrEmpty(propValue?.ToString()))
+                {
+                    validateFailed.Add(mustHave.ErrorMessage);
+                }
+            }
+
+            // Check xem nếu có lỗi văng ra kết quả luôn khỏi chạy đoạn dưới
+            if (validateFailed.Count > 0)
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    Data =
+                    new ErrorResult(
+                    ErrorCode.EmptyCode,
+                    MISAResource.DevMsg_ValidateFailed,
+                    MISAResource.UserMsg_ValidateFailed,
+                    validateFailed
+                    )
+                };
+            }
+            return new ServiceResponse
+            {
+                Success = true
+            };
         }
 
         #endregion

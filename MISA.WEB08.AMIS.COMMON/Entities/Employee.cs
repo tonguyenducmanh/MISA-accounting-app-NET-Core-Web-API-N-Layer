@@ -21,6 +21,7 @@ namespace MISA.WEB08.AMIS.COMMON.Entities
         /// Mã của nhân viên
         /// </summary>
         [MustHave("Mã nhân viên không được để trống")]
+        [RecordCode]
         public string EmployeeCode { get; set; }
 
         /// <summary>
