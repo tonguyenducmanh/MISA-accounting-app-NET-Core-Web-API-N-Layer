@@ -107,11 +107,6 @@ namespace MISA.WEB08.AMIS.COMMON.Entities
         public string DepartmentName { get; set; }
 
         /// <summary>
-        /// ID của chức danh
-        /// </summary>
-        public Guid? PositionID { get; set; }
-
-        /// <summary>
         /// Tên chức danh
         /// </summary>
         public string? PositionName { get; set; }
