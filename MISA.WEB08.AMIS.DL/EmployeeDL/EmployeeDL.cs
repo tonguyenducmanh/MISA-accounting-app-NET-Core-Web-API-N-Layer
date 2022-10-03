@@ -53,7 +53,11 @@ namespace MISA.WEB08.AMIS.DL
 
             // Tạo ra số trang
             int? totalPage;
-            if(totalRecord % pageSize == 0)
+            if(totalRecord == 0)
+            {
+                totalPage = 1;
+            }
+            else if(totalRecord % pageSize == 0)
             {
                 totalPage = totalRecord/ pageSize;
             }
