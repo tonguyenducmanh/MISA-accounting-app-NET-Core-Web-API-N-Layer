@@ -51,12 +51,23 @@ namespace MISA.WEB08.AMIS.DL
             var employees = employeesFiltered.Read<Employee>().ToList();
             var totalRecord = (int)employeesFiltered.ReadSingle().TotalCount;
 
+            // Tạo ra số trang
+            int? totalPage = 1;
+            if(totalRecord % pageSize == 0)
+            {
+                totalPage = totalRecord/ pageSize;
+            }
+            else
+            {
+                totalPage = (int)Math.Ceiling(Convert.ToDecimal(totalRecord / pageSize) + 1);
+            }
+
             // Trả về status code kèm theo object kết quả
             return new PagingData()
             {
                 PageSize = pageSize,
                 CurrentPage = pageNumber,
-                TotalPage = (int)Math.Ceiling(Convert.ToDecimal(totalRecord / pageSize) + 1),
+                TotalPage = totalPage,
                 Data = employees,
                 TotalRecord = totalRecord,
             };
