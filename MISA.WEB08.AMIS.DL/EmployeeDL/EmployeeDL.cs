@@ -52,7 +52,7 @@ namespace MISA.WEB08.AMIS.DL
             var totalRecord = (int)employeesFiltered.ReadSingle().TotalCount;
 
             // Tạo ra số trang
-            int? totalPage = 1;
+            int? totalPage;
             if(totalRecord % pageSize == 0)
             {
                 totalPage = totalRecord/ pageSize;
