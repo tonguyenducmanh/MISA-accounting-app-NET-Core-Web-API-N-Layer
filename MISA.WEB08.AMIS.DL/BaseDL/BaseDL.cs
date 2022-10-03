@@ -283,7 +283,7 @@ namespace MISA.WEB08.AMIS.DL
 
             // khởi tạo các parameter truyền vào trong store procedure
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("v_id", recordID);
+            parameters.Add(MISAResource.Param_ID, recordID);
 
             // Tạo biến số lượng kết quả
             int nunmberOfAffectedRows;

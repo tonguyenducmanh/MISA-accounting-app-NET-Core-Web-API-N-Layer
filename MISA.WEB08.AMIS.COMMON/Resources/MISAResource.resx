@@ -177,6 +177,26 @@
     <value>https://openapi.misa.com/error-code/e003</value>
     <comment>Trang mô tả chi tiết về validate dữ liệu</comment>
   </data>
+  <data name="MyConnectionString" xml:space="preserve">
+    <value>MySQLConnectionString</value>
+    <comment>Tên connection string để kết nối tới databse</comment>
+  </data>
+  <data name="Param_ID" xml:space="preserve">
+    <value>v_id</value>
+    <comment>Param ID của record</comment>
+  </data>
+  <data name="Param_PageNumber" xml:space="preserve">
+    <value>v_PageNumber</value>
+    <comment>Param số trang trong proc</comment>
+  </data>
+  <data name="Param_PageSize" xml:space="preserve">
+    <value>v_PageSize</value>
+    <comment>Param số bản ghi 1 trang trong proc</comment>
+  </data>
+  <data name="Param_Search" xml:space="preserve">
+    <value>v_Search</value>
+    <comment>Param từ khóa tìm kiếm trong proc</comment>
+  </data>
   <data name="ProcGetEmployeeFilter" xml:space="preserve">
     <value>Proc_employee_GetPaging</value>
     <comment>Tên proc lọc danh sách người dùng có điều kiện</comment>

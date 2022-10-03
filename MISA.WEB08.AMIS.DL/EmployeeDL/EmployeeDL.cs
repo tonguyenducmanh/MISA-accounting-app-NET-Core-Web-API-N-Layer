@@ -37,9 +37,9 @@ namespace MISA.WEB08.AMIS.DL
             // Chèn parameter cho procedure
             DynamicParameters parameters = new DynamicParameters();
 
-            parameters.Add("v_PageNumber", pageNumber);
-            parameters.Add("v_PageSize", pageSize);
-            parameters.Add("v_Search", keyword);
+            parameters.Add(MISAResource.Param_PageNumber, pageNumber);
+            parameters.Add(MISAResource.Param_PageSize, pageSize);
+            parameters.Add(MISAResource.Param_Search, keyword);
 
             // Thực hiện gọi vào trong Database
             var employeesFiltered = sqlConnection.QueryMultiple(

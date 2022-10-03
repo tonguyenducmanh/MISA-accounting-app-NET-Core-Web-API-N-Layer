@@ -196,6 +196,51 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MySQLConnectionString.
+        /// </summary>
+        public static string MyConnectionString {
+            get {
+                return ResourceManager.GetString("MyConnectionString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to v_id.
+        /// </summary>
+        public static string Param_ID {
+            get {
+                return ResourceManager.GetString("Param_ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to v_PageNumber.
+        /// </summary>
+        public static string Param_PageNumber {
+            get {
+                return ResourceManager.GetString("Param_PageNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to v_PageSize.
+        /// </summary>
+        public static string Param_PageSize {
+            get {
+                return ResourceManager.GetString("Param_PageSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to v_Search.
+        /// </summary>
+        public static string Param_Search {
+            get {
+                return ResourceManager.GetString("Param_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Proc_{0}_DeleteOneRecord.
         /// </summary>
         public static string Proc_Delete_OneRecord {

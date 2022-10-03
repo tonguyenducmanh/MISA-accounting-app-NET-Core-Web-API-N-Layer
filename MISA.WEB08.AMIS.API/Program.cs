@@ -1,4 +1,5 @@
 ﻿using MISA.WEB08.AMIS.BL;
+using MISA.WEB08.AMIS.COMMON.Resources;
 using MISA.WEB08.AMIS.DL;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,7 +39,7 @@ builder.Services.AddScoped<IDepartmentDL, DepartmentDL>();
 builder.Services.AddScoped<IEmployeeDL, EmployeeDL>();
 
 // Gán connection string vào trong datacontext
-DataContext.MySQLConnectionString = builder.Configuration.GetConnectionString("MySQLConnectionString");
+DataContext.MySQLConnectionString = builder.Configuration.GetConnectionString(MISAResource.MyConnectionString);
 
 var app = builder.Build();
 
