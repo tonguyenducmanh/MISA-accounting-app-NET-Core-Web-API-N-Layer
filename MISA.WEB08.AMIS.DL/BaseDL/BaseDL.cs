@@ -182,6 +182,7 @@ namespace MISA.WEB08.AMIS.DL
             {
                 sqlConnection.Open();
 
+                // Khởi tạo transaction
                 using (var sqlTransaction = sqlConnection.BeginTransaction())
                 {
                     try
@@ -266,6 +267,7 @@ namespace MISA.WEB08.AMIS.DL
             {
                 sqlConnection.Open();
 
+                // Khởi tạo transaction
                 using (var sqlTransaction = sqlConnection.BeginTransaction())
                 {
                     try
@@ -331,6 +333,7 @@ namespace MISA.WEB08.AMIS.DL
             {
                 sqlConnection.Open();
 
+                // Khởi tạo transaction
                 using (var sqlTransaction = sqlConnection.BeginTransaction())
                 {
                     try
