@@ -180,16 +180,35 @@ namespace MISA.WEB08.AMIS.DL
             // Tạo connection
             using (var sqlConnection = new MySqlConnection(DataContext.MySQLConnectionString))
             {
-                // chuẩn bị câu lệnh MySQL
-                string storeProcedureName = string.Format(MISAResource.Proc_InsertOne, typeof(T).Name.ToLower());
+                sqlConnection.Open();
 
-                // Thực hiện chèn dữ liệu vào trong database
-                nunmberOfAffectedRows = sqlConnection.Execute(
-                        storeProcedureName,
-                        parameters,
-                        commandType: System.Data.CommandType.StoredProcedure
-                    );
-            };
+                using (var sqlTransaction = sqlConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        // chuẩn bị câu lệnh MySQL
+                        string storeProcedureName = string.Format(MISAResource.Proc_InsertOne, typeof(T).Name.ToLower());
+
+                        // Thực hiện chèn dữ liệu vào trong database
+                        nunmberOfAffectedRows = sqlConnection.Execute(
+                                storeProcedureName,
+                                parameters,
+                                commandType: System.Data.CommandType.StoredProcedure,
+                                transaction: sqlTransaction
+                            );
+
+                        // commit tranaction nếu thành công
+                        sqlTransaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+
+                        // rollback lại nếu có bất cứ 1 exception nào
+                        sqlTransaction.Rollback();
+                    }
+                };
+            }
 
             if (nunmberOfAffectedRows > 0)
             {
@@ -245,14 +264,33 @@ namespace MISA.WEB08.AMIS.DL
             // Tạo connection
             using (var sqlConnection = new MySqlConnection(DataContext.MySQLConnectionString))
             {
-                string storeProcedureName = string.Format(MISAResource.Proc_Put_OneRecord, typeof(T).Name.ToLower());
-                // Thực hiện chèn dữ liệu vào trong database
-                nunmberOfAffectedRows = sqlConnection.Execute(
-                    storeProcedureName,
-                    parameters,
-                    commandType: System.Data.CommandType.StoredProcedure
-                );
-            };
+                sqlConnection.Open();
+
+                using (var sqlTransaction = sqlConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        string storeProcedureName = string.Format(MISAResource.Proc_Put_OneRecord, typeof(T).Name.ToLower());
+                        // Thực hiện chèn dữ liệu vào trong database
+                        nunmberOfAffectedRows = sqlConnection.Execute(
+                            storeProcedureName,
+                            parameters,
+                            commandType: System.Data.CommandType.StoredProcedure,
+                            transaction: sqlTransaction
+                        );
+
+                        // Commit tranaction nếu thành công
+                        sqlTransaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+
+                        // Rollback tranaction nếu có bất kỳ 1 exception nào
+                        sqlTransaction.Rollback();
+                    }
+                };
+            }
 
             // Trả về kết quả
             if (nunmberOfAffectedRows > 0)
@@ -286,18 +324,37 @@ namespace MISA.WEB08.AMIS.DL
             parameters.Add(MISAResource.Param_ID, recordID);
 
             // Tạo biến số lượng kết quả
-            int nunmberOfAffectedRows;
+            int nunmberOfAffectedRows = 0;
 
             // Tạo connection
             using (var sqlConnection = new MySqlConnection(DataContext.MySQLConnectionString))
             {
-            // thực hiện truy vấn tới database
-                nunmberOfAffectedRows = sqlConnection.Execute(
-                storeProcedureName,
-                parameters,
-                commandType: System.Data.CommandType.StoredProcedure
-                );
-            } ;
+                sqlConnection.Open();
+
+                using (var sqlTransaction = sqlConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        // thực hiện truy vấn tới database
+                        nunmberOfAffectedRows = sqlConnection.Execute(
+                        storeProcedureName,
+                        parameters,
+                        commandType: System.Data.CommandType.StoredProcedure,
+                        transaction: sqlTransaction
+                        );
+
+                        // commit tranaction nếu thành công
+                        sqlTransaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+
+                        // Rollback tranaction nếu có bất kỳ 1 exception nào
+                        sqlTransaction.Rollback();
+                    }
+                };
+            }
 
             // Trả về kết quả
             if (nunmberOfAffectedRows > 0)
