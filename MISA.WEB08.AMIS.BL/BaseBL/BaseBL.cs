@@ -13,6 +13,10 @@ namespace MISA.WEB08.AMIS.BL
 {
     public class BaseBL<T> : IBaseBL<T>
     {
+
+        /// <summary>
+        /// các filed của class BaseBL
+        /// </summary>
         #region Field
 
         private IBaseDL<T> _baseDL;
@@ -21,6 +25,11 @@ namespace MISA.WEB08.AMIS.BL
 
         #region Constructor
 
+        /// <summary>
+        /// Hàm khởi tạo của class BaseBL, tiêm phụ thuộc vào qua đây
+        /// </summary>
+        /// <param name="baseDL">Interface để tiêm phụ thuộc được dùng</param>
+        /// Created by : TNMANH (29/09/2022)
         public BaseBL(IBaseDL<T> baseDL)
         {
             _baseDL = baseDL;
@@ -50,7 +59,6 @@ namespace MISA.WEB08.AMIS.BL
         {
             return _baseDL.GetDuplicateCode(recordCode);
         }
-
 
         /// <summary>
         /// API lấy mã record lớn nhất
@@ -87,8 +95,14 @@ namespace MISA.WEB08.AMIS.BL
         {
             // Lấy ra trường record code trong object recor
             var props = typeof(T).GetProperties();
+
+            // Tạo list các trường validate lỗi
             List<string> validateFailed = new List<string>();
+
+            // Tạo giá trị return
             string recordCode = "";
+
+            // Thực hiện vòng lặp để check lỗi validate
             foreach (var prop in props)
             {
                 var propName = prop.Name;
@@ -99,6 +113,7 @@ namespace MISA.WEB08.AMIS.BL
                     recordCode = propValue.ToString();
                 }
             }
+
             return recordCode;
         }
 
@@ -113,6 +128,7 @@ namespace MISA.WEB08.AMIS.BL
 
             // Lấy ra trường record code trong object recor
             string recordCode = GetRecordCode(record);
+
             // Kiểm tra xem mã có bị trùng chưa
             var testDuplicateCode = GetDuplicateCode(recordCode);
 
@@ -149,7 +165,11 @@ namespace MISA.WEB08.AMIS.BL
         {
             // Validate dữ liệu đầu vào
             var props = typeof(T).GetProperties();
+
+            // Tạo list các trường validate lỗi
             List<string> validateFailed = new List<string>();
+
+            // Thực hiện vòng lặp để check lỗi validate
             foreach (var prop in props)
             {
                 var propName = prop.Name;
@@ -176,6 +196,7 @@ namespace MISA.WEB08.AMIS.BL
                     )
                 };
             }
+
             return new ServiceResponse
             {
                 Success = true
@@ -335,8 +356,10 @@ namespace MISA.WEB08.AMIS.BL
         /// Created by : TNMANH (29/09/2022)
         public ServiceResponse DeleteRecord(Guid recordID)
         {
+            // thực hiện xóa 1 record
             var deletedRecordID = _baseDL.DeleteRecord(recordID);
 
+            // trả về kết quả
             if (deletedRecordID != Guid.Empty)
             {
                 return new ServiceResponse

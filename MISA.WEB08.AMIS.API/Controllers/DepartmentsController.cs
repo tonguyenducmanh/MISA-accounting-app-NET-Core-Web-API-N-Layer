@@ -16,11 +16,17 @@ namespace MISA.WEB08.AMIS.API
     public class DepartmentsController : BasesController<Department>
     {
 
+        /// <summary>
+        /// các field dùng trong class DepartmentsController
+        /// </summary>
+        /// Created by : TNMANH (24/09/2022)
         #region Field
 
         private IDepartmentBL _departmentBL;
 
         #endregion
+
+        #region Constructor
 
         /// <summary>
         /// Hàm khởi tạo để truyền configuration dùng để get connection string từ file
@@ -28,8 +34,6 @@ namespace MISA.WEB08.AMIS.API
         /// </summary>
         /// <param name="configuration"></param>
         /// Created by : TNMANH (24/09/2022)
-        #region Constructor
-
         public DepartmentsController(IDepartmentBL departmentBL) : base(departmentBL)
         {
             _departmentBL = departmentBL;

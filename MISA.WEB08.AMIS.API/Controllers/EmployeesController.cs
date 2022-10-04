@@ -15,12 +15,17 @@ namespace MISA.WEB08.AMIS.API
     [ApiController]
     public class EmployeesController : BasesController<Employee>
     {
-
+        /// <summary>
+        /// Các field của class EmployeesController
+        /// </summary>
+        /// Created by : TNMANH (24/09/2022)
         #region Field
 
         private IEmployeeBL _employeeBL;
 
         #endregion
+
+        #region Constructor
 
         /// <summary>
         /// Hàm khởi tạo để truyền configuration dùng để get connection string từ file
@@ -28,8 +33,6 @@ namespace MISA.WEB08.AMIS.API
         /// </summary>
         /// <param name="configuration"></param>
         /// Created by : TNMANH (24/09/2022)
-        #region Constructor
-
         public EmployeesController(IEmployeeBL employeeBL): base(employeeBL)
         {
             _employeeBL = employeeBL;

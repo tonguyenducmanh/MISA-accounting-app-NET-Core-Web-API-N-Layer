@@ -23,6 +23,7 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="limit">Số lượng kết quả trả về của 1 bảng</param>
         /// <param name="offset">Start Index của bảng</param>
         /// <returns>Tổng số bản ghi, tổng số trang, số trang hiện tại, danh sách kết quả</returns>
+        /// Created by : TNMANH (24/09/2022)
         public PagingData FilterEmployee(
              string? keyword,
             int? pageNumber,

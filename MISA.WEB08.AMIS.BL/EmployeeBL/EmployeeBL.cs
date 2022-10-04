@@ -22,7 +22,11 @@ namespace MISA.WEB08.AMIS.BL
         #endregion
 
         #region Constructor
-
+        /// <summary>
+        /// Hàm khởi tạo để tiêm phụ thuộc vào class
+        /// </summary>
+        /// <param name="employeeDL"></param>
+        /// Created by : TNMANH (29/09/2022)
         public EmployeeBL(IEmployeeDL employeeDL) : base(employeeDL)
         {
             _employeeDL = employeeDL;
@@ -42,6 +46,7 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="limit">Số lượng kết quả trả về của 1 bảng</param>
         /// <param name="offset">Start Index của bảng</param>
         /// <returns>Tổng số bản ghi, tổng số trang, số trang hiện tại, danh sách kết quả</returns>
+        /// Created by : TNMANH (29/09/2022)
         public PagingData FilterEmployee(string? keyword, int? pageNumber, int? pageSize)
         {
             return _employeeDL.FilterEmployee(keyword, pageNumber, pageSize);

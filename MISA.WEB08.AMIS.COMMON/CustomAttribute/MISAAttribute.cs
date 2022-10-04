@@ -38,7 +38,11 @@
         #endregion
 
         #region Constructor
-
+        /// <summary>
+        /// Hàm khởi tạo tùy chỉnh để trả về errorMessage tương ứng
+        /// </summary>
+        /// <param name="errorMessage">Đoạn mã báo lỗi</param>
+        /// Created by : TNMANH (24/09/2022)
         public MustHave(string errorMessage)
         {
             ErrorMessage = errorMessage;

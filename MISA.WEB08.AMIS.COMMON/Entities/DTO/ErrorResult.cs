@@ -43,6 +43,7 @@ namespace MISA.WEB08.AMIS.COMMON.Entities
         #endregion
 
         #region Constructor
+
         /// <summary>
         /// Hàm khởi tạo class
         /// </summary>
@@ -52,7 +53,6 @@ namespace MISA.WEB08.AMIS.COMMON.Entities
         /// <param name="moreInfo">Thông tin thêm</param>
         /// <param name="traceId">ID kết nối để dò lỗi sau này</param>
         /// Created by : TNMANH (21/09/2022)
-
         public ErrorResult(ErrorCode errorCode, string devMsg, string userMsg, dynamic? moreInfo, string? traceId = null)
         {
             ErrorCode = errorCode;

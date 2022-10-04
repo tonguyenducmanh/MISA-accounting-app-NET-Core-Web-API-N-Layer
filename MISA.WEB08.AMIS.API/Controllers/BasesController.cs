@@ -11,6 +11,10 @@ namespace MISA.WEB08.AMIS.API.Controllers
     [ApiController]
     public class BasesController<T> : ControllerBase
     {
+        /// <summary>
+        /// Các field được dùng trong class BaseController
+        /// </summary>
+        /// Created by: TNMANH (29/09/2022)
         #region Field
 
         private IBaseBL<T> _baseBL;
@@ -19,6 +23,11 @@ namespace MISA.WEB08.AMIS.API.Controllers
 
         #region Constructor
 
+        /// <summary>
+        /// Hàm constructor để thực hiện Dependencies Injection
+        /// </summary>
+        /// <param name="baseBL">Interface tương ứng</param>
+        /// Created by: TNMANH (29/09/2022)
         public BasesController(IBaseBL<T> baseBL)
         {
             _baseBL = baseBL;
@@ -42,12 +51,14 @@ namespace MISA.WEB08.AMIS.API.Controllers
                 // thực hiện gọi vào DB
                 var records = _baseBL.GetAllRecords();
 
-
+                // trả về status code và danh sách record
                 return StatusCode(StatusCodes.Status200OK, records);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+
+                // trả về status code và object thông báo lỗi
                 return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
                 (
                     ErrorCode.Exception,
@@ -72,6 +83,7 @@ namespace MISA.WEB08.AMIS.API.Controllers
             {
                 // Thực hiện gọi vào db
                 var duplicatedRecord = _baseBL.GetDuplicateCode(recordCode);
+
                 // Trả về Status code và kết quả
                 return StatusCode(StatusCodes.Status200OK, duplicatedRecord);
             }
@@ -100,7 +112,9 @@ namespace MISA.WEB08.AMIS.API.Controllers
         {
             try
             {
+                // thực hiện gọi vào db
                 var maxCode = _baseBL.GetMaxRecordCode();
+
                 // Trả về Status code và kết quả
                 return StatusCode(StatusCodes.Status200OK, maxCode);
             }
@@ -169,7 +183,10 @@ namespace MISA.WEB08.AMIS.API.Controllers
         {
             try
             {
+                // thực hiện gọi vào db
                 var result = _baseBL.InsertRecord(record);
+
+                // kiểm tra kết quả trả về từ db và trả về status code kèm data tương ứng
                 if (result.Success)
                 {
                     return StatusCode(StatusCodes.Status200OK, result.Data);
@@ -182,6 +199,8 @@ namespace MISA.WEB08.AMIS.API.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+
+                // Trả về status code kèm theo kết quả báo lỗi
                 return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
                 (
                     ErrorCode.Exception,
@@ -210,7 +229,10 @@ namespace MISA.WEB08.AMIS.API.Controllers
 
             try
             {
+                // thực hiện cập nhật dữ liệu trong db
                 var result = _baseBL.UpdateRecord(recordID, record);
+
+                // kiểm tra kết quả trả về từ db và trả về status code kèm data tương ứng
                 if (result.Success)
                 {
                     return StatusCode(StatusCodes.Status200OK, result.Data);
@@ -223,6 +245,8 @@ namespace MISA.WEB08.AMIS.API.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+
+                // Trả về status code kèm theo kết quả báo lỗi
                 return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
                 (
                     ErrorCode.Exception,
@@ -249,7 +273,9 @@ namespace MISA.WEB08.AMIS.API.Controllers
         {
             try
             {
+                // thực hiện xóa 1 bản ghi trong db
                 var record = _baseBL.DeleteRecord(recordID);
+
                 // trả về status code và kết quả
                 return StatusCode(StatusCodes.Status200OK, record);
             }

@@ -43,9 +43,7 @@ namespace MISA.WEB08.AMIS.BL
         #endregion
 
         // Danh sách các API liên quan tới việc thêm mới 1 record vào 1 table
-
         #region PostMethod
-
 
         /// <summary>
         /// API Thêm mới 1 record
