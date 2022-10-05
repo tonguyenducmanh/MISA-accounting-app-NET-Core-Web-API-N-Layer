@@ -241,6 +241,15 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Proc_{0}_DeleteManyRecord.
+        /// </summary>
+        public static string Proc_Delete_ManyRecord {
+            get {
+                return ResourceManager.GetString("Proc_Delete_ManyRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Proc_{0}_DeleteOneRecord.
         /// </summary>
         public static string Proc_Delete_OneRecord {

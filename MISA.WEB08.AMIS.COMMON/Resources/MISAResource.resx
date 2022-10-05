@@ -201,6 +201,10 @@
     <value>Proc_employee_GetPaging</value>
     <comment>Tên proc lọc danh sách người dùng có điều kiện</comment>
   </data>
+  <data name="Proc_Delete_ManyRecord" xml:space="preserve">
+    <value>Proc_{0}_DeleteManyRecord</value>
+    <comment>Tên proc xóa nhiều record trong 1 database</comment>
+  </data>
   <data name="Proc_Delete_OneRecord" xml:space="preserve">
     <value>Proc_{0}_DeleteOneRecord</value>
     <comment>Tên proc xóa 1 nhân viên trong Database</comment>

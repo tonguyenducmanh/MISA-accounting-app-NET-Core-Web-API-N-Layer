@@ -38,7 +38,21 @@ namespace MISA.WEB08.AMIS.DL
 
         #endregion
 
+        // Danh sách các API liên quan tới sửa nhân viên
         #region PutMethod
+
+        #endregion
+
+        // Danh sách các API liên quan tới xóa nhân viên
+        #region DeleteMethod
+
+        /// <summary>
+        /// API xóa nhiều nhân viên theo danh sách IDs
+        /// </summary>
+        /// <param name="employeeIDs"></param>
+        /// <returns>True hoặc false, true là xóa thành công, false là xóa không thành công</returns>
+        /// Created by : TNMANH (05/10/2022)
+        public bool DeleteManyEmployee(Guid[] employeeIDs);
 
         #endregion
 

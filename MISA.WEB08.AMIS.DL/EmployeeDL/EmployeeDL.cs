@@ -1,15 +1,8 @@
 ﻿using Dapper;
-using MISA.WEB08.AMIS.COMMON.CustomAttribute;
-using MISA.Web08.AMIS.COMMON.Enums;
 using MISA.WEB08.AMIS.COMMON.Entities;
 using MISA.WEB08.AMIS.COMMON.Resources;
 using MySqlConnector;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+using static Dapper.SqlMapper;
 
 namespace MISA.WEB08.AMIS.DL
 {
@@ -28,10 +21,6 @@ namespace MISA.WEB08.AMIS.DL
         /// Created by : TNMANH (24/09/2022)
         public PagingData FilterEmployee(string? keyword, int? pageNumber, int? pageSize)
         {
-            // Tạo connection
-            string connectionString = DataContext.MySQLConnectionString;
-            var sqlConnection = new MySqlConnection(connectionString);
-
             // Chuẩn bị câu lệnh MySQL
             string storeProcedureName = MISAResource.ProcGetEmployeeFilter;
 
@@ -42,15 +31,27 @@ namespace MISA.WEB08.AMIS.DL
             parameters.Add(MISAResource.Param_PageSize, pageSize);
             parameters.Add(MISAResource.Param_Search, keyword);
 
-            // Thực hiện gọi vào trong Database
-            var employeesFiltered = sqlConnection.QueryMultiple(
-                    storeProcedureName,
-                    parameters,
-                    commandType: System.Data.CommandType.StoredProcedure
-                );
+            // Tạo các giá trị trả về
+            GridReader employeesFiltered;
+            List<Employee> employees;
+            int totalRecord;
 
-            var employees = employeesFiltered.Read<Employee>().ToList();
-            var totalRecord = (int)employeesFiltered.ReadSingle().TotalCount;
+            // Tạo connection
+            string connectionString = DataContext.MySQLConnectionString;
+            using (var sqlConnection = new MySqlConnection(connectionString))
+            {
+                // Thực hiện gọi vào trong Database
+                    employeesFiltered = sqlConnection.QueryMultiple(
+                        storeProcedureName,
+                        parameters,
+                        commandType: System.Data.CommandType.StoredProcedure
+                    );
+
+                // Lấy ra các kết quả tương ứng với từng table (prop này có 2 table trả về)
+                employees = employeesFiltered.Read<Employee>().ToList();
+                totalRecord = (int)employeesFiltered.ReadSingle().TotalCount;
+
+            }
 
             // Tạo ra số trang
             int? totalPage;
@@ -80,15 +81,88 @@ namespace MISA.WEB08.AMIS.DL
 
         #endregion
 
-        // Danh sách các API liên quan tới việc tạo mới nhân viên
-        #region PostMethod
+        // Danh sách các API liên quan tới xóa nhân viên
+        #region DeleteMethod
 
+        /// <summary>
+        /// API xóa nhiều nhân viên theo danh sách IDs
+        /// </summary>
+        /// <param name="employeeIDs"></param>
+        /// <returns>True hoặc false, true là xóa thành công, false là xóa không thành công</returns>
+        /// Created by : TNMANH (05/10/2022)
+        public bool DeleteManyEmployee(Guid[] employeeIDs)
+        {
+            // Khởi tạo store procedure
+            string storeProcedureName = string.Format(MISAResource.Proc_Delete_ManyRecord, typeof(Employee).Name.ToLower());
+
+            // Tạo biến số lượng kết quả
+            int nunmberOfAffectedRows = 0;
+            bool result = false;
+
+            // Khởi tạo các parameter truyền vào trong store procedure
+            DynamicParameters parameters = new DynamicParameters();
+
+            // Xử lý mảng string đầu vào thành chuỗi có dạng '"abc", "cde"'
+            List<string> tempIDList = new List<string>();
+
+            foreach (var employee in employeeIDs)
+            {
+                tempIDList.Add($"'{employee}'");
+            }
+
+            // Nếu list rỗng result false luôn
+            if (tempIDList.Count == 0)
+            {
+                return result;
+            }
+
+            string listStringIDs = string.Join(",", tempIDList);
+
+            //thêm giá trị vào trong parameters
+            parameters.Add(MISAResource.Param_ID, listStringIDs);
+
+            // Tạo connection
+            using (var sqlConnection = new MySqlConnection(DataContext.MySQLConnectionString))
+            {
+                sqlConnection.Open();
+
+                // Khởi tạo transaction
+                using (var sqlTransaction = sqlConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        // thực hiện truy vấn tới database
+                        nunmberOfAffectedRows = sqlConnection.Execute(
+                        storeProcedureName,
+                        parameters,
+                        commandType: System.Data.CommandType.StoredProcedure,
+                        transaction: sqlTransaction
+                        );
+
+
+                        // khi trả về truy vấn thành công thì chuyển result về true
+                        if (nunmberOfAffectedRows > 0)
+                        {
+                            result = true;
+                        }
+
+                        // commit transaction nếu thành công
+                        sqlTransaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+
+                        // Rollback transaction nếu có bất kỳ 1 exception nào
+                        sqlTransaction.Rollback();
+                    }
+                }
+            };
+
+            return result;
+
+        }
         #endregion
-
-        #region PutMethod
-
-        #endregion
-
 
     }
 }

@@ -82,18 +82,42 @@ namespace MISA.WEB08.AMIS.API
 
         #endregion
 
+        // Danh sách các API liên quan tới xóa nhân viên
+        #region DeleteMethod
 
-        //// Danh sách các API liên quan tới việc tạo mới nhân viên
-        #region PostMethod
+        /// <summary>
+        /// API xóa nhiều nhân viên theo danh sách IDs
+        /// </summary>
+        /// <param name="employeeIDs"></param>
+        /// <returns>True hoặc false, true là xóa thành công, false là xóa không thành công</returns>
+        /// Created by : TNMANH (05/10/2022)
+        [HttpPost("delete-many")]
+        public IActionResult DeleteManyEmployee([FromBody]Guid[] employeeIDs)
+        {
+            try
+            {
+                // thực hiện xóa 1 bản ghi trong db
+                var result = _employeeBL.DeleteManyEmployee(employeeIDs);
+
+                // trả về status code và kết quả
+                return StatusCode(StatusCodes.Status200OK, result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                // trả về status code và object báo lỗi
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult(
+                    ErrorCode.Exception,
+                    MISAResource.DevMsg_Exception,
+                    MISAResource.UserMsg_Exception,
+                    MISAResource.MoreInfo_Exception,
+                    HttpContext.TraceIdentifier
+                    ));
+            }
+        }
 
         #endregion
-
-
-
-        #region PutMethod
-
-        #endregion
-
 
     }
 }
