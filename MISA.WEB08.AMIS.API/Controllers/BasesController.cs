@@ -277,7 +277,14 @@ namespace MISA.WEB08.AMIS.API.Controllers
                 var record = _baseBL.DeleteRecord(recordID);
 
                 // trả về status code và kết quả
-                return StatusCode(StatusCodes.Status200OK, record);
+                if (record.Success)
+                {
+                    return StatusCode(StatusCodes.Status200OK, record);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, record);
+                }
             }
             catch (Exception ex)
             {

@@ -95,28 +95,21 @@ namespace MISA.WEB08.AMIS.DL
             // Khởi tạo store procedure
             string storeProcedureName = string.Format(MISAResource.Proc_Delete_ManyRecord, typeof(Employee).Name.ToLower());
 
+            // Khởi tạo các parameter truyền vào trong store procedure
+            DynamicParameters parameters = new DynamicParameters();
+
             // Tạo biến số lượng kết quả
             int nunmberOfAffectedRows = 0;
             bool result = false;
 
-            // Khởi tạo các parameter truyền vào trong store procedure
-            DynamicParameters parameters = new DynamicParameters();
-
             // Xử lý mảng string đầu vào thành chuỗi có dạng '"abc", "cde"'
-            List<string> tempIDList = new List<string>();
+            string listStringIDs = GenerateParamDeleteMany(employeeIDs);
 
-            foreach (var employee in employeeIDs)
-            {
-                tempIDList.Add($"'{employee}'");
-            }
-
-            // Nếu list rỗng result false luôn
-            if (tempIDList.Count == 0)
+            // Nếu chuỗi rỗng return false luôn
+            if(listStringIDs == string.Empty)
             {
                 return result;
             }
-
-            string listStringIDs = string.Join(",", tempIDList);
 
             //thêm giá trị vào trong parameters
             parameters.Add(MISAResource.Param_ID, listStringIDs);
@@ -133,18 +126,11 @@ namespace MISA.WEB08.AMIS.DL
                     {
                         // thực hiện truy vấn tới database
                         nunmberOfAffectedRows = sqlConnection.Execute(
-                        storeProcedureName,
+                        storeProcedureName, 
                         parameters,
                         commandType: System.Data.CommandType.StoredProcedure,
                         transaction: sqlTransaction
                         );
-
-
-                        // khi trả về truy vấn thành công thì chuyển result về true
-                        if (nunmberOfAffectedRows > 0)
-                        {
-                            result = true;
-                        }
 
                         // commit transaction nếu thành công
                         sqlTransaction.Commit();
@@ -159,9 +145,46 @@ namespace MISA.WEB08.AMIS.DL
                 }
             };
 
+            // khi trả về truy vấn thành công thì chuyển result về true
+            if (nunmberOfAffectedRows > 0)
+            {
+                result = true;
+            }
+
             return result;
 
         }
+        #endregion
+
+        #region OtherMethod
+
+        /// <summary>
+        /// Method giúp biến mảng guid record id thành chuỗi để truyền vào param của procedure cho method deletemany
+        /// </summary>
+        /// <param name="recordIDs">mảng guid truyền vào</param>
+        /// <returns>chuỗi recordID</returns>
+        /// Created by : TNMANH (05/10/2022)
+        public string GenerateParamDeleteMany(Guid[] recordIDs)
+        {
+            try
+            {
+                // Nếu list rỗng result chuỗi rỗng luôn
+                if (recordIDs.Length == 0)
+                {
+                    return string.Empty;
+                }
+
+                // Nối List vào thành 1 chuỗi
+                return string.Join(",", recordIDs);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                // Có lỗi luôn return về chuỗi rỗng
+                return string.Empty;
+            }
+        } 
         #endregion
 
     }

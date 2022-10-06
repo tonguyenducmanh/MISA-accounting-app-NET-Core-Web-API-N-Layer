@@ -213,7 +213,7 @@ namespace MISA.WEB08.AMIS.BL
         /// API Thêm mới 1 record
         /// </summary>
         /// <param name="record">Thông tin record mới</param>
-        /// <returns>Status 201 created, recordID</returns>
+        /// <returns>ServiceResponse</returns>
         /// Created by : TNMANH (29/09/2022)
         public ServiceResponse InsertRecord(T record)
         {
@@ -278,7 +278,7 @@ namespace MISA.WEB08.AMIS.BL
         /// </summary>
         /// <param name="recordID">ID của record định sửa</param>
         /// <param name="record">Giá trị của record sửa</param>
-        /// <returns>Status 200 OK, recordID / Status 400 badrequest</returns>
+        /// <returns>ServiceResponse</returns>
         /// Created by : TNMANH (29/09/2022)
         public ServiceResponse UpdateRecord(Guid recordID, T record)
         {
@@ -352,7 +352,7 @@ namespace MISA.WEB08.AMIS.BL
         /// API xóa 1 record dựa vào ID
         /// </summary>
         /// <param name="recordID">ID của record</param>
-        /// <returns>Status 200 OK, recordID / Status 400 badrequest</returns>
+        /// <returns>ServiceResponse</returns>
         /// Created by : TNMANH (29/09/2022)
         public ServiceResponse DeleteRecord(Guid recordID)
         {

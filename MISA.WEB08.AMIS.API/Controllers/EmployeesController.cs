@@ -100,7 +100,14 @@ namespace MISA.WEB08.AMIS.API
                 var result = _employeeBL.DeleteManyEmployee(employeeIDs);
 
                 // trả về status code và kết quả
-                return StatusCode(StatusCodes.Status200OK, result);
+                if (result)
+                {
+                    return StatusCode(StatusCodes.Status200OK, result);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, result);
+                }
             }
             catch (Exception ex)
             {
