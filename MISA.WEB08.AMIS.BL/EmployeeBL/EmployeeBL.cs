@@ -65,6 +65,13 @@ namespace MISA.WEB08.AMIS.BL
         /// Created by : TNMANH (05/10/2022)
         public bool DeleteManyEmployee(Guid[] employeeIDs)
         {
+            // giá trị rỗng trả về false luôn k gọi tới database nữa
+            if(employeeIDs.Length == 0)
+            {
+                return false;
+            }
+
+            // trả về bool khi xóa nhiều
             return _employeeDL.DeleteManyEmployee(employeeIDs);
         }
 

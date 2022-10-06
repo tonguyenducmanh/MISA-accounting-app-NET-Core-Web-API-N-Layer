@@ -103,13 +103,7 @@ namespace MISA.WEB08.AMIS.DL
             bool result = false;
 
             // Xử lý mảng string đầu vào thành chuỗi có dạng '"abc", "cde"'
-            string listStringIDs = GenerateParamDeleteMany(employeeIDs);
-
-            // Nếu chuỗi rỗng return false luôn
-            if(listStringIDs == string.Empty)
-            {
-                return result;
-            }
+            string listStringIDs = string.Join(",", employeeIDs);
 
             //thêm giá trị vào trong parameters
             parameters.Add(MISAResource.Param_ID, listStringIDs);
@@ -156,36 +150,6 @@ namespace MISA.WEB08.AMIS.DL
         }
         #endregion
 
-        #region OtherMethod
-
-        /// <summary>
-        /// Method giúp biến mảng guid record id thành chuỗi để truyền vào param của procedure cho method deletemany
-        /// </summary>
-        /// <param name="recordIDs">mảng guid truyền vào</param>
-        /// <returns>chuỗi recordID</returns>
-        /// Created by : TNMANH (05/10/2022)
-        public string GenerateParamDeleteMany(Guid[] recordIDs)
-        {
-            try
-            {
-                // Nếu list rỗng result chuỗi rỗng luôn
-                if (recordIDs.Length == 0)
-                {
-                    return string.Empty;
-                }
-
-                // Nối List vào thành 1 chuỗi
-                return string.Join(",", recordIDs);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-
-                // Có lỗi luôn return về chuỗi rỗng
-                return string.Empty;
-            }
-        } 
-        #endregion
 
     }
 }
