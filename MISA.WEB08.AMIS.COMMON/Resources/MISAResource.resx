@@ -209,6 +209,10 @@
     <value>Proc_{0}_DeleteOneRecord</value>
     <comment>Tên proc xóa 1 nhân viên trong Database</comment>
   </data>
+  <data name="Proc_ExportToExcel" xml:space="preserve">
+    <value>Proc_{0}_ExportAll</value>
+    <comment>Tên proc xuất khẩu toàn bộ record ra file excell</comment>
+  </data>
   <data name="Proc_GetAll" xml:space="preserve">
     <value>Proc_{0}_GetAll</value>
     <comment>Tên proc getall tùy thuộc vào từng table trong Database</comment>

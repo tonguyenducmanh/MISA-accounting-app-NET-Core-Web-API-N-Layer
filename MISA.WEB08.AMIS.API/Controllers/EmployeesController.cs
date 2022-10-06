@@ -4,6 +4,8 @@ using MISA.WEB08.AMIS.API.Controllers;
 using MISA.WEB08.AMIS.BL;
 using MISA.WEB08.AMIS.COMMON.Entities;
 using MISA.WEB08.AMIS.COMMON.Resources;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
+using System.Drawing.Printing;
 
 namespace MISA.WEB08.AMIS.API
 {
@@ -42,6 +44,47 @@ namespace MISA.WEB08.AMIS.API
 
         /// danh sách các API liên quan tới việc lấy thông tin nhân viên
         #region GETMethod
+
+        /// <summary>
+        /// API lấy ra danh sách nhân viên theo các trường cố định
+        /// của class EmployeeExport
+        /// </summary>
+        /// <returns>Danh sách nhân viên map theo class EmployeeExport</returns>
+        /// Created by : TNMANH (06/10/2022)
+        [HttpGet("export-all")]
+        public IActionResult GetExportEmployee()
+        {
+            try
+            {
+                // Lấy danh sách nhân viên theo filter
+                var employeeExport =  _employeeBL.GetExportEmployee();
+
+
+                // Trả về status code kèm theo object kết quả
+                if (employeeExport != null)
+                {
+                    return StatusCode(StatusCodes.Status200OK, employeeExport);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                // Trả về status code kèm theo object thông báo lỗi
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult(
+                    ErrorCode.Exception,
+                    MISAResource.DevMsg_Exception,
+                    MISAResource.UserMsg_Exception,
+                    MISAResource.MoreInfo_Exception,
+                    HttpContext.TraceIdentifier));
+            }
+
+        }
+
 
         /// <summary>
         /// API lọc danh sách nhân viên theo các điều kiện cho trước

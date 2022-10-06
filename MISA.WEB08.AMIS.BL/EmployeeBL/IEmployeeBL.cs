@@ -13,6 +13,14 @@ namespace MISA.WEB08.AMIS.BL
         #region GetMethod
 
         /// <summary>
+        /// API lấy ra danh sách nhân viên theo các trường cố định
+        /// của class EmployeeExport
+        /// </summary>
+        /// <returns>Danh sách nhân viên map theo class EmployeeExport</returns>
+        /// Created by : TNMANH (06/10/2022)
+        public IEnumerable<EmployeeExport> GetExportEmployee();
+
+        /// <summary>
         /// API lọc danh sách nhân viên theo các điều kiện cho trước
         /// </summary>
         /// <param name="keyword">Từ khóa tìm kiếm (mã, tên, số điện thoại của nhân viên)</param>

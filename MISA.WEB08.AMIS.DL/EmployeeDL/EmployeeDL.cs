@@ -12,6 +12,32 @@ namespace MISA.WEB08.AMIS.DL
         #region GetMethod
 
         /// <summary>
+        /// API lấy ra danh sách nhân viên theo các trường cố định
+        /// của class EmployeeExport
+        /// </summary>
+        /// <returns>Danh sách nhân viên map theo class EmployeeExport</returns>
+        /// Created by : TNMANH (06/10/2022)
+        public IEnumerable<EmployeeExport> GetExportEmployee()
+        {
+            // Khởi tạo store procedure
+            string storeProcedureName = string.Format(MISAResource.Proc_ExportToExcel, typeof(Employee).Name.ToLower());
+
+            // Tạo connection
+            string connectionString = DataContext.MySQLConnectionString;
+            using (var sqlConnection = new MySqlConnection(connectionString))
+            {
+                // thực hiện gọi vào DB
+                var records = sqlConnection.Query<EmployeeExport>(
+                    storeProcedureName
+                    , commandType: System.Data.CommandType.StoredProcedure
+                    );
+                return records;
+            };
+
+        }
+
+
+        /// <summary>
         /// API lọc danh sách nhân viên theo các điều kiện cho trước
         /// </summary>
         /// <param name="keyword">Từ khóa tìm kiếm (mã, tên, số điện thoại của nhân viên)</param>

@@ -40,6 +40,18 @@ namespace MISA.WEB08.AMIS.BL
         #region GetMethod
 
         /// <summary>
+        /// Method giúp trả về file excell danh sách nhân viên
+        /// của class EmployeeExport
+        /// </summary>
+        /// <returns>File excell danh sách nhân viên</returns>
+        /// Created by : TNMANH (06/10/2022)
+        public IEnumerable<EmployeeExport> GetExportEmployee()
+        {
+            return _employeeDL.GetExportEmployee();
+        }
+
+
+        /// <summary>
         /// API lọc danh sách nhân viên theo các điều kiện cho trước
         /// </summary>
         /// <param name="keyword">Từ khóa tìm kiếm (mã, tên, số điện thoại của nhân viên)</param>

@@ -259,6 +259,15 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Proc_{0}_ExportAll.
+        /// </summary>
+        public static string Proc_ExportToExcel {
+            get {
+                return ResourceManager.GetString("Proc_ExportToExcel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Proc_{0}_GetByID.
         /// </summary>
         public static string Proc_Get_ByID {
