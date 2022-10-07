@@ -4,8 +4,6 @@ using MISA.WEB08.AMIS.API.Controllers;
 using MISA.WEB08.AMIS.BL;
 using MISA.WEB08.AMIS.COMMON.Entities;
 using MISA.WEB08.AMIS.COMMON.Resources;
-using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
-using System.Drawing.Printing;
 
 namespace MISA.WEB08.AMIS.API
 {
@@ -52,18 +50,19 @@ namespace MISA.WEB08.AMIS.API
         /// <returns>Danh sách nhân viên map theo class EmployeeExport</returns>
         /// Created by : TNMANH (06/10/2022)
         [HttpGet("export-all")]
-        public IActionResult GetExportEmployee()
+        public  IActionResult GetExportEmployee()
         {
             try
             {
                 // Lấy danh sách nhân viên theo filter
-                var employeeExport =  _employeeBL.GetExportEmployee();
+                var employeeExportFile =  _employeeBL.GetExportEmployee();
 
+                string excelName = $"Danh sách nhân viên-{DateTime.Now.ToString("ddMMyyyy")}.xlsx";
 
                 // Trả về status code kèm theo object kết quả
-                if (employeeExport != null)
-                {
-                    return StatusCode(StatusCodes.Status200OK, employeeExport);
+                if (employeeExportFile != null)
+                {   
+                    return StatusCode(StatusCodes.Status200OK, true);
                 }
                 else
                 {

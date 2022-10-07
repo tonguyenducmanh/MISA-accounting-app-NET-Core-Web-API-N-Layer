@@ -27,7 +27,7 @@ namespace MISA.WEB08.AMIS.DL
             using (var sqlConnection = new MySqlConnection(connectionString))
             {
                 // thực hiện gọi vào DB
-                var records = sqlConnection.Query<EmployeeExport>(
+                var records =  sqlConnection.Query<EmployeeExport>(
                     storeProcedureName
                     , commandType: System.Data.CommandType.StoredProcedure
                     );
