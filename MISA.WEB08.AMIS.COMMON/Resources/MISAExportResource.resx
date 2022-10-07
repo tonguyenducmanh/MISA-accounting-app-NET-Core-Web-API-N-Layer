@@ -129,6 +129,10 @@
     <value>Tên ngân hàng</value>
     <comment>Tên ngân hàng trong db</comment>
   </data>
+  <data name="ContentType" xml:space="preserve">
+    <value>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</value>
+    <comment>ContentType để chèn vào header cho api export</comment>
+  </data>
   <data name="DateOfBirth" xml:space="preserve">
     <value>Ngày sinh</value>
     <comment>Ngày sinh trong db</comment>
@@ -140,6 +144,10 @@
   <data name="EmployeeCode" xml:space="preserve">
     <value>Mã nhân viên</value>
     <comment>Mã nhân viên trong db</comment>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>Danh_sach_nhan_vien.xlsx</value>
+    <comment>Tên file excell sẽ được lưu</comment>
   </data>
   <data name="FullName" xml:space="preserve">
     <value>Tên nhân viên</value>

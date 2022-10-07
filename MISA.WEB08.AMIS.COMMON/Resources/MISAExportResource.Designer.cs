@@ -88,6 +88,15 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.
+        /// </summary>
+        public static string ContentType {
+            get {
+                return ResourceManager.GetString("ContentType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ngày sinh.
         /// </summary>
         public static string DateOfBirth {
@@ -111,6 +120,15 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         public static string EmployeeCode {
             get {
                 return ResourceManager.GetString("EmployeeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Danh_sach_nhan_vien.xlsx.
+        /// </summary>
+        public static string FileName {
+            get {
+                return ResourceManager.GetString("FileName", resourceCulture);
             }
         }
         

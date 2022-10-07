@@ -19,7 +19,7 @@ namespace MISA.WEB08.AMIS.BL
         /// </summary>
         /// <returns>Danh sách nhân viên map theo class EmployeeExport</returns>
         /// Created by : TNMANH (06/10/2022)
-        public Stream GetExportEmployee();
+        public byte[] GetExportEmployee();
 
         /// <summary>
         /// API lọc danh sách nhân viên theo các điều kiện cho trước

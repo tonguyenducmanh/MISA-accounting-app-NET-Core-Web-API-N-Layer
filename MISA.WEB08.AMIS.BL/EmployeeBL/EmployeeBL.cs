@@ -52,7 +52,7 @@ namespace MISA.WEB08.AMIS.BL
         /// </summary>
         /// <returns>File excell danh sách nhân viên</returns>
         /// Created by : TNMANH (06/10/2022)
-        public Stream GetExportEmployee()
+        public byte[] GetExportEmployee()
         {
 
             var employeeList = _employeeDL.GetExportEmployee();
@@ -60,11 +60,6 @@ namespace MISA.WEB08.AMIS.BL
             // thêm license để dùng free
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-            MemoryStream stream = new MemoryStream();
-
-            var existingFile = new FileInfo(@"C:\Users\NAM BO\Desktop\temp.xlsx");
-            if (existingFile.Exists)
-                existingFile.Delete();
 
             using (ExcelPackage package = new ExcelPackage())
             {
@@ -155,10 +150,9 @@ namespace MISA.WEB08.AMIS.BL
 
                 #endregion
 
-                // Trả file này về bên controller để tiến hành hỏi lưu file
-                package.SaveAs(existingFile);
-                
-                return stream;
+                // Trả dòng này để truyền qua bên controller và lưu lại sau
+                var excelData= package.GetAsByteArray();
+                return excelData;
             }
 
 
