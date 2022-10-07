@@ -148,10 +148,30 @@ namespace MISA.WEB08.AMIS.BL
 
                 #endregion
 
+                #region FormatColumn
+
+                int lastRecord = employeeList.Count() + 4;
+
+                // Format lại các trường như ngày tháng hay giới tinh, căn lề, bắt đầu từ số 4
+                // vì trong excel index đánh từ 1 chứ k phải 0 như trong lập trình
+
+                // Format cột ngày sinh
+                ws.Cells[$"E4:E{lastRecord}"].Style.Numberformat.Format = MISAExportResource.DateFormat;
+                ws.Cells[$"E4:E{lastRecord}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                // Format cột số thứ tự
+                ws.Cells[$"A4:A{lastRecord}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+
+                // Format cột thẻ ngân hàng về dạng số
+                ws.Cells[$"H4:H{lastRecord}"].Style.Numberformat.Format = MISAExportResource.NumberFormat;
+                ws.Cells[$"H4:H{lastRecord}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+
+                #endregion
+
                 #endregion
 
                 // Trả dòng này để truyền qua bên controller và lưu lại sau
-                var excelData= package.GetAsByteArray();
+                var excelData = package.GetAsByteArray();
                 return excelData;
             }
 

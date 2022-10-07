@@ -97,6 +97,15 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to dd/mm/yyyy.
+        /// </summary>
+        public static string DateFormat {
+            get {
+                return ResourceManager.GetString("DateFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ngày sinh.
         /// </summary>
         public static string DateOfBirth {
@@ -120,6 +129,15 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         public static string EmployeeCode {
             get {
                 return ResourceManager.GetString("EmployeeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nữ.
+        /// </summary>
+        public static string Female {
+            get {
+                return ResourceManager.GetString("Female", resourceCulture);
             }
         }
         
@@ -151,11 +169,38 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nam.
+        /// </summary>
+        public static string Male {
+            get {
+                return ResourceManager.GetString("Male", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to STT.
         /// </summary>
         public static string NumberCount {
             get {
                 return ResourceManager.GetString("NumberCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #0.
+        /// </summary>
+        public static string NumberFormat {
+            get {
+                return ResourceManager.GetString("NumberFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Khác.
+        /// </summary>
+        public static string Other {
+            get {
+                return ResourceManager.GetString("Other", resourceCulture);
             }
         }
         

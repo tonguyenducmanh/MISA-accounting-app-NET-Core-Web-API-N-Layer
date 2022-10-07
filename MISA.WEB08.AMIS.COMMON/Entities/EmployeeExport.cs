@@ -48,7 +48,7 @@ namespace MISA.WEB08.AMIS.COMMON.Entities
         /// <summary>
         /// Số tài khoản ngân hàng của nhân viên
         /// </summary>
-        public string? BankAccount { get; set; }
+        public long? BankAccount { get; set; }
 
         /// <summary>
         /// Tên ngân hàng

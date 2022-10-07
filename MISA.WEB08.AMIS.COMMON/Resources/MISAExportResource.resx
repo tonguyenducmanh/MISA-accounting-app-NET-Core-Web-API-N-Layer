@@ -133,6 +133,10 @@
     <value>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</value>
     <comment>ContentType để chèn vào header cho api export</comment>
   </data>
+  <data name="DateFormat" xml:space="preserve">
+    <value>dd/mm/yyyy</value>
+    <comment>Định dạng ngày tháng trong excell</comment>
+  </data>
   <data name="DateOfBirth" xml:space="preserve">
     <value>Ngày sinh</value>
     <comment>Ngày sinh trong db</comment>
@@ -144,6 +148,10 @@
   <data name="EmployeeCode" xml:space="preserve">
     <value>Mã nhân viên</value>
     <comment>Mã nhân viên trong db</comment>
+  </data>
+  <data name="Female" xml:space="preserve">
+    <value>Nữ</value>
+    <comment>Giới tính nữ</comment>
   </data>
   <data name="FileName" xml:space="preserve">
     <value>Danh_sach_nhan_vien.xlsx</value>
@@ -157,9 +165,21 @@
     <value>Giới tính</value>
     <comment>Giới tính tỏng db</comment>
   </data>
+  <data name="Male" xml:space="preserve">
+    <value>Nam</value>
+    <comment>Giới tính nam</comment>
+  </data>
   <data name="NumberCount" xml:space="preserve">
     <value>STT</value>
     <comment>Cột số thứ tự</comment>
+  </data>
+  <data name="NumberFormat" xml:space="preserve">
+    <value>#0</value>
+    <comment>Định dạng số cơ bản trong excell</comment>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Khác</value>
+    <comment>Giới tinh khác</comment>
   </data>
   <data name="PositionName" xml:space="preserve">
     <value>Chức danh</value>
