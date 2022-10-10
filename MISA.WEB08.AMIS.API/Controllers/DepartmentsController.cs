@@ -41,9 +41,5 @@ namespace MISA.WEB08.AMIS.API
 
         #endregion
 
-        /// danh sách các API liên quan tới việc lấy thông tin
-        #region GETMethod
-
-        #endregion
     }
 }

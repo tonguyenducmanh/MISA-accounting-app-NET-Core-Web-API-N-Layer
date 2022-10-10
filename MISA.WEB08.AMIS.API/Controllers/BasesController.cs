@@ -7,6 +7,10 @@ using MISA.WEB08.AMIS.BL;
 
 namespace MISA.WEB08.AMIS.API.Controllers
 {
+    /// <summary>
+    /// Controler base chứa các api CRUD cơ bản
+    /// </summary>
+    /// Created by : TNMANH (29/09/2022)
     [Route("api/v1/[controller]")]
     [ApiController]
     public class BasesController<T> : ControllerBase
@@ -45,7 +49,6 @@ namespace MISA.WEB08.AMIS.API.Controllers
         [HttpGet("")]
         public IActionResult GetAllRecords()
         {
-
             try
             {
                 // thực hiện gọi vào DB

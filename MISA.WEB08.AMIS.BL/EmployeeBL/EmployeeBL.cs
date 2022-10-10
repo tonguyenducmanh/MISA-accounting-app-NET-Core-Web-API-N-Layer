@@ -164,7 +164,7 @@ namespace MISA.WEB08.AMIS.BL
 
                 // Format cột thẻ ngân hàng về dạng số
                 ws.Cells[$"H4:H{lastRecord}"].Style.Numberformat.Format = MISAExportResource.NumberFormat;
-                ws.Cells[$"H4:H{lastRecord}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[$"H4:H{lastRecord}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
 
                 #endregion
 
