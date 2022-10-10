@@ -111,7 +111,14 @@ namespace MISA.WEB08.AMIS.API
                 var employeeFiltered = _employeeBL.FilterEmployee(keyword, pageNumber, pageSize);
 
                 // Trả về status code kèm theo object kết quả
-                return StatusCode(StatusCodes.Status200OK, employeeFiltered);
+                if(employeeFiltered != null)
+                {
+                    return StatusCode(StatusCodes.Status200OK, employeeFiltered);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status204NoContent);
+                }
             }
             catch (Exception ex)
             {

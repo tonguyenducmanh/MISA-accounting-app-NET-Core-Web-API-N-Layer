@@ -53,9 +53,15 @@ namespace MISA.WEB08.AMIS.API.Controllers
             {
                 // thực hiện gọi vào DB
                 var records = _baseBL.GetAllRecords();
-
                 // trả về status code và danh sách record
-                return StatusCode(StatusCodes.Status200OK, records);
+                if(records != null)
+                {
+                    return StatusCode(StatusCodes.Status200OK, records);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status204NoContent);
+                }
             }
             catch (Exception ex)
             {
@@ -88,7 +94,14 @@ namespace MISA.WEB08.AMIS.API.Controllers
                 var duplicatedRecord = _baseBL.GetDuplicateCode(recordCode);
 
                 // Trả về Status code và kết quả
-                return StatusCode(StatusCodes.Status200OK, duplicatedRecord);
+                if(duplicatedRecord != null)
+                {
+                    return StatusCode(StatusCodes.Status200OK, duplicatedRecord);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status204NoContent);
+                }
             }
             catch (Exception ex)
             {
@@ -149,9 +162,15 @@ namespace MISA.WEB08.AMIS.API.Controllers
             {
                 // Lấy thông tin chi tiết 1 record
                 var record = _baseBL.GetRecordByID(recordID);
-
                 // Trả về status code và kết quả trả về
-                return StatusCode(StatusCodes.Status200OK, record);
+                if(record != null)
+                {
+                    return StatusCode(StatusCodes.Status200OK, record);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status204NoContent);
+                }
 
             }
             catch (Exception ex)
