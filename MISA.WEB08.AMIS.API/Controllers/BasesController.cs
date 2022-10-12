@@ -211,7 +211,7 @@ namespace MISA.WEB08.AMIS.API.Controllers
                 // kiểm tra kết quả trả về từ db và trả về status code kèm data tương ứng
                 if (result.Success)
                 {
-                    return StatusCode(StatusCodes.Status200OK, result.Data);
+                    return StatusCode(StatusCodes.Status201Created, result.Data);
                 }
                 else
                 {
