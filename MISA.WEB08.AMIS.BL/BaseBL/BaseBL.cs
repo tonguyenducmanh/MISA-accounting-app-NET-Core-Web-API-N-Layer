@@ -123,36 +123,13 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="record">record đầu vào</param>
         /// <returns>trả về ServiceResponse</returns>
         /// Created by : TNMANH (29/09/2022)
-        public ServiceResponse CheckDuplicateEmployeeCode(T record)
+        public virtual ServiceResponse CheckDuplicateCode(T record)
         {
-
-            // Lấy ra trường record code trong object recor
-            string recordCode = GetRecordCode(record);
-
-            // Kiểm tra xem mã có bị trùng chưa
-            var testDuplicateCode = GetDuplicateCode(recordCode);
-
-            if (testDuplicateCode != null)
+            return new ServiceResponse
             {
-                return new ServiceResponse
-                {
-                    Success = false,
-                    Data = new ErrorResult(
-                        ErrorCode.DuplicateCode,
-                        MISAResource.DevMsg_DuplicatedCode,
-                        MISAResource.UserMsg_DuplicatedCode,
-                        MISAResource.MoreInfo_DupplicatedCode
-                        )
-                };
-            }
-            else
-            {
-                return new ServiceResponse
-                {
-                    Success = true,
-                    Data = ""
-                };
-            }
+                Success = true,
+                Data = ""
+            };
         }
 
         /// <summary>
@@ -161,45 +138,12 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="record">Đối tượng record cần validate</param>
         /// <returns>Đối tượng ServiceRespone</returns>
         /// Created by : TNMANH (27/09/2022)
-        public ServiceResponse ValidateRequestData(T record)
+        public virtual ServiceResponse ValidateRequestData(T record)
         {
-            // Validate dữ liệu đầu vào
-            var props = typeof(T).GetProperties();
-
-            // Tạo list các trường validate lỗi
-            List<string> validateFailed = new List<string>();
-
-            // Thực hiện vòng lặp để check lỗi validate
-            foreach (var prop in props)
-            {
-                var propName = prop.Name;
-                var propValue = prop.GetValue(record);
-                var mustHave = (MustHave?)Attribute.GetCustomAttribute(prop, typeof(MustHave));
-                if (mustHave != null && string.IsNullOrEmpty(propValue?.ToString()))
-                {
-                    validateFailed.Add(mustHave.ErrorMessage);
-                }
-            }
-
-            // Check xem nếu có lỗi văng ra kết quả luôn khỏi chạy đoạn dưới
-            if (validateFailed.Count > 0)
-            {
-                return new ServiceResponse
-                {
-                    Success = false,
-                    Data =
-                    new ErrorResult(
-                    ErrorCode.EmptyCode,
-                    MISAResource.DevMsg_ValidateFailed,
-                    MISAResource.UserMsg_ValidateFailed,
-                    validateFailed
-                    )
-                };
-            }
-
             return new ServiceResponse
             {
-                Success = true
+                Success = true,
+                Data = ""
             };
         }
 
@@ -218,7 +162,7 @@ namespace MISA.WEB08.AMIS.BL
         public ServiceResponse InsertRecord(T record)
         {
             var validateResult = ValidateRequestData(record);
-            var checkDuplicateResult = CheckDuplicateEmployeeCode(record);
+            var checkDuplicateResult = CheckDuplicateCode(record);
 
             // trả về kết quả mã trùng trước
             if (checkDuplicateResult.Success == false)
@@ -236,7 +180,7 @@ namespace MISA.WEB08.AMIS.BL
                 var newRecordID = _baseDL.InsertRecord(record);
 
                 if (newRecordID != Guid.Empty)
-                {
+                {   
                     return new ServiceResponse
                     {
                         Success = true,
@@ -290,7 +234,7 @@ namespace MISA.WEB08.AMIS.BL
 
             if(originalRecordCode != currentRecordCode)
             {
-                var checkDuplicateResult = CheckDuplicateEmployeeCode(record);
+                var checkDuplicateResult = CheckDuplicateCode(record);
 
                 // trả về kết quả mã trùng trước
                 if (checkDuplicateResult.Success == false)

@@ -99,9 +99,9 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         /// <summary>
         ///   Looks up a localized string similar to EmployeeCode is existed, please try another code.
         /// </summary>
-        public static string DevMsg_DuplicatedCode {
+        public static string DevMsg_Employee_DuplicatedCode {
             get {
-                return ResourceManager.GetString("DevMsg_DuplicatedCode", resourceCulture);
+                return ResourceManager.GetString("DevMsg_Employee_DuplicatedCode", resourceCulture);
             }
         }
         
@@ -153,9 +153,9 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         /// <summary>
         ///   Looks up a localized string similar to https://openapi.misa.com/error-code/e002.
         /// </summary>
-        public static string MoreInfo_DupplicatedCode {
+        public static string MoreInfo_Employee_DupplicatedCode {
             get {
-                return ResourceManager.GetString("MoreInfo_DupplicatedCode", resourceCulture);
+                return ResourceManager.GetString("MoreInfo_Employee_DupplicatedCode", resourceCulture);
             }
         }
         
@@ -351,9 +351,9 @@ namespace MISA.WEB08.AMIS.COMMON.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Mã nhân viên đã tồn tại trong hệ thống, vui lòng sử dụng mã khác.
         /// </summary>
-        public static string UserMsg_DuplicatedCode {
+        public static string UserMsg_Employee_DuplicatedCode {
             get {
-                return ResourceManager.GetString("UserMsg_DuplicatedCode", resourceCulture);
+                return ResourceManager.GetString("UserMsg_Employee_DuplicatedCode", resourceCulture);
             }
         }
         

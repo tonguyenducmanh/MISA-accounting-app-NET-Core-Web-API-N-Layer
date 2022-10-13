@@ -133,7 +133,7 @@
     <value>Something wrong when try to delete this record</value>
     <comment>Thông báo cho dev lỗi xóa record</comment>
   </data>
-  <data name="DevMsg_DuplicatedCode" xml:space="preserve">
+  <data name="DevMsg_Employee_DuplicatedCode" xml:space="preserve">
     <value>EmployeeCode is existed, please try another code</value>
     <comment>Thông báo cho dev mã đã bị trùng</comment>
   </data>
@@ -157,7 +157,7 @@
     <value>https://openapi.misa.com/error-code/e009</value>
     <comment>Trang mô tả chi tiết thông tin xóa thất bại</comment>
   </data>
-  <data name="MoreInfo_DupplicatedCode" xml:space="preserve">
+  <data name="MoreInfo_Employee_DupplicatedCode" xml:space="preserve">
     <value>https://openapi.misa.com/error-code/e002</value>
     <comment>Trang mô tả chi tiết về mã trùng</comment>
   </data>
@@ -245,7 +245,7 @@
     <value>Có lỗi xảy ra khi cố gắng xóa trường này, vui lòng kiểm tra lại</value>
     <comment>Thông báo cho người dùng lỗi xóa record</comment>
   </data>
-  <data name="UserMsg_DuplicatedCode" xml:space="preserve">
+  <data name="UserMsg_Employee_DuplicatedCode" xml:space="preserve">
     <value>Mã nhân viên đã tồn tại trong hệ thống, vui lòng sử dụng mã khác</value>
     <comment>Thông báo cho người dùng mã đã bị trùng</comment>
   </data>

@@ -3,20 +3,10 @@ using MISA.Web08.AMIS.COMMON.Enums;
 using MISA.WEB08.AMIS.COMMON.Entities;
 using MISA.WEB08.AMIS.COMMON.Resources;
 using MISA.WEB08.AMIS.DL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
-using OfficeOpenXml.DataValidation;
-using System.IO;
-using OfficeOpenXml.ConditionalFormatting;
-using OfficeOpenXml.Style.XmlAccess;
 using OfficeOpenXml.Style;
 using System.Drawing;
+using System.ComponentModel.DataAnnotations;
 
 namespace MISA.WEB08.AMIS.BL
 {
@@ -261,6 +251,108 @@ namespace MISA.WEB08.AMIS.BL
             return 0d;
         }
 
+        /// <summary>
+        /// Method override lại từ base, để custom lại check trùng mã ứng với mã nhân viên
+        /// </summary>
+        /// <param name="record"></param>
+        /// <returns>ServiceResponse</returns>
+        /// Created by: TNMANH (13/10/2022)
+        public override ServiceResponse CheckDuplicateCode(Employee record)
+        {
+
+
+            // Lấy ra trường record code trong object recor
+            string recordCode = GetRecordCode(record);
+
+            // Kiểm tra xem mã có bị trùng chưa
+            var testDuplicateCode = GetDuplicateCode(recordCode);
+
+            if (testDuplicateCode != null)
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    Data = new ErrorResult(
+                        ErrorCode.DuplicateCode,
+                        MISAResource.DevMsg_Employee_DuplicatedCode,
+                        MISAResource.UserMsg_Employee_DuplicatedCode,
+                        MISAResource.MoreInfo_Employee_DupplicatedCode
+                        )
+                };
+            }
+            else
+            {
+                return new ServiceResponse
+                {
+                    Success = true,
+                    Data = ""
+                };
+            }
+        }
+
+        public override ServiceResponse ValidateRequestData(Employee record)
+        {
+            // Validate dữ liệu đầu vào
+            var props = typeof(Employee).GetProperties();
+
+            // Tạo list các trường validate lỗi
+            List<string> validateFailed = new List<string>();
+
+            // Thực hiện vòng lặp để check lỗi validate
+            foreach (var prop in props)
+            {
+                var propValue = prop.GetValue(record);
+
+                // Kiểm tra xem các trường bắt buộc nhập đã có chưa
+                var mustHave = (MustHave?)Attribute.GetCustomAttribute(prop, typeof(MustHave));
+                if (mustHave != null && string.IsNullOrEmpty(propValue?.ToString()))
+                {
+                    validateFailed.Add(mustHave.ErrorMessage);
+                }
+
+                // Kiểm tra xem các trường đã vượt quá độ dài tối đa chưa
+                var maxLength = (MaxLength?)Attribute.GetCustomAttribute(prop, typeof(MaxLength));
+                if(maxLength !=null && propValue.ToString().Length > maxLength.Length)
+                {
+                    validateFailed.Add(maxLength.ErrorMessage);
+                }
+
+                // Kiểm tra xem email đã đúng định dạng chưa
+                var emailValidate = (EmailValidate?)Attribute.GetCustomAttribute(prop, typeof(EmailValidate));
+                if(emailValidate != null && new EmailAddressAttribute().IsValid(propValue.ToString()) == false)
+                {
+                    validateFailed.Add(emailValidate.ErrorMessage);
+                }
+                
+                // Kiểm tra xem các trường chỉ nhập số đã đúng định dạng chưa
+                var numberValidate = (NumberValidate?)Attribute.GetCustomAttribute(prop, typeof(NumberValidate));
+                if(numberValidate != null && propValue.ToString().All(char.IsDigit) == false)
+                {
+                    validateFailed.Add(numberValidate.ErrorMessage);
+                }
+            }
+
+            // Check xem nếu có lỗi văng ra kết quả luôn khỏi chạy đoạn dưới
+            if (validateFailed.Count > 0)
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    Data =
+                    new ErrorResult(
+                    ErrorCode.EmptyCode,
+                    MISAResource.DevMsg_ValidateFailed,
+                    MISAResource.UserMsg_ValidateFailed,
+                    validateFailed
+                    )
+                };
+            }
+
+            return new ServiceResponse
+            {
+                Success = true
+            };
+        }
         #endregion
 
         #endregion
