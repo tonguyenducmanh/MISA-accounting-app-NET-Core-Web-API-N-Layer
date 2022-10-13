@@ -22,7 +22,7 @@
         /// Lỗi do mã để trống
         /// </summary>
         /// Created by : TNMANH (21/09/2022)
-        EmptyCode = 3,
+        ValidateFail = 3,
 
         /// <summary>
         /// Gọi vào DB để insert thất bại

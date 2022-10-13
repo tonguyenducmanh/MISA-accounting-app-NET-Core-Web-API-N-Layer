@@ -310,25 +310,28 @@ namespace MISA.WEB08.AMIS.BL
                     validateFailed.Add(mustHave.ErrorMessage);
                 }
 
-                // Kiểm tra xem các trường đã vượt quá độ dài tối đa chưa
-                var maxLength = (MaxLength?)Attribute.GetCustomAttribute(prop, typeof(MaxLength));
-                if(maxLength !=null && propValue.ToString().Length > maxLength.Length)
+                if (propValue != null && propValue.ToString() != String.Empty)
                 {
-                    validateFailed.Add(maxLength.ErrorMessage);
-                }
+                    // Kiểm tra xem các trường đã vượt quá độ dài tối đa chưa
+                    var maxLength = (MaxLength?)Attribute.GetCustomAttribute(prop, typeof(MaxLength));
+                    if (maxLength != null && propValue.ToString().Length > maxLength.Length)
+                    {
+                        validateFailed.Add(maxLength.ErrorMessage);
+                    }
 
-                // Kiểm tra xem email đã đúng định dạng chưa
-                var emailValidate = (EmailValidate?)Attribute.GetCustomAttribute(prop, typeof(EmailValidate));
-                if(emailValidate != null && new EmailAddressAttribute().IsValid(propValue.ToString()) == false)
-                {
-                    validateFailed.Add(emailValidate.ErrorMessage);
-                }
-                
-                // Kiểm tra xem các trường chỉ nhập số đã đúng định dạng chưa
-                var numberValidate = (NumberValidate?)Attribute.GetCustomAttribute(prop, typeof(NumberValidate));
-                if(numberValidate != null && propValue.ToString().All(char.IsDigit) == false)
-                {
-                    validateFailed.Add(numberValidate.ErrorMessage);
+                    // Kiểm tra xem email đã đúng định dạng chưa
+                    var emailValidate = (EmailValidate?)Attribute.GetCustomAttribute(prop, typeof(EmailValidate));
+                    if (emailValidate != null && new EmailAddressAttribute().IsValid(propValue.ToString()) == false)
+                    {
+                        validateFailed.Add(emailValidate.ErrorMessage);
+                    }
+
+                    // Kiểm tra xem các trường chỉ nhập số đã đúng định dạng chưa
+                    var numberValidate = (NumberValidate?)Attribute.GetCustomAttribute(prop, typeof(NumberValidate));
+                    if (numberValidate != null && propValue.ToString().All(char.IsDigit) == false)
+                    {
+                        validateFailed.Add(numberValidate.ErrorMessage);
+                    }
                 }
             }
 
@@ -340,7 +343,7 @@ namespace MISA.WEB08.AMIS.BL
                     Success = false,
                     Data =
                     new ErrorResult(
-                    ErrorCode.EmptyCode,
+                    ErrorCode.ValidateFail,
                     MISAResource.DevMsg_ValidateFailed,
                     MISAResource.UserMsg_ValidateFailed,
                     validateFailed
